@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 06 fév. 2024 à 12:51
+-- Généré le : mar. 06 fév. 2024 à 13:51
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -30,10 +30,17 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `id_admin` int NOT NULL AUTO_INCREMENT,
-  `nom d'utilisateur` varchar(50) NOT NULL,
-  `mot de passe` varchar(50) NOT NULL,
+  `nom_utilisateur` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `mot_de_passe` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id_admin`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `nom_utilisateur`, `mot_de_passe`) VALUES
+(1, 'admin', '1234');
 
 -- --------------------------------------------------------
 
@@ -46,7 +53,19 @@ CREATE TABLE IF NOT EXISTS `connaissance` (
   `id_connaissance` int NOT NULL AUTO_INCREMENT,
   `moyen` varchar(100) NOT NULL,
   PRIMARY KEY (`id_connaissance`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `connaissance`
+--
+
+INSERT INTO `connaissance` (`id_connaissance`, `moyen`) VALUES
+(1, 'Recherche en ligne'),
+(2, 'Publicité en ligne'),
+(3, 'Réseaux sociaux'),
+(4, 'Salons'),
+(5, 'Bouche à oreille'),
+(6, 'autre');
 
 -- --------------------------------------------------------
 
@@ -57,9 +76,9 @@ CREATE TABLE IF NOT EXISTS `connaissance` (
 DROP TABLE IF EXISTS `etablissement`;
 CREATE TABLE IF NOT EXISTS `etablissement` (
   `id_etablissement` int NOT NULL AUTO_INCREMENT,
-  `nom etablissement` varchar(50) NOT NULL,
+  `nom_etablissement` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `ville` varchar(50) NOT NULL,
-  `code postal` int NOT NULL,
+  `code_postal` int NOT NULL,
   PRIMARY KEY (`id_etablissement`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -75,20 +94,46 @@ CREATE TABLE IF NOT EXISTS `formation` (
   `nom` varchar(50) NOT NULL,
   `alternance` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_formation`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `formation`
+--
+
+INSERT INTO `formation` (`id_formation`, `nom`, `alternance`) VALUES
+(1, 'BTS SIO SLAM', 0),
+(2, 'BTS SIO SLAM', 1),
+(3, 'BTS SIO SISR', 0),
+(4, 'BTS SIO SISR', 1),
+(6, 'LIC  SIO SLAM', 1),
+(8, 'LIC  SIO SISR', 1),
+(9, 'MASTER LEAD DEVELOPEUR', 1),
+(10, 'MASTER MANAGER CYBERSECURITE', 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `niveau etude`
+-- Structure de la table `niveau_etude`
 --
 
-DROP TABLE IF EXISTS `niveau etude`;
-CREATE TABLE IF NOT EXISTS `niveau etude` (
+DROP TABLE IF EXISTS `niveau_etude`;
+CREATE TABLE IF NOT EXISTS `niveau_etude` (
   `id_niveau` int NOT NULL AUTO_INCREMENT,
   `RNCP` varchar(20) NOT NULL,
+  `equivalent` varchar(10) NOT NULL,
   PRIMARY KEY (`id_niveau`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `niveau_etude`
+--
+
+INSERT INTO `niveau_etude` (`id_niveau`, `RNCP`, `equivalent`) VALUES
+(1, 'I', 'master'),
+(2, 'II', 'licence'),
+(3, 'III', 'bac +2'),
+(4, 'IV', 'bac'),
+(5, 'V', 'CAP');
 
 -- --------------------------------------------------------
 
@@ -99,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `niveau etude` (
 DROP TABLE IF EXISTS `pdf`;
 CREATE TABLE IF NOT EXISTS `pdf` (
   `id_pdf` int NOT NULL AUTO_INCREMENT,
-  `date d'export` date NOT NULL,
+  `date_export` datetime NOT NULL,
   `lien` varchar(50) NOT NULL,
   PRIMARY KEY (`id_pdf`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -113,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `pdf` (
 DROP TABLE IF EXISTS `planning`;
 CREATE TABLE IF NOT EXISTS `planning` (
   `id_planning` int NOT NULL AUTO_INCREMENT,
-  `journée` date NOT NULL,
+  `journee` date NOT NULL,
   `matin` tinyint(1) NOT NULL,
   `soir` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_planning`)
@@ -128,19 +173,27 @@ CREATE TABLE IF NOT EXISTS `planning` (
 DROP TABLE IF EXISTS `prospect`;
 CREATE TABLE IF NOT EXISTS `prospect` (
   `id_prospect` int NOT NULL AUTO_INCREMENT,
-  `Prenom` varchar(50) NOT NULL,
-  `Nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `email` varchar(100) NOT NULL,
-  `N° de téléphone` int NOT NULL,
+  `n°_de_téléphone` int NOT NULL,
   `adresse` varchar(100) NOT NULL,
   `Ville` varchar(50) NOT NULL,
-  `Code postal` int NOT NULL,
+  `code_postal` int NOT NULL,
   `projet` text NOT NULL,
   `pre_inscrit` tinyint(1) NOT NULL,
-  `niveau etude` varchar(20) NOT NULL,
-  `heure d'enregistrement` date NOT NULL,
+  `niveau_etude` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `decouverte_IIA` int NOT NULL,
+  `heure_enregistrement` datetime NOT NULL,
   PRIMARY KEY (`id_prospect`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `prospect`
+--
+
+INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `n°_de_téléphone`, `adresse`, `Ville`, `code_postal`, `projet`, `pre_inscrit`, `niveau_etude`, `decouverte_IIA`, `heure_enregistrement`) VALUES
+(2, 'Jeremy', 'Blanchard', 'jeremy.blanchard@gmail.com', 123456789, '1 boulevard de Saint Nazaire', 'Pornichet', 44380, 'Ne pas se retrouver dans la même classe que Claire', 0, '1', 0, '2024-02-06 14:24:43');
 
 -- --------------------------------------------------------
 
@@ -151,8 +204,8 @@ CREATE TABLE IF NOT EXISTS `prospect` (
 DROP TABLE IF EXISTS `étudiant`;
 CREATE TABLE IF NOT EXISTS `étudiant` (
   `id_etudiant` int NOT NULL AUTO_INCREMENT,
-  `Prenom` varchar(50) NOT NULL,
-  `Nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `formation` tinyint NOT NULL,
   PRIMARY KEY (`id_etudiant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
