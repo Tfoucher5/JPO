@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 06 fév. 2024 à 14:05
+-- Généré le : mar. 06 fév. 2024 à 15:36
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -51,7 +51,7 @@ INSERT INTO `admin` (`id_admin`, `nom_utilisateur`, `mot_de_passe`) VALUES
 DROP TABLE IF EXISTS `connaissance`;
 CREATE TABLE IF NOT EXISTS `connaissance` (
   `id_connaissance` int NOT NULL AUTO_INCREMENT,
-  `moyen` varchar(100) NOT NULL,
+  `methode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id_connaissance`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `connaissance` (
 -- Déchargement des données de la table `connaissance`
 --
 
-INSERT INTO `connaissance` (`id_connaissance`, `moyen`) VALUES
+INSERT INTO `connaissance` (`id_connaissance`, `methode`) VALUES
 (1, 'Recherche en ligne'),
 (2, 'Publicité en ligne'),
 (3, 'Réseaux sociaux'),
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `prospect` (
   `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `email` varchar(100) NOT NULL,
-  `n°_de_téléphone` int NOT NULL,
+  `tel` int NOT NULL,
   `adresse` varchar(100) NOT NULL,
   `ville` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `code_postal` int NOT NULL,
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `prospect` (
 -- Déchargement des données de la table `prospect`
 --
 
-INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `n°_de_téléphone`, `adresse`, `ville`, `code_postal`, `projet`, `pre_inscrit`, `niveau_etude`, `decouverte_IIA`, `heure_enregistrement`) VALUES
+INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `tel`, `adresse`, `ville`, `code_postal`, `projet`, `pre_inscrit`, `niveau_etude`, `decouverte_IIA`, `heure_enregistrement`) VALUES
 (2, 'Jeremy', 'Blanchard', 'jeremy.blanchard@gmail.com', 123456789, '1 boulevard de Saint Nazaire', 'Pornichet', 44380, 'Ne pas se retrouver dans la même classe que Claire', 0, '1', 0, '2024-02-06 14:24:43');
 
 -- --------------------------------------------------------
