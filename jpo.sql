@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 06 fév. 2024 à 13:51
+-- Généré le : mar. 06 fév. 2024 à 14:05
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -167,6 +167,18 @@ CREATE TABLE IF NOT EXISTS `planning` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `planning_etudiant`
+--
+
+DROP TABLE IF EXISTS `planning_etudiant`;
+CREATE TABLE IF NOT EXISTS `planning_etudiant` (
+  `id_etudiant` int NOT NULL,
+  `id_planning` int NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `prospect`
 --
 
@@ -178,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `prospect` (
   `email` varchar(100) NOT NULL,
   `n°_de_téléphone` int NOT NULL,
   `adresse` varchar(100) NOT NULL,
-  `Ville` varchar(50) NOT NULL,
+  `ville` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `code_postal` int NOT NULL,
   `projet` text NOT NULL,
   `pre_inscrit` tinyint(1) NOT NULL,
@@ -192,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `prospect` (
 -- Déchargement des données de la table `prospect`
 --
 
-INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `n°_de_téléphone`, `adresse`, `Ville`, `code_postal`, `projet`, `pre_inscrit`, `niveau_etude`, `decouverte_IIA`, `heure_enregistrement`) VALUES
+INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `n°_de_téléphone`, `adresse`, `ville`, `code_postal`, `projet`, `pre_inscrit`, `niveau_etude`, `decouverte_IIA`, `heure_enregistrement`) VALUES
 (2, 'Jeremy', 'Blanchard', 'jeremy.blanchard@gmail.com', 123456789, '1 boulevard de Saint Nazaire', 'Pornichet', 44380, 'Ne pas se retrouver dans la même classe que Claire', 0, '1', 0, '2024-02-06 14:24:43');
 
 -- --------------------------------------------------------
