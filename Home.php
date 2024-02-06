@@ -23,19 +23,19 @@
 <body>
     <form action="Home.php" method="post">
         <label for="prenom">Prénom : </label>
-        <input type="text" name="prenom" id="prenom" placeholder="Mohamed" required />
+            <input type="text" name="prenom" id="prenom" placeholder="Mohamed" required />
         <label for="nom">Nom : </label>
-        <input type="text" name="nom" id="nom" placeholder="Couscous" required />
+            <input type="text" name="nom" id="nom" placeholder="Couscous" required />
         <label for="email">Email : </label>
-        <input type="text" name="email" id="email" placeholder="Mohamed.couscous@gmail.com" required />
+            <input type="text" name="email" id="email" placeholder="Mohamed.couscous@gmail.com" required />
         <label for="telephone">Téléphone : </label>
-        <input type="text" name="tel" id="tel" placeholder="0669696969" required />
+            <input type="text" name="tel" id="tel" placeholder="0669696969" required />
         <label for="adresse">Adresse : </label>
-        <input type="text" name="adresse" id="adresse" placeholder="69 rue du couscous" required />
+            <input type="text" name="adresse" id="adresse" placeholder="69 rue du couscous" required />
         <label for="code-postal">Code postal : </label>
-        <input type="text" name="code-postal" id="code-postal" placeholder="69000" required />
+            <input type="text" name="code-postal" id="code-postal" placeholder="69000" required />
         <label for="projet">Projet : </label>
-        <input type="text" name="projet" id="projet" placholder="Le projet de Mohamed" required />
+            <input type="text" name="projet" id="projet" placholder="Le projet de Mohamed" required />
         <select name="pre-inscrit" id="pre-inscrit">
             <option value="">pré-inscrit</option>
             <option value="oui">Oui</option>
