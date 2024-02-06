@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 06 fév. 2024 à 15:36
+-- Généré le : mar. 06 fév. 2024 à 15:37
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -51,7 +51,7 @@ INSERT INTO `admin` (`id_admin`, `nom_utilisateur`, `mot_de_passe`) VALUES
 DROP TABLE IF EXISTS `connaissance`;
 CREATE TABLE IF NOT EXISTS `connaissance` (
   `id_connaissance` int NOT NULL AUTO_INCREMENT,
-  `methode` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `moyen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id_connaissance`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `connaissance` (
 -- Déchargement des données de la table `connaissance`
 --
 
-INSERT INTO `connaissance` (`id_connaissance`, `methode`) VALUES
+INSERT INTO `connaissance` (`id_connaissance`, `moyen`) VALUES
 (1, 'Recherche en ligne'),
 (2, 'Publicité en ligne'),
 (3, 'Réseaux sociaux'),
