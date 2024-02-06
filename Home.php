@@ -1,15 +1,39 @@
 <?php
 
-    //script de connexion
-    $host = '127.0.0.1';
-    $db = 'jpo';
-    $user = 'root';
-    $pass = '';
-    $port = '3306';
-    $charset = 'utf8mb4';
+// script de connexion
+$host = '127.0.0.1';
+$db = 'jpo';
+$user = 'root';
+$pass = '';
+$port = '3306';
+$charset = 'utf8mb4';
 
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset;port=$port";
-    $pdo = new PDO($dsn, $user, $pass);
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset;port=$port";
+$pdo = new PDO($dsn, $user, $pass);
+
+if (isset($_POST['soumettre'])) {
+
+    // on récupère les valeurs
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $mail = $_POST['email'];
+    $tel = $_POST['tel'];
+    $adresse = $_POST['adresse'];
+    $ville = $_POST['ville'];
+    $code_postal = $_POST['code-postal'];
+    $projet = $_POST['projet'];
+    $pre_inscrit = $_POST['pre_inscrit'];
+    $niveau_etude = $_POST['niveau_etude'];
+
+    // on ajoute les valeurs dans la db
+    $sql = "INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, heure_enregistrement) 
+            VALUES ('$prenom', '$nom', '$mail', '$tel', '$adresse', '$ville', '$code_postal', '$projet', '$pre_inscrit', '$niveau_etude', NOW())";
+    $pdo->exec($sql);
+
+    // Effectuer la redirection après la soumission du formulaire
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
 ?>
 
@@ -23,25 +47,27 @@
 <body>
     <form action="Home.php" method="post">
         <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" placeholder="Mohamed" required />
+            <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
         <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" placeholder="Couscous" required />
+            <input type="text" name="nom" id="nom" placeholder="Nom" required />
         <label for="email">Email : </label>
-            <input type="text" name="email" id="email" placeholder="Mohamed.couscous@gmail.com" required />
+            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
         <label for="telephone">Téléphone : </label>
-            <input type="text" name="tel" id="tel" placeholder="0669696969" required />
+            <input type="text" name="tel" id="tel" placeholder="telephone" required />
         <label for="adresse">Adresse : </label>
-            <input type="text" name="adresse" id="adresse" placeholder="69 rue du couscous" required />
+            <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
         <label for="ville">Ville : </label>
-            <input type="text" name="ville" id="ville" placeholder="arabie city" required />
+            <input type="text" name="ville" id="ville" placeholder="ville" required />
         <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" placeholder="69000" required />
+            <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
         <label for="projet">Projet : </label>
-            <input type="text" name="projet" id="projet" placholder="Le projet de Mohamed" required />
+            <input type="text" name="projet" id="projet" placeholder="votre projet" required />
+            <label for="pre-inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
             <option value="1">Oui</option>
             <option value="0">Non</option>
         </select>
+        <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
             <option value="3">BAC</option>
             <option value="2">Licence</option>
@@ -51,28 +77,5 @@
         </select>
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
-    <?php
-
-    if(isset($_POST['soumettre'])) {
-
-        //on récupère les valeurs
-        $prenom = $_POST['prenom'];
-        $nom = $_POST['nom'];
-        $mail = $_POST['email'];
-        $tel = $_POST['tel'];
-        $adresse = $_POST['adresse'];
-        $ville = $_POST['ville'];
-        $code_postal = $_POST['code-postal'];
-        $projet = $_POST['projet'];
-        $pre_inscrit = $_POST['pre_inscrit'];
-        $niveau_etude = $_POST['niveau_etude'];
-
-        //on ajoute les valeurs dans la db
-        $sql = "INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, heure_enregistrement) 
-                VALUES ('$prenom', '$nom', '$mail', '$tel', '$adresse', '$ville', '$code_postal', '$projet', '$pre_inscrit', '$niveau_etude', NOW())";
-        $pdo->exec($sql);
-        }
-    ?>
-
 </body>
 </html>
