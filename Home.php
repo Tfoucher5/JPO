@@ -16,10 +16,11 @@ if (isset($_POST['soumettre'])) {
     $projet = $_POST['projet'];
     $pre_inscrit = $_POST['pre_inscrit'];
     $niveau_etude = $_POST['niveau_etude'];
+    $connaissance = $_POST['decouverte_IIA'];
 
     // on ajoute les valeurs dans la db
-    $sql = "INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, heure_enregistrement) 
-            VALUES ('$prenom', '$nom', '$mail', '$tel', '$adresse', '$ville', '$code_postal', '$projet', '$pre_inscrit', '$niveau_etude', NOW())";
+    $sql = "INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, heure_enregistrement) 
+            VALUES ('$prenom', '$nom', '$mail', '$tel', '$adresse', '$ville', '$code_postal', '$projet', '$pre_inscrit', '$niveau_etude', '$connaissance', NOW())";
     $pdo->exec($sql);
 
     // Effectuer la redirection après la soumission du formulaire
@@ -64,6 +65,14 @@ if (isset($_POST['soumettre'])) {
             <option value="1">Master</option>
             <option value="4">Bac +2</option>
             <option value="5">CAP</option>
+        </select>
+        <select name="decouverte_IIA" id="decouverte_IIA" required>
+            <option value="1">Recherches en ligne</option>
+            <option value="2">Publicité en ligne</option>
+            <option value="3">réseaux sociaux</option>
+            <option value="4">Salons</option>
+            <option value="5">Bouche a oreille</option>
+            <option value="6">Autre</option>
         </select>
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
