@@ -19,8 +19,11 @@ if (isset($_POST['soumettre'])) {
     $connaissance = $_POST['decouverte_IIA'];
 
     // on ajoute les valeurs dans la db
-    $sql = "INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, heure_enregistrement) 
-            VALUES ('$prenom', '$nom', '$mail', '$tel', '$adresse', '$ville', '$code_postal', '$projet', '$pre_inscrit', '$niveau_etude', '$connaissance', NOW())";
+    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, heure_enregistrement) 
+            VALUES ("'.$prenom.'", "'.$nom.'", "'.$mail.'", "'.$tel.'", "'.$adresse.'", "'.$ville.'", "'.$code_postal.'", "'.$projet.'", "'.$pre_inscrit.'", "'.$niveau_etude.'", "'.$connaissance.'", NOW())';
+    
+    echo $sql;
+    
     $pdo->exec($sql);
 
     // Effectuer la redirection après la soumission du formulaire
