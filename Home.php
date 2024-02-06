@@ -43,7 +43,7 @@ if (isset($_POST['soumettre'])) {
         <label for="email">Email : </label>
             <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
         <label for="telephone">Téléphone : </label>
-            <input type="text" name="tel" id="tel" placeholder="telephone" required />
+            <input type="number" name="tel" id="tel" placeholder="telephone" required />
         <label for="adresse">Adresse : </label>
             <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
         <label for="ville">Ville : </label>
