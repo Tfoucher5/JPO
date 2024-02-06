@@ -1,7 +1,7 @@
 <?php
 
 // script de connexion
-require_once('base_donne.php');
+require_once('base_donnee.php');
 
 if (isset($_POST['soumettre'])) {
 
