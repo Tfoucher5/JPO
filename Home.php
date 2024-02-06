@@ -40,10 +40,10 @@ if (isset($_POST['soumettre'])) {
             <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
         <label for="nom">Nom : </label>
             <input type="text" name="nom" id="nom" placeholder="Nom" required />
-        <label for="email">Email : </label>
+        <label for="email">Email : </label> 
             <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
         <label for="telephone">Téléphone : </label>
-            <input type="text" name="tel" id="tel" placeholder="telephone" required />
+            <input type="number" name="tel" id="tel" placeholder="telephone" required />
         <label for="adresse">Adresse : </label>
             <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
         <label for="ville">Ville : </label>
