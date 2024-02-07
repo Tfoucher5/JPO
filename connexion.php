@@ -1,5 +1,24 @@
 <?php
-    session_start()
+session_start();
+
+$user = "admin";
+$password = "1234";
+$failed_to_log = "";
+
+if (isset($_POST['soumettre'])) {
+    $user_verif = $_POST['utilisateur'];
+    $password_verif = $_POST['password'];
+
+    if ($user_verif == $user and $password_verif == $password) {
+        // Stocker les informations de connexion dans la session
+        $_SESSION['utilisateur'] = $user_verif;
+        $_SESSION['connected'] = true;
+        header('Location: Home.php');
+        exit();
+    } else {
+        $failed_to_log = "Nom d'utilisateur ou mot de passe erroné veuillez réessayer.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,9 +30,14 @@
 </head>
 <body>
     <form action="connexion.php" method="post">
-    <label for="nom_utilisateur">nom_utilisateur : </label>
-            <input type="text" name="nom_utilisateur" id="nom_utilisateur" placeholder="nom d'utilisateur" required />
-    <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+        <label for="utilisateur">utilisateur : </label>
+        <input type="text" name="utilisateur" id="utilisateur" placeholder="utilisateur" required />
+        <label for="password">Prénom : </label>
+        <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+        <input type="submit" name="soumettre" value="se connecter" />
+    </form>
+    <?php
+        echo $failed_to_log;
+    ?>
 </body>
 </html>
