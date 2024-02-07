@@ -61,7 +61,8 @@ require_once('base_donnee.php')
                     <td>' . $resultats['projet'] . '</td>
                     <td>' . $resultats['pre_inscrit'] . '</td>
                     <td>' . $resultats['decouverte_IIA'] . '</td>
-                    <td>' . $resultats['heure_enregistrement'] . '</td>' ;          
+                    <td>' . $resultats['heure_enregistrement'] . '</td>
+                    <td><a href="modification.php"><img src="" alt="" title="" /></a></td>';        
         }
         // referme la table
         echo '</table>';
