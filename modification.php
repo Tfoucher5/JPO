@@ -18,9 +18,10 @@ require_once('base_donnee.php')
     // renomer les numériques
     // bouton modifier + bouton supprimer
     
-    $sql='SELECT * FROM prospect ORDER BY id';
+    $sql='SELECT * FROM prospect ORDER BY id_prospect';
     $temp=$pdo->query($sql);
-    //affichage du tableau
+    //affichage du tableau 
+    //
     echo "<table border='1'>
     <tr>
         <td>Nom : </td>
@@ -33,9 +34,11 @@ require_once('base_donnee.php')
         <td>Niveau d'études : </td>
         <td>Projet : </td>
         <td>Pre-inscrit ? : </td>
+        <td>Comment nous avez-vous découvert ? : </td>
         <td>Date d'enregistrement : </td>
         <td>Action : </td>
         </tr>";
+
         while ($resultats = $temp -> fetch()){
             echo '<tr>
                     <td>' . $resultats['nom'] . '</td>
@@ -44,11 +47,12 @@ require_once('base_donnee.php')
                     <td>' . $resultats['code_postal'] . '</td>
                     <td>' . $resultats['ville'] . '</td>
                     <td>' . $resultats['email'] . '</td>
-                    <td>' . $resultats['niveau_etude'] . " ";  
-                    if ($resultats['alternance']== '1') { 
-                        echo 'en alternance';
-                    }
-                   echo '<td><a href="inscription.php?id='.$resultats['id'].'">modifier<a/><br/><a href="ex1.php?suppr='.$resultats['id'].'">supprimer<a/></td>';           
+                    <td>' . $resultats['niveau_etude'] . '</td>
+                    <td>' . $resultats['projet'] . '</td>
+                    <td>' . $resultats['pre-inscrit'] . '</td>
+                    <td>' . $resultats['decouverte_IIA'] . '</td>
+                    <td>' . $resultats['heure_enregistrement'] . '</td>
+                    <td>' . $resultats['niveau_etude'] . '</td>'           
         }
         // referme la table
         echo '</table>';
@@ -66,26 +70,6 @@ require_once('base_donnee.php')
         //$sql='DELETE FROM etudiants WHERE id='.$id.'';
         //$pdo->exec($sql);
         }
-    */
-    /*
-    Boucle while pour remplir les lignes du tableau tant qu'ils trouvent des lignes dans la bases de données
-    Concatène les données tiré 
-    if pour écrire alterance à la suite de formation
-    Dans un <a/> on concatène l'ID de l'étudiants et on le stock dans dans une variable dans l'URL du lien
-    */
-    while ($resultats = $temp -> fetch()){
-        echo '<tr>
-                <td>' . $resultats['id'] . '</td>
-                <td>' . $resultats['nom'] . '</td>
-                <td>' . $resultats['prenom'] . '</td>
-                <td>' . $resultats['formation'] . " ";  
-                if ($resultats['alternance']== '1') { 
-                    echo 'en alternance';
-                }
-               echo '<td><a href="inscription.php?id='.$resultats['id'].'">modifier<a/><br/><a href="ex1.php?suppr='.$resultats['id'].'">supprimer<a/></td>';           
-    }
-    // referme la table
-    echo '</table>';
     ?>
 </body>
 </html>
