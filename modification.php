@@ -1,14 +1,50 @@
 <?php
-session_start();
 
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    header('Location: connexion.php');
-    exit();
+// script de connexion
+$host = '127.0.0.1';
+$db = 'portes_ouvertes';
+$user = 'root';
+$pass = '';
+$port = '3306';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset;port=$port";
+$pdo = new PDO($dsn, $user, $pass);
+
+// Vérifier si l'ID est passé dans l'URL
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    
+    // Récupérer les données de l'étudiant avec l'ID spécifié
+    $query = "SELECT * FROM etudiants WHERE id='$id'";
+    $result = $pdo->query($query);
+    $etudiant = $result->fetch(PDO::FETCH_ASSOC);
+
+    // Assigner les valeurs à des variables
+    $nom = $etudiant['nom'];
+    $prenom = $etudiant['prenom'];
+    $formation = $etudiant['formation'];
+
+    // Vérifier si le bouton submit est pressé
+    if(isset($_POST['submit'])) {
+
+        //on récupère les nouvelles valeurs
+        $nom_updated = $_POST['nom'];
+        $prenom_updated = $_POST['prenom'];
+        $formation_updated = $_POST['formation'];
+
+        //on ajoute les valeurs dans la db
+        $sql = "UPDATE etudiants
+                SET nom = '$nom_updated', prenom = '$prenom_updated', formation = '$formation_updated'
+                WHERE id = $id";
+        $pdo->exec($sql);
+
+        // Rediriger vers la page d'affichage après la mise à jour
+        header('Location: http://localhost/PHP/dbphp/dbphp.php');
+        exit();
+    }
 }
 
-require_once('base_donnee.php')
 ?>
 
 <!DOCTYPE html>
@@ -16,74 +52,15 @@ require_once('base_donnee.php')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="phpstyle.css">
-    <title>Php et Sql : </title>
+    <title>Edit</title>
 </head>
 <body>
-
-    <?php
-    // appeler toute les lignes de la tables prospect
-    // les faire apparaitre dans un tableau
-    // renomer les numériques
-    // bouton modifier + bouton supprimer
-    
-    $sql='SELECT * FROM prospect ORDER BY id_prospect';
-    $temp=$pdo->query($sql);
-    //affichage du tableau 
-    //
-    echo "<table border='1'>
-    <tr>
-        <td>Nom : </td>
-        <td>Prenom : </td>
-        <td>Adresse : </td>
-        <td>Code postal : </td>
-        <td>Ville : </td>
-        <td>Téléphone : </td>
-        <td>Adresse mail : </td>
-        <td>Niveau d'études : </td>
-        <td>Projet : </td>
-        <td>Pre-inscrit ? : </td>
-        <td>Comment nous avez-vous découvert ? : </td>
-        <td>Date d'enregistrement : </td>
-        <td>Action : </td>
-        </tr>";
-
-        while ($resultats = $temp -> fetch()){
-            echo '<tr>
-                    <td>' . $resultats['nom'] . '</td>
-                    <td>' . $resultats['prenom'] . '</td>
-                    <td>' . $resultats['adresse'] . '</td>
-                    <td>' . $resultats['code_postal'] . '</td>
-                    <td>' . $resultats['ville'] . '</td>
-                    <td>' . $resultats['tel'] . '</td>
-                    <td>' . $resultats['email'] . '</td>
-                    <td>' . $resultats['niveau_etude'] . '</td>
-                    <td>' . $resultats['projet'] . '</td>
-                    <td>' . $resultats['pre_inscrit'] . '</td>
-                    <td>' . $resultats['decouverte_IIA'] . '</td>
-                    <td>' . $resultats['heure_enregistrement'] . '</td>' ;          
-        }
-        // referme la table
-        echo '</table>';
-
-
-    // lie les tables etudiants et formations pour transformer les nombres en nom de formation
-    // $sql="SELECT etudiants.id, etudiants.nom, etudiants.prenom, formations.nom AS formation, formations.alternance
-    //     FROM etudiant, formation, connaissance, 
-    //     WHERE etudiants.formation = formations.id 
-    //     ORDER BY id";
-    // $temp=$pdo->query($sql);
-    // // TRAITEMENT DE LA SUPPRESSION D'UN ETUDIANT
-    // if(isset($_REQUEST['suppr'])){
-    //     $id=$_REQUEST['suppr'];
-    //     echo $id;
-    //     //$sql='DELETE FROM etudiants WHERE id='.$id.'';
-    //     //$pdo->exec($sql);
-    //     }
-    ?>
-    <form action="deconnexion.php" method="post">
-        <input type="submit" name="deconnecter" value="Se déconnecter" />
+    <form method="post" action="edit.php?id=<?php echo $id; ?>">
+        <input type="text" name="nom" value="<?php echo $nom; ?>">
+        <input type="text" name="prenom" value="<?php echo $prenom; ?>">
+        <input type="text" name="formation" value="<?php echo $formation; ?>">
+        <input type="submit" name="submit" value="Modifier">
+        <a href="http://localhost/PHP/dbphp/dbphp.php" style="color: black; text-decoration: none; border: 1px solid; border-radius: 3px; padding: 0.5px 7px">Retour</a>
     </form>
 </body>
 </html>
-
