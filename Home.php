@@ -20,7 +20,7 @@ if (isset($_POST['soumettre'])) {
 
     // on ajoute les valeurs dans la db
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, heure_enregistrement) 
-            VALUES ("'.$prenom.'", "'.$nom.'", "'.$mail.'", "'.$tel.'", "'.$adresse.'", "'.$ville.'", "'.$code_postal.'", "'.$projet.'", "'.$pre_inscrit.'", "'.$niveau_etude.'", "'.$connaissance.'", NOW())';
+            VALUES ("'.$prenom.'", "'.$nom.'", "'.$mail.'", "'.$tel.'", "'.$adresse.'", "'.$ville.'", "'.$code_postal.'", "'. addslashes($projet).'", "'.$pre_inscrit.'", "'.$niveau_etude.'", "'.$connaissance.'", NOW())';
     
     echo $sql;
     

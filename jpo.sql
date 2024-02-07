@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 06 fév. 2024 à 15:37
+-- Généré le : mer. 07 fév. 2024 à 11:02
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -51,7 +51,7 @@ INSERT INTO `admin` (`id_admin`, `nom_utilisateur`, `mot_de_passe`) VALUES
 DROP TABLE IF EXISTS `connaissance`;
 CREATE TABLE IF NOT EXISTS `connaissance` (
   `id_connaissance` int NOT NULL AUTO_INCREMENT,
-  `moyen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `moyen` varchar(100) NOT NULL,
   PRIMARY KEY (`id_connaissance`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -167,18 +167,6 @@ CREATE TABLE IF NOT EXISTS `planning` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `planning_etudiant`
---
-
-DROP TABLE IF EXISTS `planning_etudiant`;
-CREATE TABLE IF NOT EXISTS `planning_etudiant` (
-  `id_etudiant` int NOT NULL,
-  `id_planning` int NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `prospect`
 --
 
@@ -188,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `prospect` (
   `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `email` varchar(100) NOT NULL,
-  `tel` int NOT NULL,
+  `tel` text NOT NULL,
   `adresse` varchar(100) NOT NULL,
   `ville` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `code_postal` int NOT NULL,
@@ -198,14 +186,18 @@ CREATE TABLE IF NOT EXISTS `prospect` (
   `decouverte_IIA` int NOT NULL,
   `heure_enregistrement` datetime NOT NULL,
   PRIMARY KEY (`id_prospect`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `prospect`
 --
 
 INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `tel`, `adresse`, `ville`, `code_postal`, `projet`, `pre_inscrit`, `niveau_etude`, `decouverte_IIA`, `heure_enregistrement`) VALUES
-(2, 'Jeremy', 'Blanchard', 'jeremy.blanchard@gmail.com', 123456789, '1 boulevard de Saint Nazaire', 'Pornichet', 44380, 'Ne pas se retrouver dans la même classe que Claire', 0, '1', 0, '2024-02-06 14:24:43');
+(2, 'Jeremy', 'Blanchard', 'jeremy.blanchard@gmail.com', '123456789', '1 boulevard de Saint Nazaire', 'Pornichet', 44380, 'Ne pas se retrouver dans la même classe que Claire', 0, '1', 0, '2024-02-06 14:24:43'),
+(39, 'Rayan', 'Mars', 'rayan.mars@gmail.com', '620084692', 'sans domicile fixe', 'Saint Nazaire', 44600, 'je veux etudier wallah', 1, '3', 0, '2024-02-06 16:00:24'),
+(45, 'Theo', 'Foucher', 'theonicolas.foucher@gmail.com', '771944433', '77B route de Tréfféac', 'Trignac', 44570, 'je veux etudier wallah', 1, '3', 1, '2024-02-06 16:34:43'),
+(50, 'Theo', 'Foucher', 'theonicolas.foucher@gmail.com', '0771944433', '77B route de Tréfféac', 'Trignac', 44570, 'j\'ai a manger dans mon \"sac\"', 1, '3', 4, '2024-02-07 11:56:18'),
+(51, 'Theo', 'Foucher', 'theonicolas.foucher@gmail.com', '0771944433', '77B route de Tréfféac', 'Trignac', 44570, 'j\'ai a manger dans mon \"sac\"', 1, '3', 3, '2024-02-07 11:56:23');
 
 -- --------------------------------------------------------
 
