@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
+    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    header('Location: connexion.php');
+    exit();
+}
+
 require_once('base_donnee.php')
 ?>
 
@@ -87,6 +96,9 @@ require_once('base_donnee.php')
     // referme la table
     echo '</table>';
     ?>
+    <form action="deconnexion.php" method="post">
+        <input type="submit" name="deconnecter" value="Se déconnecter" />
+    </form>
 </body>
 </html>
 
