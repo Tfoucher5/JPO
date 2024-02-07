@@ -11,34 +11,52 @@ require_once('base_donnee.php')
     <title>Php et Sql : </title>
 </head>
 <body>
-    <form action="inscription.php" method="post">
-        <button type="submit" value="inscription" >Inscription</button>
 
     <?php
-        /* Récupere la valeur du formulaire si il existe une valeur
-        Ligne SQL pour conter le nombre d'occurence des données récupéré du formulaire avec concaténation des variables
-        Boucle while pour dire de scanner chaque ligne de la commande SQL plus haut
-        Si le compteur renvoi 0 alors on insére les données du formulaires, sinon on affiche un message d'erreur
-        */
-        if(isset($_REQUEST['nom'])&&(isset($_REQUEST['prenom']))&&(isset($_REQUEST['formation']))) { 
-            $nom=$_REQUEST['nom'];
-            $prenom=$_REQUEST['prenom'];
-            $formation=$_REQUEST['formation'];
-            $sql='SELECT COUNT(DISTINCT prenom,nom,formation) AS verif FROM etudiants WHERE prenom="'.$prenom.'" AND nom="'.$nom.'" AND formation="'.$formation.'" ';
-            $temp=$pdo->query($sql);
-            while ($resultats = $temp -> fetch()){
-                if ($resultats['verif']==0){
-                    $sql = 'INSERT INTO etudiants(prenom,nom,formation) VALUES ("'.$prenom.'", "'.$nom.'", "'.$formation.'") ' ;
-                    $pdo->exec($sql);
-                }
-                else{
-                    $fail='Cet.te étudiant.e est déjà inscrit.e';
-                }
-            } 
+    // appeler toute les lignes de la tables prospect
+    // les faire apparaitre dans un tableau
+    // renomer les numériques
+    // bouton modifier + bouton supprimer
+    
+    $sql='SELECT * FROM prospect ORDER BY id';
+    $temp=$pdo->query($sql);
+    //affichage du tableau
+    echo "<table border='1'>
+    <tr>
+        <td>Nom : </td>
+        <td>Prenom : </td>
+        <td>Adresse : </td>
+        <td>Code postal : </td>
+        <td>Ville : </td>
+        <td>Téléphone : </td>
+        <td>Adresse mail : </td>
+        <td>Niveau d'études : </td>
+        <td>Projet : </td>
+        <td>Pre-inscrit ? : </td>
+        <td>Date d'enregistrement : </td>
+        <td>Action : </td>
+        </tr>";
+        while ($resultats = $temp -> fetch()){
+            echo '<tr>
+                    <td>' . $resultats['nom'] . '</td>
+                    <td>' . $resultats['prenom'] . '</td>
+                    <td>' . $resultats['adresse'] . '</td>
+                    <td>' . $resultats['code_postal'] . '</td>
+                    <td>' . $resultats['ville'] . '</td>
+                    <td>' . $resultats['email'] . '</td>
+                    <td>' . $resultats['niveau_etude'] . " ";  
+                    if ($resultats['alternance']== '1') { 
+                        echo 'en alternance';
+                    }
+                   echo '<td><a href="inscription.php?id='.$resultats['id'].'">modifier<a/><br/><a href="ex1.php?suppr='.$resultats['id'].'">supprimer<a/></td>';           
         }
-    // lie les tables etudiants et formations pour transformer les nombres en nom de formation
+        // referme la table
+        echo '</table>';
+
+
+    /* lie les tables etudiants et formations pour transformer les nombres en nom de formation
     $sql="SELECT etudiants.id, etudiants.nom, etudiants.prenom, formations.nom AS formation, formations.alternance
-    FROM etudiants, formations
+    FROM etudiant, formation, connaissance, 
     WHERE etudiants.formation = formations.id ORDER BY id";
     $temp=$pdo->query($sql);
     // TRAITEMENT DE LA SUPPRESSION D'UN ETUDIANT
@@ -48,16 +66,7 @@ require_once('base_donnee.php')
         //$sql='DELETE FROM etudiants WHERE id='.$id.'';
         //$pdo->exec($sql);
         }
- 
-    // Déut de l'affichage de la base de donnée sous forme de tableau
-    echo '<table border="1">
-    <tr>
-        <td>id : </td>
-        <td>nom : </td>
-        <td>prenom : </td>
-        <td>formation : </td>
-        <td>action : </td>
-        </tr>';
+    */
     /*
     Boucle while pour remplir les lignes du tableau tant qu'ils trouvent des lignes dans la bases de données
     Concatène les données tiré 
