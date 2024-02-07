@@ -55,30 +55,31 @@ require_once('base_donnee.php')
                     <td>' . $resultats['adresse'] . '</td>
                     <td>' . $resultats['code_postal'] . '</td>
                     <td>' . $resultats['ville'] . '</td>
+                    <td>' . $resultats['tel'] . '</td>
                     <td>' . $resultats['email'] . '</td>
                     <td>' . $resultats['niveau_etude'] . '</td>
                     <td>' . $resultats['projet'] . '</td>
-                    <td>' . $resultats['pre-inscrit'] . '</td>
+                    <td>' . $resultats['pre_inscrit'] . '</td>
                     <td>' . $resultats['decouverte_IIA'] . '</td>
-                    <td>' . $resultats['heure_enregistrement'] . '</td>
-                    <td>' . $resultats['niveau_etude'] . '</td>';           
+                    <td>' . $resultats['heure_enregistrement'] . '</td>' ;          
         }
         // referme la table
         echo '</table>';
 
 
-    /* lie les tables etudiants et formations pour transformer les nombres en nom de formation
-    $sql="SELECT etudiants.id, etudiants.nom, etudiants.prenom, formations.nom AS formation, formations.alternance
-    FROM etudiant, formation, connaissance, 
-    WHERE etudiants.formation = formations.id ORDER BY id";
-    $temp=$pdo->query($sql);
-    // TRAITEMENT DE LA SUPPRESSION D'UN ETUDIANT
-    if(isset($_REQUEST['suppr'])){
-        $id=$_REQUEST['suppr'];
-        echo $id;
-        //$sql='DELETE FROM etudiants WHERE id='.$id.'';
-        //$pdo->exec($sql);
-        }*/
+    // lie les tables etudiants et formations pour transformer les nombres en nom de formation
+    // $sql="SELECT etudiants.id, etudiants.nom, etudiants.prenom, formations.nom AS formation, formations.alternance
+    //     FROM etudiant, formation, connaissance, 
+    //     WHERE etudiants.formation = formations.id 
+    //     ORDER BY id";
+    // $temp=$pdo->query($sql);
+    // // TRAITEMENT DE LA SUPPRESSION D'UN ETUDIANT
+    // if(isset($_REQUEST['suppr'])){
+    //     $id=$_REQUEST['suppr'];
+    //     echo $id;
+    //     //$sql='DELETE FROM etudiants WHERE id='.$id.'';
+    //     //$pdo->exec($sql);
+    //     }
     ?>
     <form action="deconnexion.php" method="post">
         <input type="submit" name="deconnecter" value="Se déconnecter" />

@@ -13,7 +13,7 @@ if (isset($_POST['soumettre'])) {
         // Stocker les informations de connexion dans la session
         $_SESSION['utilisateur'] = $user_verif;
         $_SESSION['connected'] = true;
-        header('Location: Home.php');
+        header('Location: modification.php');
         exit();
     } else {
         $failed_to_log = "Nom d'utilisateur ou mot de passe erroné veuillez réessayer.";
