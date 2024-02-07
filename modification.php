@@ -61,7 +61,7 @@ require_once('base_donnee.php')
                     <td>' . $resultats['pre-inscrit'] . '</td>
                     <td>' . $resultats['decouverte_IIA'] . '</td>
                     <td>' . $resultats['heure_enregistrement'] . '</td>
-                    <td>' . $resultats['niveau_etude'] . '</td>'           
+                    <td>' . $resultats['niveau_etude'] . '</td>';           
         }
         // referme la table
         echo '</table>';
@@ -78,7 +78,7 @@ require_once('base_donnee.php')
         echo $id;
         //$sql='DELETE FROM etudiants WHERE id='.$id.'';
         //$pdo->exec($sql);
-        }
+        }*/
     ?>
     <form action="deconnexion.php" method="post">
         <input type="submit" name="deconnecter" value="Se déconnecter" />
