@@ -27,7 +27,7 @@ require_once('base_donnee.php')
     // renomer les numériques
     // bouton modifier + bouton supprimer
     
-    $sql='SELECT * FROM prospect ORDER BY id_prospect';
+    $sql='SELECT * FROM prospect,connaissance,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau AND connaissance.id_connaissance=prospect.decouverte_IIA ORDER BY id_prospect';
     $temp=$pdo->query($sql);
     //affichage du tableau 
     //
@@ -57,30 +57,19 @@ require_once('base_donnee.php')
                     <td>' . $resultats['ville'] . '</td>
                     <td>' . $resultats['tel'] . '</td>
                     <td>' . $resultats['email'] . '</td>
-                    <td>' . $resultats['niveau_etude'] . '</td>
+                    <td>' . $resultats['equivalent'] . '</td>
                     <td>' . $resultats['projet'] . '</td>
-                    <td>' . $resultats['pre_inscrit'] . '</td>
-                    <td>' . $resultats['decouverte_IIA'] . '</td>
-                    <td>' . $resultats['heure_enregistrement'] . '</td>
-                    <td><a href="modification.php"><img src="" alt="" title="" /></a></td>';        
+                    <td>'; if ($resultats['pre_inscrit']== '1') { 
+                        echo 'oui';
+                    } else{
+                        echo 'non';
+                    }
+                echo '<td>' . $resultats['moyen'] . '</td>
+                     <td>' . $resultats['heure_enregistrement'] . '</td>
+                     <td><a href="modification.php"><img src="" alt="" title="" /></a></td>';        
         }
         // referme la table
         echo '</table>';
-
-
-    // lie les tables etudiants et formations pour transformer les nombres en nom de formation
-    // $sql="SELECT etudiants.id, etudiants.nom, etudiants.prenom, formations.nom AS formation, formations.alternance
-    //     FROM etudiant, formation, connaissance, 
-    //     WHERE etudiants.formation = formations.id 
-    //     ORDER BY id";
-    // $temp=$pdo->query($sql);
-    // // TRAITEMENT DE LA SUPPRESSION D'UN ETUDIANT
-    // if(isset($_REQUEST['suppr'])){
-    //     $id=$_REQUEST['suppr'];
-    //     echo $id;
-    //     //$sql='DELETE FROM etudiants WHERE id='.$id.'';
-    //     //$pdo->exec($sql);
-    //     }
     ?>
     <form action="deconnexion.php" method="post">
         <input type="submit" name="deconnecter" value="Se déconnecter" />
