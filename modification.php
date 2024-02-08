@@ -13,7 +13,6 @@ if (isset($_GET['id'])) {
     $stmt->bindParam(':id_prospect', $id);
     $stmt->execute();
     $prospect = $stmt->fetch(PDO::FETCH_ASSOC);
-    var_dump($prospect);
 
     // Assigner les valeurs à des variables
     $nom = $prospect['nom'];
@@ -32,17 +31,17 @@ if (isset($_GET['id'])) {
     if (isset($_POST['soumettre'])) {
 
         //on récupère les nouvelles valeurs
-        $nom_updated = $_POST['nom'];
-        $prenom_updated = $_POST['prenom'];
-        $mail_updated = $_POST['email'];
-        $tel_updated = $_POST['tel'];
-        $adresse_updated = $_POST['adresse'];
-        $ville_updated = $_POST['ville'];
-        $code_postal_updated = $_POST['code_postal'];
-        $projet_updated = $_POST['projet'];
-        $pre_inscrit_updated = $_POST['pre_inscrit'];
-        $niveau_etude_updated = $_POST['niveau_etude'];
-        $decouverte_IIA_updated = $_POST['decouverte_IIA'];
+        $nom_updated = htmlentities($_POST['nom']);
+        $prenom_updated = htmlentities($_POST['prenom']);
+        $mail_updated = htmlentities($_POST['email']);
+        $tel_updated = htmlentities($_POST['tel']);
+        $adresse_updated = htmlentities($_POST['adresse']);
+        $ville_updated = htmlentities($_POST['ville']);
+        $code_postal_updated = htmlentities($_POST['code_postal']);
+        $projet_updated = htmlentities($_POST['projet']);
+        $pre_inscrit_updated = htmlentities($_POST['pre_inscrit']);
+        $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
+        $decouverte_IIA_updated = htmlentities($_POST['decouverte_IIA']);
 
         //on ajoute les valeurs dans la db
         $sql = "UPDATE prospect
