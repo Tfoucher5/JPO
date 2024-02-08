@@ -33,7 +33,7 @@ require_once('base_donnee.php')
     //
 
     
-    echo 'Connecté en tant que'. ' ' . $_SESSION['utilisateur'] ;
+    echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
     
     echo "<table border='1'>
     <tr>

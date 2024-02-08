@@ -6,17 +6,17 @@ require_once('base_donnee.php');
 if (isset($_POST['soumettre'])) {
 
     // on récupère les valeurs
-    $prenom = $_POST['prenom'];
-    $nom = $_POST['nom'];
-    $mail = $_POST['email'];
-    $tel = $_POST['tel'];
-    $adresse = $_POST['adresse'];
-    $ville = $_POST['ville'];
-    $code_postal = $_POST['code-postal'];
-    $projet = $_POST['projet'];
-    $pre_inscrit = $_POST['pre_inscrit'];
-    $niveau_etude = $_POST['niveau_etude'];
-    $connaissance = $_POST['decouverte_IIA'];
+    $prenom = htmlentities($_POST['prenom']);
+    $nom = htmlentities($_POST['nom']);
+    $mail = htmlentities($_POST['email']);
+    $tel = htmlentities($_POST['tel']);
+    $adresse = htmlentities($_POST['adresse']);
+    $ville = htmlentities($_POST['ville']);
+    $code_postal = htmlentities($_POST['code-postal']);
+    $projet = htmlentities($_POST['projet']);
+    $pre_inscrit = htmlentities($_POST['pre_inscrit']);
+    $niveau_etude = htmlentities($_POST['niveau_etude']);
+    $connaissance = htmlentities($_POST['decouverte_IIA']);
 
     // on ajoute les valeurs dans la db
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, heure_enregistrement) 

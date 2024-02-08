@@ -7,8 +7,8 @@ session_start();
 $failed_to_log = "";
 
 if (isset($_POST['soumettre'])) {
-    $user_verif = $_POST['utilisateur'];
-    $password_verif = $_POST['password'];
+    $user_verif = htmlentities($_POST['utilisateur']);
+    $password_verif = htmlentities($_POST['password']);
 
     // Récupérer le nom d'utilisateur et le mot de passe correspondant à $user_verif
     $query = "SELECT nom_utilisateur, mot_de_passe FROM admin WHERE nom_utilisateur = ?";
