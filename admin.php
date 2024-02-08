@@ -31,6 +31,10 @@ require_once('base_donnee.php')
     $temp=$pdo->query($sql);
     //affichage du tableau 
     //
+
+    
+    echo 'Connecté en tant que'. ' ' . $_SESSION['utilisateur'] ;
+    
     echo "<table border='1'>
     <tr>
         <td>Nom : </td>
