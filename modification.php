@@ -8,31 +8,60 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     
     // Récupérer les données de l'étudiant avec l'ID spécifié
-    $query = "SELECT * FROM etudiants WHERE id='$id'";
-    $result = $pdo->query($query);
-    $etudiant = $result->fetch(PDO::FETCH_ASSOC);
+    $query = "SELECT * FROM prospect WHERE id_prospect = :id_prospect";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':id_prospect', $id);
+    $stmt->execute();
+    $prospect = $stmt->fetch(PDO::FETCH_ASSOC);
+    var_dump($prospect);
 
     // Assigner les valeurs à des variables
-    $nom = $etudiant['nom'];
-    $prenom = $etudiant['prenom'];
-    $formation = $etudiant['formation'];
+    $nom = $prospect['nom'];
+    $prenom = $prospect['prenom'];
+    $mail = $prospect['email'];
+    $tel = $prospect['tel'];
+    $adresse = $prospect['adresse'];
+    $ville = $prospect['ville'];
+    $code_postal = $prospect['code_postal'];
+    $projet = $prospect['projet'];
+    $pre_inscrit = $prospect['pre_inscrit'];
+    $niveau_etude = $prospect['niveau_etude'];
+    $decouverte_IIA =  $prospect['decouverte_IIA'];
 
     // Vérifier si le bouton submit est pressé
-    if(isset($_POST['submit'])) {
+    if (isset($_POST['soumettre'])) {
 
         //on récupère les nouvelles valeurs
         $nom_updated = $_POST['nom'];
         $prenom_updated = $_POST['prenom'];
-        $formation_updated = $_POST['formation'];
+        $mail_updated = $_POST['email'];
+        $tel_updated = $_POST['tel'];
+        $adresse_updated = $_POST['adresse'];
+        $ville_updated = $_POST['ville'];
+        $code_postal_updated = $_POST['code_postal'];
+        $projet_updated = $_POST['projet'];
+        $pre_inscrit_updated = $_POST['pre_inscrit'];
+        $niveau_etude_updated = $_POST['niveau_etude'];
+        $decouverte_IIA_updated = $_POST['decouverte_IIA'];
 
         //on ajoute les valeurs dans la db
-        $sql = "UPDATE etudiants
-                SET nom = '$nom_updated', prenom = '$prenom_updated', formation = '$formation_updated'
-                WHERE id = $id";
+        $sql = "UPDATE prospect
+        SET nom = '$nom_updated', 
+            prenom = '$prenom_updated', 
+            email = '$mail_updated', 
+            tel = '$tel_updated', 
+            adresse = '$adresse_updated',
+            ville = '$ville_updated',
+            code_postal = '$code_postal_updated',
+            projet = '$projet_updated',
+            pre_inscrit = '$pre_inscrit_updated',
+            niveau_etude = '$niveau_etude_updated',
+            decouverte_IIA = '$decouverte_IIA_updated'
+        WHERE id_prospect = $id";
         $pdo->exec($sql);
 
         // Rediriger vers la page d'affichage après la mise à jour
-        header('Location: http://localhost/PHP/dbphp/dbphp.php');
+        header('Location: admin.php');
         exit();
     }
 }
@@ -47,12 +76,46 @@ if (isset($_GET['id'])) {
     <title>Edit</title>
 </head>
 <body>
-    <form method="post" action="edit.php?id=<?php echo $id; ?>">
-        <input type="text" name="nom" value="<?php echo $nom; ?>">
-        <input type="text" name="prenom" value="<?php echo $prenom; ?>">
-        <input type="text" name="formation" value="<?php echo $formation; ?>">
-        <input type="submit" name="submit" value="Modifier">
-        <a href="http://localhost/PHP/dbphp/dbphp.php" style="color: black; text-decoration: none; border: 1px solid; border-radius: 3px; padding: 0.5px 7px">Retour</a>
+    <form action="modification.php?id=<?php echo $id; ?>" method="post">
+        <label for="prenom">Prénom : </label>
+            <input type="text" name="prenom" id="prenom" value="<?php echo $prenom; ?>" required />
+        <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom" value="<?php echo $nom; ?>" required />
+        <label for="email">Email : </label> 
+            <input type="text" name="email" id="email" value="<?php echo $mail; ?>" required />
+        <label for="telephone">Téléphone : </label>
+            <input type="number" name="tel" id="tel" value="<?php echo $tel; ?>" required />
+        <label for="adresse">Adresse : </label>
+            <input type="text" name="adresse" id="adresse" value="<?php echo $adresse; ?>" required />
+        <label for="ville">Ville : </label>
+            <input type="text" name="ville" id="ville" value="<?php echo $ville; ?>" required />
+        <label for="code-postal">Code postal : </label>
+            <input type="text" name="code-postal" id="code-postal" value="<?php echo $code_postal; ?>" required />
+        <label for="projet">Projet : </label>
+            <input type="text" name="projet" id="projet" value="<?php echo $projet; ?>" required />
+            <label for="pre-inscrit">Pré inscrit : </label>
+            <select name="pre_inscrit" id="pre_inscrit" required>
+    <option value="1" <?php echo ($pre_inscrit == 1) ? 'selected' : ''; ?>>Oui</option>
+    <option value="0" <?php echo ($pre_inscrit == 0) ? 'selected' : ''; ?>>Non</option>
+    </select>
+    <label for="niveau-etude">Niveau d'étude : </label>
+    <select name="niveau_etude" id="niveau_etude" required>
+        <option value="3" <?php echo ($niveau_etude == 3) ? 'selected' : ''; ?>>BAC</option>
+        <option value="2" <?php echo ($niveau_etude == 2) ? 'selected' : ''; ?>>Licence</option>
+        <option value="1" <?php echo ($niveau_etude == 1) ? 'selected' : ''; ?>>Master</option>
+        <option value="4" <?php echo ($niveau_etude == 4) ? 'selected' : ''; ?>>Bac +2</option>
+        <option value="5" <?php echo ($niveau_etude == 5) ? 'selected' : ''; ?>>CAP</option>
+    </select>
+    <select name="decouverte_IIA" id="decouverte_IIA" required>
+        <option value="1" <?php echo ($decouverte_IIA == 1) ? 'selected' : ''; ?>>Recherches en ligne</option>
+        <option value="2" <?php echo ($decouverte_IIA == 2) ? 'selected' : ''; ?>>Publicité en ligne</option>
+        <option value="3" <?php echo ($decouverte_IIA == 3) ? 'selected' : ''; ?>>Réseaux sociaux</option>
+        <option value="4" <?php echo ($decouverte_IIA == 4) ? 'selected' : ''; ?>>Salons</option>
+        <option value="5" <?php echo ($decouverte_IIA == 5) ? 'selected' : ''; ?>>Bouche à oreille</option>
+        <option value="6" <?php echo ($decouverte_IIA == 6) ? 'selected' : ''; ?>>Autre</option>
+    </select>
+        <input type="submit" name="soumettre" value="enregistrer" />
     </form>
+    <a href="admin.php">Retour</a>
 </body>
 </html>

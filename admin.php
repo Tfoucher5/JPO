@@ -29,16 +29,25 @@ require_once('base_donnee.php')
     
     $sql='SELECT * FROM prospect,connaissance,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau AND connaissance.id_connaissance=prospect.decouverte_IIA ORDER BY id_prospect';
     $temp=$pdo->query($sql);
-    //affichage du tableau 
-    //
 
-    
+    //Script de suppression d'une ligne
+        if (isset($_POST['id_prospect'])) {
+        $id = $_POST['id_prospect'];
+        $del = "DELETE FROM prospect WHERE id_prospect='$id'";
+        $pdo->exec($del);
+        header('Location: admin.php');
+        exit();
+}
+
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
-    
+
+
+    //affichage du tableau 
     echo "<table border='1'>
     <tr>
-        <td>Nom : </td>
+        <td>id : </td>
         <td>Prenom : </td>
+        <td>Nom : </td>
         <td>Adresse : </td>
         <td>Code postal : </td>
         <td>Ville : </td>
@@ -54,8 +63,9 @@ require_once('base_donnee.php')
 
         while ($resultats = $temp -> fetch()){
             echo '<tr>
-                    <td>' . $resultats['nom'] . '</td>
+                    <td>' . $resultats['id_prospect'] . '</td>
                     <td>' . $resultats['prenom'] . '</td>
+                    <td>' . $resultats['nom'] . '</td>
                     <td>' . $resultats['adresse'] . '</td>
                     <td>' . $resultats['code_postal'] . '</td>
                     <td>' . $resultats['ville'] . '</td>
@@ -68,9 +78,15 @@ require_once('base_donnee.php')
                     } else{
                         echo 'non';
                     }
-                echo '<td>' . $resultats['moyen'] . '</td>
-                     <td>' . $resultats['heure_enregistrement'] . '</td>
-                     <td><a href="modification.php"><img src="" alt="" title="" />modifier</a></td>';        
+                    echo    '<td>' . $resultats['moyen'] . '</td>
+                            <td>' . $resultats['heure_enregistrement'] . '</td>
+                            <td>
+                                <a href="modification.php?id=' . $resultats['id_prospect'] . '">Modifier</a>
+                                <form action="admin.php" method="post">
+                                    <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
+                                    <input type="submit" value="Supprimer">
+                                </form>
+                            </td>';        
         }
         // referme la table
         echo '</table>';
