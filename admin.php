@@ -66,7 +66,7 @@ require_once('base_donnee.php')
                     }
                 echo '<td>' . $resultats['moyen'] . '</td>
                      <td>' . $resultats['heure_enregistrement'] . '</td>
-                     <td><a href="modification.php"><img src="" alt="" title="" /></a></td>';        
+                     <td><a href="modification.php"><img src="" alt="" title="" />modifier</a></td>';        
         }
         // referme la table
         echo '</table>';
