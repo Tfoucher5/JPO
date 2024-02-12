@@ -5,9 +5,9 @@
 }
 body{
     background-color: #242038;
-    overflow: hidden;
 }
 nav{
+  position: fixed;
     float: left;
     display: flex;
     justify-content: space-evenly;
@@ -145,6 +145,7 @@ h1{
     height: auto;
     margin:0 auto;
     margin-top:40px;
+    margin-bottom: 40px;
     padding: 10px;
     width: 700px;
     float:none;
@@ -172,7 +173,16 @@ h1{
     width:80%;
     float:right;
   }
-
+  .label_box textarea{
+    background-color: #EA7AF4;
+    border-radius: 10px;
+    width:80%;
+    min-height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+  }
   .label_box select{
     text-align: center;
     appearance: none;
