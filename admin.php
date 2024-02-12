@@ -85,13 +85,32 @@ require_once('base_donnee.php')
                                 <a href="modification.php?id=' . $resultats['id_prospect'] . '">Modifier</a>
                                 <form action="admin.php" method="post">
                                     <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
-                                    <input type="submit" value="Supprimer">
+                                    <input type="submit" class="delete-btn" value="Supprimer">
                                 </form>
                             </td>';        
         }
         // referme la table
         echo '</table>';
     ?>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                var confirmDelete = confirm("Êtes-vous sûr de vouloir supprimer cette ligne ?");
+                
+                if (!confirmDelete) {
+                    event.preventDefault(); // Annule l'action par défaut (l'envoi du formulaire)
+                }
+            });
+        });
+    });
+    </script>
+
+
     <form action="deconnexion.php" method="post">
         <input type="submit" name="deconnecter" value="Se déconnecter" />
     </form>
