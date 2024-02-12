@@ -99,43 +99,67 @@ if (isset($_POST['soumettre'])) {
     </div>
         <div class="label_home">
         <form action="Home.php" method="post">
-        <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
-        <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" placeholder="Nom" required />
-        <label for="email">Email : </label> 
-            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
-        <label for="telephone">Téléphone : </label>
-            <input type="number" name="tel" id="tel" placeholder="telephone" required />
-        <label for="adresse">Adresse : </label>
-            <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
-        <label for="ville">Ville : </label>
-            <input type="text" name="ville" id="ville" placeholder="ville" required />
-        <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
-        <label for="projet">Projet : </label>
-            <input type="text" name="projet" id="projet" placeholder="votre projet" required />
-            <label for="pre-inscrit">Pré inscrit : </label>
-        <select name="pre_inscrit" id="pre_inscrit" required>
-            <option value="1">Oui</option>
-            <option value="0">Non</option>
-        </select>
-        <label for="niveau-etude">Niveau d'étude : </label>
-        <select name="niveau_etude" id="niveau_etude" required>
-            <option value="5">CAP</option>
-            <option value="4">BAC</option>
-            <option value="3">Bac +2</option>
-            <option value="2">Licence</option>
-            <option value="1">Master</option>
-        </select>
-        <select name="decouverte_IIA" id="decouverte_IIA" required>
-            <option value="1">Recherches en ligne</option>
-            <option value="2">Publicité en ligne</option>
-            <option value="3">réseaux sociaux</option>
-            <option value="4">Salons</option>
-            <option value="5">Bouche a oreille</option>
-            <option value="6">Autre</option>
-        </select>
+        <div class="label_box"></div>
+            <div class="label_box">
+                <label for="prenom">Prénom : </label>
+                <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+            </div>
+            <div class="label_box">
+                <label for="nom">Nom : </label>
+                <input type="text" name="nom" id="nom" placeholder="Nom" required />
+            </div>
+            <div class="label_box">
+                <label for="email">Email : </label> 
+                <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+            </div>
+            <div class="label_box">
+                <label for="telephone">Téléphone : </label>
+                <input type="number" name="tel" id="tel" placeholder="telephone" required />
+            </div>
+            <div class="label_box">
+                <label for="adresse">Adresse : </label>
+                <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
+            </div>
+            <div class="label_box">
+                <label for="ville">Ville : </label>
+                <input type="text" name="ville" id="ville" placeholder="ville" required />
+            </div>
+            <div class="label_box">
+                <label for="code-postal">Code postal : </label>
+                <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
+            </div>
+            <div class="label_box">
+                <label for="projet">Projet : </label>
+                <input type="text" name="projet" id="projet" placeholder="votre projet" required />
+            </div>
+            <div class="label_box">
+                <label for="pre-inscrit">Pré inscrit : </label>
+                <select name="pre_inscrit" id="pre_inscrit" required>
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                </select>
+            </div>
+            <div class="label_box">
+                <label for="niveau-etude">Niveau d'étude : </label>
+                <select name="niveau_etude" id="niveau_etude" required>
+                    <option value="5">CAP</option>
+                    <option value="4">BAC</option>
+                    <option value="3">Bac +2</option>
+                    <option value="2">Licence</option>
+                    <option value="1">Master</option>
+                </select>
+            </div>
+            <div class="label_box">
+                <select name="decouverte_IIA" id="decouverte_IIA" required>
+                    <option value="1">Recherches en ligne</option>
+                    <option value="2">Publicité en ligne</option>
+                    <option value="3">réseaux sociaux</option>
+                    <option value="4">Salons</option>
+                    <option value="5">Bouche a oreille</option>
+                    <option value="6">Autre</option>
+                </select>
+            </div>
+
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
         </div>
