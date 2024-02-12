@@ -49,6 +49,9 @@ if (isset($_POST['soumettre'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="stylenuit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <nav>
@@ -128,18 +131,13 @@ if (isset($_POST['soumettre'])) {
         <label for="code-postal">Code postal : </label>
             <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
 </div>
-            <div class="label_box">
-        <label for="projet">Projet : </label>
-            <input type="text" name="projet" id="projet" placeholder="votre projet" required />
-</div>
+            
             <div class="label_box select_box">
             <label for="pre-inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
             <option value="1">Oui</option>
             <option value="0">Non</option>
         </select>
-</div>
-            <div class="label_box select_box">
         <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
             <option value="5">CAP</option>
@@ -148,7 +146,7 @@ if (isset($_POST['soumettre'])) {
             <option value="2">Licence</option>
             <option value="1">Master</option>
         </select>
-        </div>
+</div>
         <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
@@ -159,8 +157,11 @@ if (isset($_POST['soumettre'])) {
             <option value="5">Bouche a oreille</option>
             <option value="6">Autre</option>
         </select>
+    </div>
+    <div class="label_box">
+                <label for="projet">Projet : </label>
+                <input type="text" name="projet" id="projet" placeholder="votre projet" required />
 </div>
-
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
         </div>
