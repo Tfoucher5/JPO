@@ -133,14 +133,14 @@ if (isset($_POST['soumettre'])) {
         <label for="projet">Projet : </label>
             <input type="text" name="projet" id="projet" placeholder="votre projet" required />
 </div>
-            <div class="label_box">
+            <div class="label_box select_box">
             <label for="pre-inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
             <option value="1">Oui</option>
             <option value="0">Non</option>
         </select>
 </div>
-            <div class="label_box">
+            <div class="label_box select_box">
         <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
             <option value="5">CAP</option>
@@ -150,8 +150,8 @@ if (isset($_POST['soumettre'])) {
             <option value="1">Master</option>
         </select>
         </div>
-            <div class="label_box">
-        <label for="decouverte_IIA">Comment nous avez vous décovuert ? : </label>
+        <div class="label_box select_box">
+        <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
             <option value="1">Recherches en ligne</option>
             <option value="2">Publicité en ligne</option>
