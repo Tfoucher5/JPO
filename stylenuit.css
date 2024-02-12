@@ -105,13 +105,20 @@ svg{
     height:5px;
     background-color: #242038;
 }
-
+.content_ML{
+  float:right;
+  margin:100px;
+  width:70%;
+  height:70vh;
+  overflow: auto;
+}
 h1{
+    padding-top: 50px;
     text-align: center;
     color: #fff;
     font-size: 40px;
 }
-.content .text_content{
+.content_ML .text_content{
     color: #fff;
     font-size: 25px;
     padding: 10px;
