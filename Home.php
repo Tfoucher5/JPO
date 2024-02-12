@@ -50,15 +50,18 @@ if (isset($_POST['soumettre'])) {
                   
              </div>
         </div>
-        <a href="admin.php">
-            <div class="button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path d="M16.5 7.5h-9v9h9v-9Z" />
-                    <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 0 1 9 3v.75h2.25V3a.75.75 0 0 1 1.5 0v.75H15V3a.75.75 0 0 1 1.5 0v.75h.75a3 3 0 0 1 3 3v.75H21A.75.75 0 0 1 21 9h-.75v2.25H21a.75.75 0 0 1 0 1.5h-.75V15H21a.75.75 0 0 1 0 1.5h-.75v.75a3 3 0 0 1-3 3h-.75V21a.75.75 0 0 1-1.5 0v-.75h-2.25V21a.75.75 0 0 1-1.5 0v-.75H9V21a.75.75 0 0 1-1.5 0v-.75h-.75a3 3 0 0 1-3-3v-.75H3A.75.75 0 0 1 3 15h.75v-2.25H3a.75.75 0 0 1 0-1.5h.75V9H3a.75.75 0 0 1 0-1.5h.75v-.75a3 3 0 0 1 3-3h.75V3a.75.75 0 0 1 .75-.75ZM6 6.75A.75.75 0 0 1 6.75 6h10.5a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V6.75Z" clip-rule="evenodd" />
-                  </svg>
-                  
-            </div>
-        </a>
+        <div class="nav_container">
+            <a href="admin.php">
+                <div class="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path d="M16.5 7.5h-9v9h9v-9Z" />
+                        <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 0 1 9 3v.75h2.25V3a.75.75 0 0 1 1.5 0v.75H15V3a.75.75 0 0 1 1.5 0v.75h.75a3 3 0 0 1 3 3v.75H21A.75.75 0 0 1 21 9h-.75v2.25H21a.75.75 0 0 1 0 1.5h-.75V15H21a.75.75 0 0 1 0 1.5h-.75v.75a3 3 0 0 1-3 3h-.75V21a.75.75 0 0 1-1.5 0v-.75h-2.25V21a.75.75 0 0 1-1.5 0v-.75H9V21a.75.75 0 0 1-1.5 0v-.75h-.75a3 3 0 0 1-3-3v-.75H3A.75.75 0 0 1 3 15h.75v-2.25H3a.75.75 0 0 1 0-1.5h.75V9H3a.75.75 0 0 1 0-1.5h.75v-.75a3 3 0 0 1 3-3h.75V3a.75.75 0 0 1 .75-.75ZM6 6.75A.75.75 0 0 1 6.75 6h10.5a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V6.75Z" clip-rule="evenodd" />
+                    </svg>
+                    
+                </div>
+            </a>
+        </div>
+        <div class="nav_container">
         <a href="MentionsLegales.html">
             <div class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -67,60 +70,85 @@ if (isset($_POST['soumettre'])) {
                   
             </div>
         </a>
-        <a href="#">
-            <div class="button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
-                  </svg>
-                  
-            </div>
-        </a>
+        </div>
+        <div class="nav_container">
+            <a href="#">
+                <div class="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+                    </svg>
+                    
+                </div>
+            </a>
+        </div>
     </nav>
     <div class="content_home">
-    <div class="sun">
-        <div class="line"></div>
-    </div>
-        <div class="label_home">
-        <form action="Home.php" method="post">
-        <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
-        <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" placeholder="Nom" required />
-        <label for="email">Email : </label> 
-            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
-        <label for="telephone">Téléphone : </label>
-            <input type="number" name="tel" id="tel" placeholder="telephone" required />
-        <label for="adresse">Adresse : </label>
-            <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
-        <label for="ville">Ville : </label>
-            <input type="text" name="ville" id="ville" placeholder="ville" required />
-        <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
-        <label for="projet">Projet : </label>
-            <input type="text" name="projet" id="projet" placeholder="votre projet" required />
-            <label for="pre-inscrit">Pré inscrit : </label>
-        <select name="pre_inscrit" id="pre_inscrit" required>
-            <option value="1">Oui</option>
-            <option value="0">Non</option>
-        </select>
-        <label for="niveau-etude">Niveau d'étude : </label>
-        <select name="niveau_etude" id="niveau_etude" required>
-            <option value="3">BAC</option>
-            <option value="2">Licence</option>
-            <option value="1">Master</option>
-            <option value="4">Bac +2</option>
-            <option value="5">CAP</option>
-        </select>
-        <select name="decouverte_IIA" id="decouverte_IIA" required>
-            <option value="1">Recherches en ligne</option>
-            <option value="2">Publicité en ligne</option>
-            <option value="3">réseaux sociaux</option>
-            <option value="4">Salons</option>
-            <option value="5">Bouche a oreille</option>
-            <option value="6">Autre</option>
-        </select>
-        <input type="submit" name="soumettre" value="enregistrer" />
-    </form>
+        <div class="sun">
+            <div class="line"></div>
+        </div>
+            <div class="label_home">
+                <form action="Home.php" method="post">
+                <div class="label_box">
+                    <label for="prenom">Prénom : </label>
+                    <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+                </div>
+                <div class="label_box">
+                    <label for="nom">Nom : </label>
+                    <input type="text" name="nom" id="nom" placeholder="Nom" required />
+                </div>
+                <div class="label_box">
+                    <label for="email">Email : </label> 
+                    <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+                </div>
+                <div class="label_box">
+                    <label for="telephone">Téléphone : </label>
+                    <input type="number" name="tel" id="tel" placeholder="telephone" required />
+                </div>
+                <div class="label_box">
+                    <label for="adresse">Adresse : </label>
+                    <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
+                </div>
+                <div class="label_box">
+                    <label for="ville">Ville : </label>
+                    <input type="text" name="ville" id="ville" placeholder="ville" required />
+                </div>
+                <div class="label_box">
+                    <label for="code-postal">Code postal : </label>
+                    <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
+                </div>
+                <div class="label_box">
+                    <label for="projet">Projet : </label>
+                    <input type="text" name="projet" id="projet" placeholder="votre projet" required />
+                </div>
+                <div class="label_box">
+                    <label for="pre-inscrit">Pré inscrit : </label>
+                    <select name="pre_inscrit" id="pre_inscrit" required>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </div>
+                <div class="label_box">
+                    <label for="niveau-etude">Niveau d'étude : </label>
+                    <select name="niveau_etude" id="niveau_etude" required>
+                        <option value="3">BAC</option>
+                        <option value="2">Licence</option>
+                        <option value="1">Master</option>
+                        <option value="4">Bac +2</option>
+                        <option value="5">CAP</option>
+                    </select>
+                </div>
+                <div class="label_box">
+                    <select name="decouverte_IIA" id="decouverte_IIA" required>
+                        <option value="1">Recherches en ligne</option>
+                        <option value="2">Publicité en ligne</option>
+                        <option value="3">réseaux sociaux</option>
+                        <option value="4">Salons</option>
+                        <option value="5">Bouche a oreille</option>
+                        <option value="6">Autre</option>
+                    </select>
+                </div>
+                <input type="submit" name="soumettre" value="enregistrer" />
+            </form>
         </div>
     </div>
 </body>
