@@ -37,6 +37,9 @@ if (isset($_POST['soumettre'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="stylenuit.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <nav>
@@ -86,16 +89,16 @@ if (isset($_POST['soumettre'])) {
             <div class="line"></div>
         </div>
 
-        <div class="label_home">
+        <div class="label_connexion">
             <form action="connexion.php" method="post">
-                <div class="label_box">
-                    <label for="utilisateur">Utilisateur :</label>
-                    <input type="text" name="utilisateur" id="utilisateur" placeholder="Utilisateur" required />
-                </div>
-                <div class="label_box">
-                    <label for="password">Mot de passe :</label>
-                    <input type="password" name="password" id="password" placeholder="Mot de passe" required />
-                </div>
+                
+                <label for="utilisateur">Utilisateur :</label>
+                <input type="text" name="utilisateur" id="utilisateur" placeholder="Utilisateur" required />
+
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+
                 <input type="submit" name="soumettre" value="Se connecter" />
             </form>
         </div>

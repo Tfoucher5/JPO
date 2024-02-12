@@ -1,5 +1,7 @@
 *{
     margin:0;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 700;
 }
 body{
     background-color: #242038;
@@ -103,19 +105,20 @@ svg{
     height:5px;
     background-color: #242038;
 }
-.content{
-    float:right;
-    margin:100px;
-    width:70%;
-    height:70vh;
-    overflow: auto;
+.content_ML{
+  float:right;
+  margin:100px;
+  width:70%;
+  height:70vh;
+  overflow: auto;
 }
 h1{
+    padding-top: 50px;
     text-align: center;
     color: #fff;
     font-size: 40px;
 }
-.content .text_content{
+.content_ML .text_content{
     color: #fff;
     font-size: 25px;
     padding: 10px;
@@ -139,6 +142,7 @@ h1{
   }
 
   .label_home{
+    height: auto;
     margin:0 auto;
     margin-top:40px;
     padding: 10px;
@@ -158,11 +162,9 @@ h1{
     color:white;
     padding:1px;
     font-size: 20px;
-  }
-.label_box{
     width:100%;
     margin: 5px;
-}
+  }
   .label_box input{
     background-color: #EA7AF4;
     border-radius: 10px;
@@ -172,8 +174,10 @@ h1{
   }
 
   .label_box select{
+    text-align: center;
     appearance: none;
-    padding: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: #EA7AF4;
@@ -181,6 +185,8 @@ h1{
   }
 
   .label_home input[type="submit"]{
+    margin-left:50%;
+    transform: translateX(-50%);
     text-align: center;
     font-size:20px;
     text-transform: capitalize;
@@ -190,7 +196,50 @@ h1{
     border-bottom-left-radius: 10px;
     padding:5px;
   }
-
-  .select_box{
-    background-color: red;
-  }
+.label_home .select_box{
+  text-align: center;
+}
+.label_connexion{
+  height: auto;
+  margin:0 auto;
+  margin-top:40px;
+  padding: 10px;
+  width: 400px;
+  float:none;
+  border-radius: 20px;
+  border: #EA7AF4 5px solid;
+  box-shadow: 0 0 .2rem #fff,
+          0 0 .2rem #fff,
+          0 0 2rem #EA7AF4,
+          0 0 0.8rem #EA7AF4,
+          0 0 2.8rem #EA7AF4,
+          inset 0 0 1.3rem #EA7AF4;
+}
+.label_connexion form[action="connexion.php"]{
+    color:white;
+    padding:1px;
+    font-size: 20px;
+    width:100%;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.label_connexion form[action="connexion.php"] input[type="text"], .label_connexion form[action="connexion.php"] input[type="password"]{
+  background-color: #EA7AF4;
+    border-radius: 10px;
+    padding:5px;
+    width:80%;
+    float:right;
+}
+.label_connexion input[type="submit"]{
+  text-align: center;
+  font-size:20px;
+  text-transform: capitalize;
+  margin-top:10px;
+  background: linear-gradient(#F7E733, #F78533);
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding:5px;
+}
