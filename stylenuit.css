@@ -178,9 +178,10 @@ h1{
     border-radius: 10px;
     width:80%;
     min-height: 100px;
-    padding: 10px;
+    padding: 5px;
     font-size: 16px;
     line-height: 1.5;
+    float:right;
     resize: none;
   }
   .label_box select{
