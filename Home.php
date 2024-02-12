@@ -162,7 +162,7 @@ if (isset($_POST['soumettre'])) {
                 <label for="projet">Projet : </label>
                 <input type="text" name="projet" id="projet" placeholder="votre projet" required />
 </div>
-        <input type="submit" name="soumettre" value="enregistrer" />
+        <input type="submit" name="soumettre" onclick="myFunction()" value="enregistrer" />
     </form>
         </div>
     </div>
@@ -171,5 +171,10 @@ if (isset($_POST['soumettre'])) {
             
         ?>
     </div>
+<script>
+function myFunction() {
+  alert("Vos informations ont bien été enregistrés.");
+}
+</script>
 </body>
 </html>
