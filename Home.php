@@ -2,7 +2,7 @@
 
 // script de connexion
 require_once('base_donnee.php');
-$réussite='';
+
 if (isset($_POST['soumettre'])) {
 
     // on récupère les valeurs
@@ -36,7 +36,6 @@ if (isset($_POST['soumettre'])) {
     $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
     $temp->Bindparam(":heure",$now,PDO::PARAM_STR);
     $temp->execute();
-    $réussite='Enregistrement réussi !'; 
 
     // Effectuer la redirection après la soumission du formulaire
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -48,7 +47,7 @@ if (isset($_POST['soumettre'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
+    <title>Document</title>
     <link rel="stylesheet" href="stylenuit.css">
 </head>
 <body>
@@ -160,14 +159,15 @@ if (isset($_POST['soumettre'])) {
             <option value="5">Bouche a oreille</option>
             <option value="6">Autre</option>
         </select>
-    </div>
+</div>
+
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
     <div>
         <?php
-        echo $réussite;
+            
         ?>
     </div>
 </body>
