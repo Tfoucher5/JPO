@@ -160,7 +160,7 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box">
                 <label for="projet">Projet : </label>
-                <input type="text" name="projet" id="projet" placeholder="votre projet" required />
+                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
 </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="enregistrer" />
     </form>
