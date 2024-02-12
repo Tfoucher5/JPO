@@ -36,6 +36,7 @@ if (isset($_POST['soumettre'])) {
     $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
     $temp->Bindparam(":heure",$now,PDO::PARAM_STR);
     $temp->execute();
+    $réussite='Enregistrement réussi !'; 
 
     // Effectuer la redirection après la soumission du formulaire
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -159,15 +160,14 @@ if (isset($_POST['soumettre'])) {
             <option value="5">Bouche a oreille</option>
             <option value="6">Autre</option>
         </select>
-</div>
-
+    </div>
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
     <div>
         <?php
-
+        echo $réussite
         ?>
     </div>
 </body>

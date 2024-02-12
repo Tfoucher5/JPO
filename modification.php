@@ -64,8 +64,8 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":tel",$tel_updated,PDO::PARAM_INT);
         $temp->Bindparam(":adresse",$adresse_updated,PDO::PARAM_STR);
         $temp->Bindparam(":ville",$ville_updated,PDO::PARAM_STR);
-        $temp->Bindparam(":cp",$ville_updated,PDO::PARAM_INT);
-        $temp->Bindparam(":projet",$code_postal_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":projet",$projet_updated,PDO::PARAM_STR);
         $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_INT);
         $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_INT);
         $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_INT);
