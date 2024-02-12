@@ -17,14 +17,25 @@ if (isset($_POST['soumettre'])) {
     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
     $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
+    $now=date('Y-m-d H:i:s');
 
     // on ajoute les valeurs dans la db
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, heure_enregistrement) 
-            VALUES ("'.$prenom.'", "'.$nom.'", "'.$mail.'", "'.$tel.'", "'.$adresse.'", "'.$ville.'", "'.$code_postal.'", "'. addslashes($projet).'", "'.$pre_inscrit.'", "'.$niveau_etude.'", "'.$connaissance.'", NOW())';
-    
-    echo $sql;
-    
-    $pdo->exec($sql);
+            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal , :projet, :pre_inscrit, :niveau_etude, :connaissance, :heure)';
+    $temp=$pdo->prepare($sql);
+    $temp->Bindparam(":prenom",$prenom,PDO::PARAM_STR);
+    $temp->Bindparam(":nom",$nom,PDO::PARAM_STR);
+    $temp->Bindparam(":mail",$mail,PDO::PARAM_STR);
+    $temp->Bindparam(":tel",$tel,PDO::PARAM_STR);
+    $temp->Bindparam(":adresse",$adresse,PDO::PARAM_STR);
+    $temp->Bindparam(":ville",$ville,PDO::PARAM_STR);
+    $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
+    $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
+    $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
+    $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
+    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
+    $temp->Bindparam(":heure",$now,PDO::PARAM_STR);
+    $temp->execute();
 
     // Effectuer la redirection après la soumission du formulaire
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -105,11 +116,11 @@ if (isset($_POST['soumettre'])) {
         </select>
         <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-            <option value="3">BAC</option>
+            <option value="5">CAP</option>
+            <option value="4">BAC</option>
+            <option value="3">Bac +2</option>
             <option value="2">Licence</option>
             <option value="1">Master</option>
-            <option value="4">Bac +2</option>
-            <option value="5">CAP</option>
         </select>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
             <option value="1">Recherches en ligne</option>
@@ -122,6 +133,11 @@ if (isset($_POST['soumettre'])) {
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
         </div>
+    </div>
+    <div>
+        <?php
+
+        ?>
     </div>
 </body>
 </html>

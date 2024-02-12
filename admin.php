@@ -28,7 +28,8 @@ require_once('base_donnee.php')
     // bouton modifier + bouton supprimer
     
     $sql='SELECT * FROM prospect,connaissance,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau AND connaissance.id_connaissance=prospect.decouverte_IIA ORDER BY id_prospect';
-    $temp=$pdo->query($sql);
+    $temp=$pdo->prepare($sql);
+    $temp->execute();
 
     //Script de suppression d'une ligne
         if (isset($_POST['id_prospect'])) {
@@ -93,6 +94,10 @@ require_once('base_donnee.php')
     ?>
     <form action="deconnexion.php" method="post">
         <input type="submit" name="deconnecter" value="Se déconnecter" />
+    </form>
+    <form action="home.php" method="post">
+    <input type="submit" name="Home" value="Home" />
+
     </form>
 </body>
 </html>

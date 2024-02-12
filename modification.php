@@ -45,19 +45,32 @@ if (isset($_GET['id'])) {
 
         //on ajoute les valeurs dans la db
         $sql = "UPDATE prospect
-        SET nom = '$nom_updated', 
-            prenom = '$prenom_updated', 
-            email = '$mail_updated', 
-            tel = '$tel_updated', 
-            adresse = '$adresse_updated',
-            ville = '$ville_updated',
-            code_postal = '$code_postal_updated',
-            projet = '$projet_updated',
-            pre_inscrit = '$pre_inscrit_updated',
-            niveau_etude = '$niveau_etude_updated',
-            decouverte_IIA = '$decouverte_IIA_updated'
-        WHERE id_prospect = $id";
-        $pdo->exec($sql);
+        SET nom = :nom, 
+            prenom = :prenom, 
+            email = :mail_updated, 
+            tel = :tel, 
+            adresse = :adresse,
+            ville = :ville,
+            code_postal = :cp,
+            projet = :projet,
+            pre_inscrit = :inscrit,
+            niveau_etude = :etude,
+            decouverte_IIA = :iia
+        WHERE id_prospect = :id";
+        $temp=$pdo->prepare($sql);
+        $temp->Bindparam(":nom",$nom_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":prenom",$prenom_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":mail",$mail_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":tel",$tel_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":adresse",$adresse_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":ville",$ville_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":cp",$ville_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":projet",$code_postal_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_INT);
+        $temp->bindParam(':id', $id);
+        $temp->execute();
 
         // Rediriger vers la page d'affichage après la mise à jour
         header('Location: admin.php');
