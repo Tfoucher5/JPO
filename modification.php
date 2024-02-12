@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     // Assigner les valeurs à des variables
     $nom = $prospect['nom'];
     $prenom = $prospect['prenom'];
-    $mail = $prospect['email'];
+    $mail = $prospect['email']; 
     $tel = $prospect['tel'];
     $adresse = $prospect['adresse'];
     $ville = $prospect['ville'];
