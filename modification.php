@@ -8,9 +8,9 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     
     // Récupérer les données de l'étudiant avec l'ID spécifié
-    $query = "SELECT * FROM prospect WHERE id_prospect = :id_prospect";
+    $query = "SELECT * FROM prospect WHERE id_prospect = :id";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':id_prospect', $id);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
     $prospect = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
         $tel_updated = htmlentities($_POST['tel']);
         $adresse_updated = htmlentities($_POST['adresse']);
         $ville_updated = htmlentities($_POST['ville']);
-        $code_postal_updated = htmlentities($_POST['code_postal']);
+        $code_postal_updated = isset($_POST['code_postal']) ? htmlentities($_POST['code_postal']) : null;
         $projet_updated = htmlentities($_POST['projet']);
         $pre_inscrit_updated = htmlentities($_POST['pre_inscrit']);
         $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
@@ -61,20 +61,25 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":nom",$nom_updated,PDO::PARAM_STR);
         $temp->Bindparam(":prenom",$prenom_updated,PDO::PARAM_STR);
         $temp->Bindparam(":mail",$mail_updated,PDO::PARAM_STR);
-        $temp->Bindparam(":tel",$tel_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":tel",$tel_updated,PDO::PARAM_STR);
         $temp->Bindparam(":adresse",$adresse_updated,PDO::PARAM_STR);
         $temp->Bindparam(":ville",$ville_updated,PDO::PARAM_STR);
-        $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_STR);
         $temp->Bindparam(":projet",$projet_updated,PDO::PARAM_STR);
         $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_INT);
         $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_INT);
         $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_INT);
         $temp->bindParam(':id', $id);
-        $temp->execute();
+        if ($stmt->execute()) {
+            echo 'data modified succesfully';
+            header('Location: admin.php');
+            exit();
+        } else {
+            print 'modification failed ';
+        }
 
         // Rediriger vers la page d'affichage après la mise à jour
-        header('Location: admin.php');
-        exit();
+
     }
 }
 
