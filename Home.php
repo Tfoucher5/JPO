@@ -2,7 +2,7 @@
 
 // script de connexion
 require_once('base_donnee.php');
-
+$réussite='';
 if (isset($_POST['soumettre'])) {
 
     // on récupère les valeurs
@@ -167,7 +167,7 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div>
         <?php
-        echo $réussite
+        echo $réussite;
         ?>
     </div>
 </body>
