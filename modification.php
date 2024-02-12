@@ -75,7 +75,7 @@ if (isset($_GET['id'])) {
             header('Location: admin.php');
             exit();
         } else {
-            print 'modification failed ';
+            echo '<h1> modification failed </h1>';
         }
 
         // Rediriger vers la page d'affichage après la mise à jour
