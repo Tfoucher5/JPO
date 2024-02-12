@@ -97,7 +97,6 @@ require_once('base_donnee.php')
     </form>
     <form action="home.php" method="post">
     <input type="submit" name="Home" value="Home" />
-
     </form>
 </body>
 </html>

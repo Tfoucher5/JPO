@@ -45,8 +45,5 @@ if (isset($_POST['soumettre'])) {
         <input type="password" name="password" id="password" placeholder="Mot de passe" required />
         <input type="submit" name="soumettre" value="Se connecter" />
     </form>
-    <?php
-        echo $failed_to_log;
-    ?>
 </body>
 </html>
