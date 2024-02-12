@@ -64,7 +64,7 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":tel",$tel_updated,PDO::PARAM_STR);
         $temp->Bindparam(":adresse",$adresse_updated,PDO::PARAM_STR);
         $temp->Bindparam(":ville",$ville_updated,PDO::PARAM_STR);
-        $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_INT);
         $temp->Bindparam(":projet",$projet_updated,PDO::PARAM_STR);
         $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_STR);
         $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_STR);
@@ -72,12 +72,11 @@ if (isset($_GET['id'])) {
         $temp->bindParam(':id', $id);
         $temp->execute();
         if ($temp->execute()) {
-            echo 'Data modified successfully';
+            header('Location: connexion.php');
+            exit();
         } else {
             echo 'Modification failed';
         }
-    } else {
-        echo 'Not all form fields are set';
     }
 
         // Rediriger vers la page d'affichage après la mise à jour
@@ -108,7 +107,7 @@ if (isset($_GET['id'])) {
         <label for="ville">Ville : </label>
             <input type="text" name="ville" id="ville" value="<?php echo $ville; ?>" required />
         <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" value="<?php echo $code_postal; ?>" required />
+            <input type="text" name="code_postal" id="code_postal" value="<?php echo $code_postal; ?>" required />
         <label for="projet">Projet : </label>
             <input type="text" name="projet" id="projet" value="<?php echo $projet; ?>" required />
             <label for="pre-inscrit">Pré inscrit : </label>
