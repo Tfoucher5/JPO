@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
         $tel_updated = htmlentities($_POST['tel']);
         $adresse_updated = htmlentities($_POST['adresse']);
         $ville_updated = htmlentities($_POST['ville']);
-        $code_postal_updated = isset($_POST['code_postal']) ? htmlentities($_POST['code_postal']) : null;
+        $code_postal_updated = htmlentities($_POST['code_postal']);
         $projet_updated = htmlentities($_POST['projet']);
         $pre_inscrit_updated = htmlentities($_POST['pre_inscrit']);
         $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
         $sql = "UPDATE prospect
         SET nom = :nom, 
             prenom = :prenom, 
-            email = :mail_updated, 
+            email = :email, 
             tel = :tel, 
             adresse = :adresse,
             ville = :ville,
@@ -60,28 +60,29 @@ if (isset($_GET['id'])) {
         $temp=$pdo->prepare($sql);
         $temp->Bindparam(":nom",$nom_updated,PDO::PARAM_STR);
         $temp->Bindparam(":prenom",$prenom_updated,PDO::PARAM_STR);
-        $temp->Bindparam(":mail",$mail_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":email",$mail_updated,PDO::PARAM_STR);
         $temp->Bindparam(":tel",$tel_updated,PDO::PARAM_STR);
         $temp->Bindparam(":adresse",$adresse_updated,PDO::PARAM_STR);
         $temp->Bindparam(":ville",$ville_updated,PDO::PARAM_STR);
         $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_STR);
         $temp->Bindparam(":projet",$projet_updated,PDO::PARAM_STR);
-        $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_INT);
-        $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_INT);
-        $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_INT);
+        $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_STR);
         $temp->bindParam(':id', $id);
-        if ($stmt->execute()) {
-            echo 'data modified succesfully';
-            header('Location: admin.php');
-            exit();
+        $temp->execute();
+        if ($temp->execute()) {
+            echo 'Data modified successfully';
         } else {
-            print 'modification failed ';
+            echo 'Modification failed';
         }
+    } else {
+        echo 'Not all form fields are set';
+    }
 
         // Rediriger vers la page d'affichage après la mise à jour
 
     }
-}
 
 ?>
 
