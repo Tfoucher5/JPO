@@ -17,7 +17,7 @@ require_once('base_donnee.php')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="phpstyle.css">
-    <title>Php et Sql : </title>
+    <title>Administrateur</title>
 </head>
 <body>
 

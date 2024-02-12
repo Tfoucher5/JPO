@@ -85,7 +85,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
+    <title>Modification</title>
 </head>
 <body>
     <form action="modification.php?id=<?php echo $id; ?>" method="post">
