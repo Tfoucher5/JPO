@@ -320,3 +320,10 @@ h1{
  .button_table svg:hover, .delete-btn:hover{
   transform:scale(110%);
 }
+
+
+.card {
+            box-sizing: content-box;
+            padding: 30px;
+            font-style: sans-serif;
+        }

@@ -21,6 +21,7 @@ require_once('base_donnee.php')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 </head>
 <body>
 <nav>
@@ -83,7 +84,9 @@ require_once('base_donnee.php')
         header('Location: admin.php');
         exit();
 }
-echo '<div class="content_admin">';
+echo '<div class="content_admin">
+<button id="button">Generate PDF</button>
+<div class="card" id="makepdf">';
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
     echo '<form action="deconnexion.php" method="post">
                 <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
@@ -140,7 +143,7 @@ echo '<div class="content_admin">';
                         <div class="content_line">' . $resultats['moyen'] . '</div>
                     </div> ';
         }
-        echo '</div>'
+        echo '</div></div>'
     ?>
     
     
@@ -148,6 +151,12 @@ echo '<div class="content_admin">';
     
 
     <script>
+        var button = document.getElementById("button");
+        var makepdf = document.getElementById("makepdf");
+  
+        button.addEventListener("click", function () {
+            html2pdf().from(makepdf).save();
+        });
     document.addEventListener('DOMContentLoaded', function () {
         var deleteButtons = document.querySelectorAll('.delete-btn');
 
