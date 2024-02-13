@@ -98,7 +98,6 @@ if (isset($_POST['soumettre'])) {
     </nav>
     <div class="content_home">
     <div class="sun">
-        <div class="line"></div>
     </div>
         <div class="label_home">
         <form action="Home.php" method="post">
