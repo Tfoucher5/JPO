@@ -112,6 +112,19 @@ echo '<div class="content_admin">
     //     <td>Action : </td>
     //     </tr>";
     echo '<div class="all_table">';
+    echo '<div class="table_head">
+            <input type="submit" value="Prénom">
+            <input type="submit" value="Nom">
+            <input type="submit" value="Adresse">
+            <input type="submit" value="Code Postal">
+            <input type="submit" value="Ville">
+            <input type="submit" value="N° Tél">
+            <input type="submit" value="E-mail">
+            <input type="submit" value="études">
+            <input type="submit" value="Projet">
+            <input type="submit" value="Préinscrit ?">
+            <input type="submit" value="Moyen">
+        </div>';
         while ($resultats = $temp -> fetch()){
         
             echo '<div class="button_table">
