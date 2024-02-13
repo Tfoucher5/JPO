@@ -7,6 +7,21 @@ require_once('vendor/autoload.php');
 use PHPMailer\PHPMailer\PHPMailer;
 
 if (isset($_POST['soumettre'])) {
+
+     // on récupère les valeurs
+     $prenom = htmlentities($_POST['prenom']);
+     $nom = htmlentities($_POST['nom']);
+     $mail = htmlentities($_POST['email']);
+     $tel = htmlentities($_POST['tel']);
+     $adresse = htmlentities($_POST['adresse']);
+     $ville = htmlentities($_POST['ville']);
+     $code_postal = htmlentities($_POST['code-postal']);
+     $projet = htmlentities($_POST['projet']);
+     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
+     $niveau_etude = htmlentities($_POST['niveau_etude']);
+     $connaissance = htmlentities($_POST['decouverte_IIA']);
+     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
+     $now = date('Y-m-d H:i:s');
     
     // Définir un tableau des chemins des fichiers correspondant à chaque option de la liste déroulante
     $chemins_fichiers = array(
@@ -71,21 +86,6 @@ if (isset($_POST['soumettre'])) {
             echo 'Erreur lors de l\'envoi de l\'e-mail: ' . $mailer->ErrorInfo;
         }
     }
-    
-    // on récupère les valeurs
-    $prenom = htmlentities($_POST['prenom']);
-    $nom = htmlentities($_POST['nom']);
-    $mail = htmlentities($_POST['email']);
-    $tel = htmlentities($_POST['tel']);
-    $adresse = htmlentities($_POST['adresse']);
-    $ville = htmlentities($_POST['ville']);
-    $code_postal = htmlentities($_POST['code-postal']);
-    $projet = htmlentities($_POST['projet']);
-    $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-    $niveau_etude = htmlentities($_POST['niveau_etude']);
-    $connaissance = htmlentities($_POST['decouverte_IIA']);
-    $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-    $now = date('Y-m-d H:i:s');
 
     // Ajouter les valeurs dans la base de données
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
