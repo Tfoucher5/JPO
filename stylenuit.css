@@ -323,7 +323,45 @@ h1{
 
 
 .card {
-            box-sizing: content-box;
-            padding: 30px;
-            font-style: sans-serif;
-        }
+  box-sizing: content-box;
+  padding: 30px;
+  font-style: sans-serif;
+}
+
+.info_enregistre{
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  margin:0 auto;
+  margin-top:40px;
+  margin-bottom: 40px;
+  padding: 20px;
+  width: 400px;
+  float:none;
+  border-radius: 20px;
+  border: #EA7AF4 5px solid;
+  box-shadow: 0 0 .2rem #fff,
+          0 0 .2rem #fff,
+          0 0 2rem #EA7AF4,
+          0 0 0.8rem #EA7AF4,
+          0 0 2.8rem #EA7AF4,
+          inset 0 0 1.3rem #EA7AF4;
+}
+
+.retour_button{
+  border:3px solid #EA7AF4;
+  border-radius: 100px;
+  width:auto;
+  height:30px;
+  background-color: #242038;
+  color: #F7E733;
+  transition: 0.5s;
+  margin-bottom: 10px;
+  padding: 8px;
+  text-decoration: none;
+  font-size: 20px;
+}
+.retour_button:hover{
+  background-color: #EA7AF4;
+  color: #242038;
+}

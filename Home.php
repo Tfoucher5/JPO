@@ -256,7 +256,7 @@ if (isset($_POST['soumettre'])) {
           <label for="projet">Projet : </label>
                 <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
 </div>
-        <input type="submit" name="soumettre" onclick="myFunction()" value="enregistrer" />
+        <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
@@ -265,10 +265,5 @@ if (isset($_POST['soumettre'])) {
             
         ?>
     </div>
-<script>
-function myFunction() {
-  alert("Vos informations ont bien été enregistrés.");
-}
-</script>
 </body>
 </html>
