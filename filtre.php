@@ -1,101 +1,106 @@
-<script>
-        function showUser(str) {
-  if (str == "") {
-    document.getElementById("txtHint").innerHTML = "";
-    return;
-  } else {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("txtHint").innerHTML = this.responseText;
-      }
-    };
-    xmlhttp.open("GET","filtre.php?q="+str,true);
-    xmlhttp.send();
-  }
-}
-</script>
-
+<?php include_once('base_donnee.php');?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Person Information</title>
 </head>
 <body>
+<form>
+    <select name="prospect" onchange="showUser(this.value)">
+        <option value="">Select a person:</option>
+        <?php
+        try {
+            $sql = "SELECT * FROM prospect";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            while ($result = $stmt->fetch()) {
+                echo '<option value="' . $result['id_prospect'] . '">' . $result['prenom'] . '</option>';
+            }
+        } catch (PDOException $e) {
+            echo 'Erreur avec la BD!: ' . $e->getMessage() . '<br/>';
+            die();
+        }
+        ?>
+    </select>
+    <div id="txtHint"></div>
+</form>
 
 <?php
-include_once('base_donnee.php');
-$q='';
-$q = intval($_GET['q']);
-try{
-    $sql="SELECT * FROM user WHERE id = ? AND prospect.niveau_etude=niveau_etude.id_niveau AND connaissance.id_connaissance=prospect.decouverte_IIA";
-    $temp=$pdo->prepare($sql);
-    $temp->bindparam(1,$q,PDO::PARAM_STR);
-    $temp->execute();
+if(isset($_GET['q'])){
+    $q = intval($_GET['q']);
     echo "<table border='1'>
     <tr>
-        <td>id : </td>
-        <td>Prenom : </td>
-        <td>Nom : </td>
-        <td>Adresse : </td>
-        <td>Code postal : </td>
-        <td>Ville : </td>
-        <td>Téléphone : </td>
-        <td>Adresse mail : </td>
-        <td>Niveau d'études : </td>
-        <td>Projet : </td>
-        <td>Pre-inscrit ? : </td>
-        <td>Comment nous avez-vous découvert ? : </td>
-        <td>Date d'enregistrement : </td>
-        <td>Action : </td>
-        </tr>";
+        <th>ID</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Code postal</th>
+        <th>Ville</th>
+        <th>Téléphone</th>
+        <th>Adresse mail</th>
+        <th>Niveau d'études</th>
+        <th>Projet</th>
+        <th>Pre-inscrit ?</th>
+        <th>Comment nous avez-vous découvert ?</th>
+        <th>Date d'enregistrement</th>
+        <th>Action</th>
+    </tr>";
+}
 
-        while ($resultats = $temp -> fetch()){
-            echo '<tr>
-                    <td>' . $resultats['id_prospect'] . '</td>
-                    <td>' . $resultats['prenom'] . '</td>
-                    <td>' . $resultats['nom'] . '</td>
-                    <td>' . $resultats['adresse'] . '</td>
-                    <td>' . $resultats['code_postal'] . '</td>
-                    <td>' . $resultats['ville'] . '</td>
-                    <td>' . $resultats['tel'] . '</td>
-                    <td>' . $resultats['email'] . '</td>
-                    <td>' . $resultats['equivalent'] . '</td>
-                    <td>' . $resultats['projet'] . '</td>
-                    <td>'; if ($resultats['pre_inscrit']== '1') { 
-                        echo 'oui';
-                    } else{
-                        echo 'non';
-                    }
-                    echo    '<td>' . $resultats['moyen'] . '</td>
-                            <td>' . $resultats['heure_enregistrement'] . '</td>';        
+
+    try {
+        $sql = "SELECT * FROM prospect,connaissance,niveau_etude WHERE id_prospect = ? AND prospect.niveau_etude = niveau_etude.id_niveau AND connaissance.id_connaissance = prospect.decouverte_IIA";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(1, $q, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        while ($result = $stmt->fetch()) {
+            echo "<tr>
+                    <td>{$result['id_prospect']}</td>
+                    <td>{$result['prenom']}</td>
+                    <td>{$result['nom']}</td>
+                    <td>{$result['adresse']}</td>
+                    <td>{$result['code_postal']}</td>
+                    <td>{$result['ville']}</td>
+                    <td>{$result['tel']}</td>
+                    <td>{$result['email']}</td>
+                    <td>{$result['equivalent']}</td>
+                    <td>{$result['projet']}</td>
+                    <td>" . ($result['pre_inscrit'] == '1' ? 'oui' : 'non') . "</td>
+                    <td>{$result['moyen']}</td>
+                    <td>{$result['heure_enregistrement']}</td>
+                    <td><!-- Actions here --></td>
+                </tr>";
         }
-}
-catch (PDOException $e) {
-    echo 'Erreur avec la BD!: ' .$e->getMessage() .'<br/>';
-    die();
+
+        echo "</table>";
+    } catch (PDOException $e) {
+        echo 'Erreur avec la BD!: ' . $e->getMessage() . '<br/>';
+        die();
     }
-try{
-    $sql="SELECT * FROM prospect";
-    $temp=$pdo->prepare($sql);
-    $temp->execute();
-    while ($resultats = $temp -> fetch()){
-        '<form>
-        <select name="users" onchange="showUser(this.value)">
-        <option value="">Select a person:</option>
-        <option value="'.$resultats['id'].'"><'.$resultats['prenom'].'/option>
-        </select>
-        </form>
-        <br>
-        <div id="txtHint"><b>Person info will be listed here...</b></div>';
+?>
+
+
+<script>
+    function showUser(str) {
+        if (str == "") {
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "filtre.php?q="+str, true);
+            xmlhttp.send();
+        }
     }
-}
-catch (PDOException $e) {
-    echo 'Erreur avec la BD!: ' .$e->getMessage() .'<br/>';
-    die();
-    }
-    ?>
+</script>
+
 </body>
 </html>
