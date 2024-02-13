@@ -215,10 +215,10 @@ if (isset($_GET['id'])) {
             <option value="9">Développeur Web et Web mobile</option>
         </select>
 </div>
-    <!-- <div class="label_box_projet">
+    <div class="label_box_projet">
                 <label for="projet">Projet : </label>
-                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
-</div> -->
+                <textarea type="text" name="projet" id="projet" value="<?php echo $projet; ?>" required ></textarea>
+</div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
         </div>
