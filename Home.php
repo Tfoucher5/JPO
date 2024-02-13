@@ -2,9 +2,6 @@
 
 // script de connexion
 require_once('base_donnee.php');
-require_once('vendor/autoload.php');
-
-use PHPMailer\PHPMailer\PHPMailer;
 
 if (isset($_POST['soumettre'])) {
 
@@ -51,40 +48,8 @@ if (isset($_POST['soumettre'])) {
         // Message de l'email
         $message = 'Veuillez trouver ci-joint le fichier correspondant à la formation souhaitée.';
 
-        
-
-        // Création de l'objet PHPMailer
-        $mailer = new PHPMailer();
-
-        // Configuration du serveur SMTP (Gmail dans cet exemple)
-        $mailer->isSMTP();
-        $mailer->Host = 'smtp.gmail.com';
-        $mailer->SMTPAuth = true;
-        $mailer->Username = 'testenvoi.mailiia@gmail.com';
-        $mailer->Password = "Testdel'envoi";
-        $mailer->SMTPSecure = 'tls';
-        $mailer->Port = 587;
-
-        // Configuration du message
-        $mailer->setFrom('testenvoi.mailiia@gmail.com', 'Theo');
-        $mailer->addAddress($destinataire);
-        $mailer->Subject = $sujet;
-        $mailer->Body = $message;
-
-        // Ajout du fichier en tant que pièce jointe
-        $mailer->addAttachment($chemin_fichier, basename($chemin_fichier));
-        
-        // En-têtes de l'email
-        $headers = 'From: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'Reply-To: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-        // Envoi de l'e-mail
-        if ($mailer->send()) {
-            echo 'E-mail envoyé avec succès.';
-        } else {
-            echo 'Erreur lors de l\'envoi de l\'e-mail: ' . $mailer->ErrorInfo;
-        }
+        // send email
+        mail($destinataire, $sujet, $message, $msg);
     }
 
     // Ajouter les valeurs dans la base de données
