@@ -254,3 +254,12 @@ h1{
   border-bottom-left-radius: 10px;
   padding:5px;
 }
+.line{
+  display:flex;
+  flex-direction: row;
+  border:3px solid #EA7AF4;
+  border-radius:10px;
+  width:800px;
+  height:50px;
+  background-color: red;
+}
