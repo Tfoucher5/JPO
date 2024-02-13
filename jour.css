@@ -182,8 +182,8 @@ h1{
     height: 100px;
   }
   .label_box input{
-    color:#FDF7FA ;
-    background-color: #242038;
+    color:#242038 ;
+    background-color: #FDF7FA;
     border-radius: 10px;
     padding:5px;
     width:80%;
