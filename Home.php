@@ -155,7 +155,7 @@ if (isset($_POST['soumettre'])) {
             <option value="3">réseaux sociaux</option>
             <option value="4">Salons</option>
             <option value="5">Bouche a oreille</option>
-            <option value="6">Autre</option>
+            <option value="6">Autres</option>
         </select>
     </div>
     <div class="label_box">
