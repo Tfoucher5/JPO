@@ -57,10 +57,7 @@ if (isset($_POST['soumettre'])) {
         // Message de l'email
         $message = 'Veuillez trouver ci-joint le fichier correspondant à la formation souhaitée.';
 
-        // En-têtes de l'email
-        $headers = 'From: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'Reply-To: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        
 
         // Création de l'objet PHPMailer
         $mailer = new PHPMailer();
@@ -82,6 +79,11 @@ if (isset($_POST['soumettre'])) {
 
         // Ajout du fichier en tant que pièce jointe
         $mailer->addAttachment($chemin_fichier, basename($chemin_fichier));
+        
+        // En-têtes de l'email
+        $headers = 'From: testenvoi.mailiia@gmail.com' . "\r\n" .
+            'Reply-To: testenvoi.mailiia@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
 
         // Envoi de l'e-mail
         if ($mailer->send()) {
