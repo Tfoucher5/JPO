@@ -317,6 +317,6 @@ h1{
   background-color: #EA7AF4;
   color: #242038;
 }
-.delete-btn a svg:hover,.button_table:hover{
-  background-color: #EA7AF4;
+ .button_table svg:hover, .delete-btn:hover{
+  transform:scale(110%);
 }
