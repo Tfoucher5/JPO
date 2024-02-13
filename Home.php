@@ -98,6 +98,7 @@ if (isset($_POST['soumettre'])) {
     </nav>
     <div class="content_home">
     <div class="sun">
+        <div class="line"></div>
     </div>
         <div class="label_home">
         <form action="Home.php" method="post">
@@ -112,11 +113,11 @@ if (isset($_POST['soumettre'])) {
 </div>
             <div class="label_box">
         <label for="email">Email : </label> 
-            <input type="email" name="email" id="email" placeholder="exemple@gmail.com" required />
+            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
 </div>
             <div class="label_box">
         <label for="telephone">Téléphone : </label>
-            <input type="tel" name="tel" id="tel" placeholder="telephone" required minlength="10" maxlength="10"/>
+            <input type="number" name="tel" id="tel" placeholder="telephone" required />
 </div>
             <div class="label_box">
         <label for="adresse">Adresse : </label>
