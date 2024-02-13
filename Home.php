@@ -243,7 +243,7 @@ if (isset($_POST['soumettre'])) {
             <option value="9">Développeur Web et Web mobile</option>
         </select>
 </div>
-    <div class="label_box">
+    <div class="label_box_projet">
                 <label for="projet">Projet : </label>
                 <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
 </div>

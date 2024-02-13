@@ -146,8 +146,9 @@ h1{
     margin:0 auto;
     margin-top:40px;
     margin-bottom: 40px;
+    margin-right:100px;
     padding: 10px;
-    width: 700px;
+    width: 1000px;
     float:none;
     border-radius: 20px;
     border: #EA7AF4 5px solid;
@@ -158,13 +159,25 @@ h1{
             0 0 2.8rem #EA7AF4,
             inset 0 0 1.3rem #EA7AF4;
   }
-
   .label_home .label_box{
     color:white;
     padding:1px;
     font-size: 20px;
     width:100%;
     margin: 5px;
+    height: 50px;
+  }
+  .label_box label{
+    width:20%;
+    margin-top: 100px;
+  }
+  .label_box_projet{
+    color:white;
+    padding:1px;
+    font-size: 20px;
+    width:100%;
+    margin: 5px;
+    height: 100px;
   }
   .label_box input{
     background-color: #EA7AF4;
@@ -172,8 +185,10 @@ h1{
     padding:5px;
     width:80%;
     float:right;
+    height:40px;
+    font-size:1em;
   }
-  .label_box textarea{
+  .label_box_projet textarea{
     background-color: #EA7AF4;
     border-radius: 10px;
     width:80%;
@@ -183,6 +198,7 @@ h1{
     line-height: 1.5;
     float:right;
     resize: none;
+    font-size:1em;
   }
   .label_box select{
     text-align: center;
@@ -193,8 +209,8 @@ h1{
     padding-right: 10px;
     background-color: #EA7AF4;
     border-radius: 10px;
+    font-size:1em;
   }
-
   .label_home input[type="submit"]{
     margin-left:50%;
     transform: translateX(-50%);
@@ -280,7 +296,7 @@ h1{
 .button_table{
   display: flex;
   flex-direction: row;
-  position: fixed;
+  position: absolute;
   left: 270px;
   margin-top:25px;
 }
@@ -301,7 +317,7 @@ h1{
   background-color: #242038;
 }
 .disconnect_button{
-  position: fixed;
+  position: absolute;
   left: 290px;
   top:3px;
   cursor: pointer;
