@@ -209,8 +209,8 @@ if (isset($_POST['soumettre'])) {
         </select>
 </div>
     <div class="label_box_projet">
-                <label for="projet">Projet : </label>
-                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
+                <label for="projet">Notes : </label>
+                <textarea type="text" name="projet" id="projet" placeholder="ajouter une note" required ></textarea>
 </div>
     <div class="label_box">
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
