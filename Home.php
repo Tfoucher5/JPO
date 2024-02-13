@@ -251,7 +251,7 @@ if (isset($_POST['soumettre'])) {
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
 </div>
-        <input type="submit" name="soumettre" onclick="myFunction()" value="enregistrer" />
+        <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
@@ -260,10 +260,5 @@ if (isset($_POST['soumettre'])) {
             
         ?>
     </div>
-<script>
-function myFunction() {
-  alert("Vos informations ont bien été enregistrés.");
-}
-</script>
 </body>
 </html>
