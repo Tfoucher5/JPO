@@ -2,7 +2,19 @@
 
 // script de connexion
 require_once('base_donnee.php');
+require_once('vendor/autoload.php');
 
+use PHPMailer\PHPMailer\PHPMailer;
+
+include ("session_start.php");
+if(isset($_REQUEST['Mode'])) {
+    if ($_REQUEST['Mode'] == 'nuit'){
+        $_SESSION["Mode"]="nuit";
+    }
+    else{
+        $_SESSION["Mode"]="jour";
+    }
+}
 if (isset($_POST['soumettre'])) {
 
      // on récupère les valeurs
@@ -48,8 +60,40 @@ if (isset($_POST['soumettre'])) {
         // Message de l'email
         $message = 'Veuillez trouver ci-joint le fichier correspondant à la formation souhaitée.';
 
-        // send email
-        mail($destinataire, $sujet, $message, $msg);
+        
+
+        // Création de l'objet PHPMailer
+        $mailer = new PHPMailer();
+
+        // Configuration du serveur SMTP (Gmail dans cet exemple)
+        $mailer->isSMTP();
+        $mailer->Host = 'smtp.gmail.com';
+        $mailer->SMTPAuth = true;
+        $mailer->Username = 'testenvoi.mailiia@gmail.com';
+        $mailer->Password = "Testdel'envoi";
+        $mailer->SMTPSecure = 'tls';
+        $mailer->Port = 587;
+
+        // Configuration du message
+        $mailer->setFrom('testenvoi.mailiia@gmail.com', 'Theo');
+        $mailer->addAddress($destinataire);
+        $mailer->Subject = $sujet;
+        $mailer->Body = $message;
+
+        // Ajout du fichier en tant que pièce jointe
+        $mailer->addAttachment($chemin_fichier, basename($chemin_fichier));
+        
+        // En-têtes de l'email
+        $headers = 'From: testenvoi.mailiia@gmail.com' . "\r\n" .
+            'Reply-To: testenvoi.mailiia@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        // Envoi de l'e-mail
+        if ($mailer->send()) {
+            echo 'E-mail envoyé avec succès.';
+        } else {
+            echo 'Erreur lors de l\'envoi de l\'e-mail: ' . $mailer->ErrorInfo;
+        }
     }
 
     // Ajouter les valeurs dans la base de données
@@ -84,7 +128,7 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="stylenuit.css">
+    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
@@ -112,7 +156,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
         <div class="nav_container">
-        <a href="MentionsLegales.html">
+        <a href="MentionsLegales.php">
             <div class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v.756a49.106 49.106 0 0 1 9.152 1 .75.75 0 0 1-.152 1.485h-1.918l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 18.75 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84l2.474-10.124H12.75v13.28c1.293.076 2.534.343 3.697.776a.75.75 0 0 1-.262 1.453h-8.37a.75.75 0 0 1-.262-1.453c1.162-.433 2.404-.7 3.697-.775V6.24H6.332l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 5.25 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84L4.168 6.241H2.25a.75.75 0 0 1-.152-1.485 49.105 49.105 0 0 1 9.152-1V3a.75.75 0 0 1 .75-.75Zm4.878 13.543 1.872-7.662 1.872 7.662h-3.744Zm-9.756 0L5.25 8.131l-1.872 7.662h3.744Z" clip-rule="evenodd" />
@@ -122,7 +166,7 @@ if (isset($_POST['soumettre'])) {
         </a>
         </div>
         <div class="nav_container">
-            <a href="#">
+            <a href="configuration.php">
                 <div class="button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
@@ -137,7 +181,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="Home.php" method="post">
+        <form action="enregistrement_reussie.php" method="post">
 <div class="label_box"></div>
             <div class="label_box">
         <label for="prenom">Prénom : </label>
@@ -216,14 +260,14 @@ if (isset($_POST['soumettre'])) {
         </select>
 </div>
     <div class="label_box_projet">
-                <label for="projet">Projet : </label>
-                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
+                <label for="projet">Notes : </label>
+                <textarea type="text" name="projet" id="projet" placeholder="ajouter une note" required ></textarea>
 </div>
     <div class="label_box">
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
 </div>
-        <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
+        <input type="submit"  name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
