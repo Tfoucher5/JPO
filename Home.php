@@ -1,9 +1,7 @@
 <?php
 
 // script de connexion
-require_once('base_donnee.php');
-
-// Inclure les fichiers PHPMailer
+require_once('base_donnee.php');// Inclure les fichiers PHPMailer
 require 'PHPMailer-6.9.1/src/PHPMailer.php';
 require 'PHPMailer-6.9.1/src/SMTP.php';
 require 'PHPMailer-6.9.1/src/Exception.php';
@@ -106,7 +104,6 @@ if (isset($_POST['soumettre'])) {
     $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
     $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
     $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
-    $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_INT);
     $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
     $temp->execute();
 
@@ -254,6 +251,8 @@ if (isset($_POST['soumettre'])) {
     <div class="label_box">
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
+          <label for="projet">Projet : </label>
+                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
 </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="enregistrer" />
     </form>
