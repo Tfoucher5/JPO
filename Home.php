@@ -166,14 +166,9 @@ if (isset($_POST['soumettre'])) {
     </form>
         </div>
     </div>
-    <div>
-        <?php
-            
-        ?>
-    </div>
 <script>
 function myFunction() {
-  alert("Vos informations ont bien été enregistrés.");
+  alert(<?php $_POST['tel'] ?>);
 }
 </script>
 </body>
