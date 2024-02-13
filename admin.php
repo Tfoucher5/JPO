@@ -16,7 +16,6 @@ require_once('base_donnee.php')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="phpstyle.css">
     <title>Administrateur</title>
     <link rel="stylesheet" href="stylenuit.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

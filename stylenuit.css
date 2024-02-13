@@ -260,6 +260,8 @@ h1{
   border:3px solid #EA7AF4;
   border-radius:10px;
   width:800px;
-  height:50px;
+  height:auto;
+}
+.line .content_line{
   background-color: red;
 }
