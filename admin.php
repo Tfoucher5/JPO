@@ -23,7 +23,7 @@ require_once('base_donnee.php')
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<!-- <nav>
+<nav>
         <div class="nav_container">
             <a href="Home.php">
                 <div class="button">
@@ -64,7 +64,7 @@ require_once('base_donnee.php')
                 </div>
             </a>
         </div>
-    </nav> -->
+    </nav>
     <?php
     // appeler toute les lignes de la tables prospect
     // les faire apparaitre dans un tableau
@@ -83,11 +83,14 @@ require_once('base_donnee.php')
         header('Location: admin.php');
         exit();
 }
-
+echo '<div class="content_admin">';
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
+    echo '<form action="deconnexion.php" method="post">
+                <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
+            </form>';
 
 
-    // //affichage du tableau 
+    //affichage du tableau 
     // echo "<table border='1'>
     // <tr>
     //     <td>id : </td>
@@ -105,51 +108,44 @@ require_once('base_donnee.php')
     //     <td>Date d'enregistrement : </td>
     //     <td>Action : </td>
     //     </tr>";
-
-    //     while ($resultats = $temp -> fetch()){
-    //         echo '<tr>
-    //                 <td>' . $resultats['id_prospect'] . '</td>
-    //                 <td>' . $resultats['prenom'] . '</td>
-    //                 <td>' . $resultats['nom'] . '</td>
-    //                 <td>' . $resultats['adresse'] . '</td>
-    //                 <td>' . $resultats['code_postal'] . '</td>
-    //                 <td>' . $resultats['ville'] . '</td>
-    //                 <td>' . $resultats['tel'] . '</td>
-    //                 <td>' . $resultats['email'] . '</td>
-    //                 <td>' . $resultats['equivalent'] . '</td>
-    //                 <td>' . $resultats['projet'] . '</td>
-    //                 <td>'; if ($resultats['pre_inscrit']== '1') { 
-    //                     echo 'oui';
-    //                 } else{
-    //                     echo 'non';
-    //                 }
-    //                 echo    '<td>' . $resultats['moyen'] . '</td>
-    //                         <td>' . $resultats['heure_enregistrement'] . '</td>
-    //                         <td>
-    //                             <a href="modification.php?id=' . $resultats['id_prospect'] . '">Modifier</a>
-    //                             <form action="admin.php" method="post">
-    //                                 <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
-    //                                 <input type="submit" class="delete-btn" value="Supprimer">
-    //                             </form>
-    //                         </td>';        
-    //     }
-    //     // referme la table
-    //     echo '</table>';
+    echo '<div class="all_table">';
+        while ($resultats = $temp -> fetch()){
+        
+            echo '<div class="button_table">
+                        <a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                          </a>
+                        <form action="admin.php" method="post">
+                            <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
+                            <input type="submit" class="delete-btn" value="🗑️">
+                        </form>
+                    </div>';
+            echo '<div class="line_table">
+                        <div class="content_line">' . $resultats['prenom'] . '</div>
+                        <div class="content_line">' . $resultats['nom'] . '</div>
+                        <div class="content_line">' . $resultats['adresse'] . '</div>
+                        <div class="content_line">' . $resultats['code_postal'] . '</div>
+                        <div class="content_line">' . $resultats['ville'] . '</div>
+                        <div class="content_line">' . $resultats['tel'] . '</div>
+                        <div class="content_line">' . $resultats['email'] . '</div>
+                        <div class="content_line">' . $resultats['equivalent'] . '</div>
+                        <div class="content_line">' . $resultats['projet'] . '</div>
+                        <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
+                            echo 'oui';
+                        } else{
+                            echo 'non';
+                        };
+                        echo '</div>
+                        <div class="content_line">' . $resultats['moyen'] . '</div>
+                    </div> ';
+        }
+        echo '</div>'
     ?>
-    <div class="line">
-        <div class="content_line">text</div>
-        <div class="content_line">texxxttt</div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-        <div class="content_line"></div>
-    </div>
+    
+    
+   
+    
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -166,14 +162,7 @@ require_once('base_donnee.php')
         });
     });
     </script>
-
-
-    <form action="deconnexion.php" method="post">
-        <input type="submit" name="deconnecter" value="Se déconnecter" />
-    </form>
-    <form action="home.php" method="post">
-    <input type="submit" name="Home" value="Home" />
-    </form>
+    </div>
 </body>
 </html>
 
