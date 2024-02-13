@@ -113,11 +113,11 @@ if (isset($_POST['soumettre'])) {
 </div>
             <div class="label_box">
         <label for="email">Email : </label> 
-            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+            <input type="email" name="email" id="email" placeholder="exemple@gmail.com" required />
 </div>
             <div class="label_box">
         <label for="telephone">Téléphone : </label>
-            <input type="number" name="tel" id="tel" placeholder="telephone" required />
+            <input type="tel" name="tel" id="tel" placeholder="telephone" required minlength="10" maxlength="10"/>
 </div>
             <div class="label_box">
         <label for="adresse">Adresse : </label>
