@@ -171,8 +171,8 @@ if (isset($_POST['soumettre'])) {
             <div class="label_box select_box">
             <label for="pre-inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
-            <option value="1">Oui</option>
             <option value="0">Non</option>
+            <option value="1">Oui</option>
         </select>
         <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
@@ -186,13 +186,20 @@ if (isset($_POST['soumettre'])) {
         <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
-            <option value="1">Recherches en ligne</option>
-            <option value="2">Publicité en ligne</option>
-            <option value="3">réseaux sociaux</option>
-            <option value="4">Salons</option>
-            <option value="5">Bouche a oreille</option>
-            <option value="6">Autres</option>
+            <?php
+            $sql = "SELECT * FROM connaissance";
+            $temp=$pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat=$temp->fetch()){
+                if($resultat['moyen']!='autre'){
+                echo '<option value="'.$resultat['moyen'].'">'.$resultat['moyen'].'</option>';
+                }else{
+                    echo '<option value="'.$resultat['moyen'].'" onchange="fonctionAutre()">'.$resultat['moyen'].'</option>';
+                }
+            }
+            ?>
         </select>
+        <div id="txtautre"><input style="display:none" type="text" name="decouverte_IIA" id="decouverte_IIA" placeholder="Autre raison" required ></div>
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
@@ -220,10 +227,19 @@ if (isset($_POST['soumettre'])) {
     </form>
         </div>
     </div>
-    <div>
-        <?php
-            
-        ?>
-    </div>
+<script>
+    function fonctionAutre(str){
+        if (str=="") {
+    document.getElementById("txtautre").innerHTML="";
+    return;
+  }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("txtautre").innerHTML = this.responseText;
+            }
+        };
+    }
+</script>
 </body>
 </html>
