@@ -28,7 +28,7 @@ if (isset($_POST['soumettre'])) {
     $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-    $now = date('Y-m-d H:i:s');
+    $now = date('d-m-Y H:i');
 
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';

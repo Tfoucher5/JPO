@@ -1,23 +1,4 @@
-<?php
-include ("session_start.php");
-if(isset($_REQUEST['Mode'])) {
-    if ($_REQUEST['Mode'] == 'nuit'){
-        $_SESSION["Mode"]="nuit";
-    }
-    else{
-        $_SESSION["Mode"]="jour";
-    }
-}
 
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    header('Location: connexion.php');
-    exit();
-}
-
-require_once('base_donnee.php')
-?>
 
 <!DOCTYPE html>
 <html lang="en">
