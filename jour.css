@@ -448,6 +448,29 @@ h1{
   float:none;
   border-radius: 20px;
   border: #75D2B4 5px solid;
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  box-shadow: 0 0 .2rem #fff,
+          0 0 .2rem #fff,
+          0 0 2rem #75D2B4,
+          0 0 0.8rem #75D2B4,
+          0 0 2.8rem #75D2B4,
+          inset 0 0 1.3rem #75D2B4;
+}
+
+.download-link{
+  text-align: center;
+  text-decoration: none;
+  color: #242038;
+  font-size: 20px;
+  margin:0 auto;
+  margin-top:40px;
+  margin-bottom: 40px;
+  padding: 8px;
+  width: 400px;
+  float:none;
+  border-radius: 20px;
   box-shadow: 0 0 .2rem #fff,
           0 0 .2rem #fff,
           0 0 2rem #75D2B4,
