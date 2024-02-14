@@ -79,6 +79,7 @@ require_once('base_donnee.php')
     // les faire apparaitre dans un tableau
     // renomer les numériques
     // bouton modifier + bouton supprimer
+    include('filtre.php');
     
     $sql='SELECT * FROM prospect ORDER BY id_prospect';
     $temp=$pdo->prepare($sql);

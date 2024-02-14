@@ -282,6 +282,11 @@ if (isset($_POST['soumettre'])) {
         </div>
     </div>
 <script>
+
+function myFunction() {
+  alert(<?php $_POST['tel'] ?>);
+}
+
     function fonctionAutre(str){
         if (str=="") {
     document.getElementById("txtautre").innerHTML="";
@@ -294,6 +299,7 @@ if (isset($_POST['soumettre'])) {
             }
         };
     }
+
 </script>
 </body>
 </html>
