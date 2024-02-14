@@ -407,5 +407,9 @@ h1{
   color: #FDF7FA;
 }
 .config_container{
-  float:right;
+  width:100vw;
+  height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
