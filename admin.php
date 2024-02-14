@@ -80,7 +80,7 @@ require_once('base_donnee.php')
     // renomer les numériques
     // bouton modifier + bouton supprimer
     
-    $sql='SELECT * FROM prospect ORDER BY id_prospect';
+    $sql='SELECT * FROM prospect,connaissance,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau AND connaissance.id_connaissance=prospect.decouverte_IIA ORDER BY id_prospect';
     $temp=$pdo->prepare($sql);
     $temp->execute();
 
@@ -93,46 +93,18 @@ require_once('base_donnee.php')
         exit();
 }
 echo '<div class="content_admin">
-<button id="button">Generate PDF</button>
 <div class="card" id="makepdf">';
-    echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
-    echo '<form action="deconnexion.php" method="post">
+echo '<div class="head_admin">';
+echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
+echo '<form action="deconnexion.php" method="post">
                 <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
-            </form>';
+        </form>';
+echo '<button class="disconnect_button">GeneratePDF</button>
+</div>';
 
+        
 
-    //affichage du tableau 
-    // echo "<table border='1'>
-    // <tr>
-    //     <td>id : </td>
-    //     <td>Prenom : </td>
-    //     <td>Nom : </td>
-    //     <td>Adresse : </td>
-    //     <td>Code postal : </td>
-    //     <td>Ville : </td>
-    //     <td>Téléphone : </td>
-    //     <td>Adresse mail : </td>
-    //     <td>Niveau d'études : </td>
-    //     <td>Projet : </td>
-    //     <td>Pre-inscrit ? : </td>
-    //     <td>Comment nous avez-vous découvert ? : </td>
-    //     <td>Date d'enregistrement : </td>
-    //     <td>Action : </td>
-    //     </tr>";
     echo '<div class="all_table">';
-    echo '<div class="table_head">
-            <input type="submit" value="Prénom">
-            <input type="submit" value="Nom">
-            <input type="submit" value="Adresse">
-            <input type="submit" value="Code Postal">
-            <input type="submit" value="Ville">
-            <input type="submit" value="N° Tél">
-            <input type="submit" value="E-mail">
-            <input type="submit" value="études">
-            <input type="submit" value="Projet">
-            <input type="submit" value="Préinscrit ?">
-            <input type="submit" value="Moyen">
-        </div>';
         while ($resultats = $temp -> fetch()){
         echo '<div class="table_container">';
             echo '<div class="button_table">
@@ -156,12 +128,13 @@ echo '<div class="content_admin">
                             echo '<div>non</div>';
                         };
                         echo '<div>'.$resultats['moyen'] .'</div></div>
+                        <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
                     </div> ';
         }
         echo '</div>
         </div>';
     ?>
-    
+
     
    
     

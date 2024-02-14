@@ -16,17 +16,15 @@ if(isset($_REQUEST['Mode'])) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Debug output to check form data
+
 var_dump($_POST);
 if (isset($_POST['soumettre'])) {
-    // Server-side validation
     if(empty($_POST['prenom']) || empty($_POST['nom']) || empty($_POST['email']) || empty($_POST['tel']) || empty($_POST['adresse']) || empty($_POST['ville']) || empty($_POST['code-postal']) || empty($_POST['pre_inscrit']) || empty($_POST['niveau_etude']) || empty($_POST['decouverte_IIA']) || empty($_POST['formation_envisagee'])) {
-        // Handle validation error (you can customize this according to your needs)
         echo "All fields are required.";
         exit();
     }
 
-    // Sanitize form inputs
+
     $prenom = htmlentities($_POST['prenom']);
     $nom = htmlentities($_POST['nom']);
     $mail = htmlentities($_POST['email']);
@@ -41,7 +39,6 @@ if (isset($_POST['soumettre'])) {
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
     $now = date('Y-m-d H:i:s');
 
-    // Insert data into the database
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
     try {
@@ -61,11 +58,9 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
         $temp->execute();
 
-        // Redirect after successful form submission
         header("Location: enregistrement_reussie.php ");
         exit();
     } catch (PDOException $e) {
-        // Handle database error
         echo "Error: " . $e->getMessage();
         exit();
     }
@@ -132,7 +127,7 @@ if (isset($_POST['soumettre'])) {
     </div>
         <div class="label_home">
         <form action="home.php" method="post">
-    <div class="label_box">
+            <div class="label_box">
         <label for="prenom">Prénom : </label>
         <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
     </div>
@@ -210,12 +205,16 @@ if (isset($_POST['soumettre'])) {
         <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
     </div>
     <div class="label_box">
-        <label for="send_mail">Envoyer la fiche formation par mail : </label>
-        <input type="checkbox" name="send_mail" id="send_mail" />
-    </div>
-    <input type="submit" name="soumettre" value="Enregistrer" />
-</form>
+                <label for="send_mail">Envoyer la fiche formation par mail : </label>
+                <input type="checkbox" name="send_mail" id="send_mail" />
+</div>
 
+<div class="label_box">
+                <label for="verif_RGPD">J'ai complété et signé la fiche de renseignement RGPD : </label>
+                <input type="checkbox" name="verif_RGPD" id="verif_RGPD" />
+</div>
+        <input type="submit"  name="soumettre" value="enregistrer" />
+    </form>
         </div>
     </div>
 </body>
