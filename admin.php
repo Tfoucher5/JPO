@@ -26,8 +26,10 @@ if (isset($_POST['download_csv'])) {
     // Ouverture de la sortie en écriture
     $output = fopen('php://output', 'w');
 
+    fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+
     // Entêtes du CSV
-    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'));
+    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
 
     // Sélection des données depuis la base de données
     $sql = 'SELECT * FROM prospect ORDER BY id_prospect';
@@ -36,6 +38,9 @@ if (isset($_POST['download_csv'])) {
 
     // Écriture des données dans le fichier CSV
     while ($resultats = $temp->fetch()) {
+        // Formater l'heure
+        $heure_enregistrement = date('Y-m-d H:i:s', strtotime($resultats['heure_enregistrement']));
+        
         fputcsv($output, array(
             $resultats['prenom'],
             $resultats['nom'],
@@ -48,14 +53,16 @@ if (isset($_POST['download_csv'])) {
             $resultats['projet'],
             $resultats['pre_inscrit'] == '1' ? 'oui' : 'non',
             $resultats['decouverte_IIA'],
-            $resultats['heure_enregistrement']
-        ));
+            '"'. $heure_enregistrement.'"' // Utilisation de l'heure formatée
+        ), ";");
     }
 
     // Fermeture du fichier CSV
     fclose($output);
     exit();
 }
+?>
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,12 +78,8 @@ if (isset($_POST['download_csv'])) {
 </head>
 
 <body>
-<<<<<<< HEAD
-    <nav>
-=======
     <div class="nav_hitbox">
 <nav>
->>>>>>> 431907ede323df7f8c5145eda471dedfddd0ce87
         <div class="nav_container">
             <a href="Home.php">
                 <div class="button">
@@ -86,11 +89,7 @@ if (isset($_POST['download_csv'])) {
                     </svg>
                 </div>
             </a>
-<<<<<<< HEAD
-        </div>
-=======
              </div>
->>>>>>> 431907ede323df7f8c5145eda471dedfddd0ce87
         <div>
             <div class="button_active">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
