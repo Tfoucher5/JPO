@@ -61,6 +61,59 @@ if (isset($_POST['download_csv'])) {
     fclose($output);
     exit();
 }
+//bare de recherche 
+$tableau=1;
+$tableau = 1;
+$connaissance = "";
+$valider = "";
+$afficher = "";
+$res = array();
+
+if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adresse']) || isset($_REQUEST['code_postal']) 
+|| isset($_REQUEST['ville']) || isset($_REQUEST['tel']) || isset($_REQUEST['email']) 
+|| isset($_REQUEST['niveau_etude']) || isset($_REQUEST['pre_inscrit']) || isset($_REQUEST['connaissance']) 
+|| isset($_REQUEST['date1']) || isset($_REQUEST['date2']) ||isset($_REQUEST['note_prive'])
+|| isset($_REQUEST['note'])) {
+    $prenom = htmlentities($_REQUEST['prenom']);
+    $nom = htmlentities($_REQUEST['nom']);
+    $adresse = htmlentities($_REQUEST['adresse']);
+    $code_postal = htmlentities($_REQUEST['code_postal']);
+    $ville = htmlentities($_REQUEST['ville']);
+    $tel = htmlentities($_REQUEST['tel']);
+    $email = htmlentities($_REQUEST['email']);
+    $niveau_etude = htmlentities($_REQUEST['niveau_etude']);
+    $pre_inscrit = htmlentities($_REQUEST['pre_inscrit']);
+    $connaissance = htmlentities($_REQUEST['connaissance']);
+    $date1 = htmlentities($_REQUEST['date1']);
+    $date2 = htmlentities($_REQUEST['date2']);
+    $note_prive = htmlentities($_REQUEST['note_prive']);
+    $note = htmlentities($_REQUEST['note']);
+
+}
+if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
+    $where = "'".$prenom."%'";
+    $where .= " AND '".$nom."%'";
+    $where .= " AND '".$adresse."%'";
+    $where .= " AND '".$code_postal."%'";
+    $where .= " AND '".$ville."%'";
+    $where .= " AND '".$tel."%'";
+    $where .= " AND '".$email."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $where .= " AND '".$connaissance."%'";
+    $sql = "SELECT * FROM connaissance WHERE ".$where;
+    $temp = $pdo->query($sql);
+    $res = $temp->fetchAll();
+    $afficher = "oui";
+    $tableau = 0;
+}
 ?>
 
 
@@ -133,20 +186,60 @@ if (isset($_POST['download_csv'])) {
             header('Location: admin.php');
             exit();
     }
-    echo '<div class="content_admin">';
-    echo '<div class="head_admin">';
-    echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
-    echo '<form action="deconnexion.php" method="post">
-                    <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
-            </form>
+    ?>
+    <div class="content_admin">
+    <div class="head_admin">
+    <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
+        <form action="deconnexion.php" method="post">
+            <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
+        </form>
         <form method="post">
             <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
         </form>';
-            
-    echo '</div>';
+                  
+        <!-- formulaire de recherche -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
+            <input type="text" name="prenom" value="<?php echo $prenom;?>" placeholder="Rechercher dans prenom">
+            <input type="text" name="nom" value="<?php echo $nom;?>" placeholder="Rechercher dans nom">
+            <input type="text" name="adresse" value="<?php echo $adresse;?>" placeholder="Rechercher dans adress">
+            <input type="text" name="code_postal" value="<?php echo $code_postal;?>" placeholder="Rechercher dans code postal">
+            <input type="text" name="ville" value="<?php echo $ville;?>" placeholder="Rechercher dans ville">
+            <input type="text" name="tel" value="<?php echo $tel;?>" placeholder="Rechercher dans tel">
+            <input type="text" name="email" value="<?php echo $email;?>" placeholder="Rechercher dans email">
+            <input type="text" name="niveau_etude" value="<?php echo $niveau_etude;?>" placeholder="Rechercher dans niveau d'étude">
+            <input type="text" name="note" value="<?php echo $note;?>" placeholder="Rechercher dans note">
+            <input type="text" name="pre_inscrit" value="<?php echo $pre_inscrit;?>" placeholder="Recherche dans pré inscrit">
+            <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Recherche moyen de decouverte">
+            <input type="text" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher dans date ">
+            <input type="text" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher dans date ">
+            <input type="text" name="note_prive" value="<?php echo $note_prive;?>" placeholder="Rechercher dans note privé">
+            <input type="text" name="formation" value="<?php echo $date;?>" placeholder="Rechercher dans formation">
+            <input type="submit" name="valider" value="rechercher" >            
+        </form>
+
+    <!-- bouton reset pour afficher le tableau complet -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
+            <input type="submit" name="1" value="reset" >
+        </form>
+
+    <!-- affichage des résultats -->
+    <?php if($afficher=="oui"){ ?>
+    <div id="resultat">
+        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+        <table border="1">
+            <tr>
+                <?php foreach($res as $r){ ?>
+                <td><?php echo $r['moyen']; ?></td>
+                <?php } ?>
+            </tr>
+        </table>
+        <?php } ?>
+    
+ 
+    </div>
     
             
-    echo '<div class="line_table index">
+    <div class="line_table index">
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
     <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
@@ -154,11 +247,13 @@ if (isset($_POST['download_csv'])) {
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
     </div>';
-        echo '<div class="all_table">';
-            while ($resultats = $temp -> fetch()){
+        <div class="all_table">
+            <?php
+
+            while ($resultats = $temp -> fetch()){ ?>
             echo '<div class="table_container">';
                 echo '<div class="button_table">
-                            <a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                           <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                               </svg>
                               </a>
@@ -167,7 +262,7 @@ if (isset($_POST['download_csv'])) {
                                 <input type="submit" class="delete-btn" value="🗑️">
                             </form>
                         </div>';
-                echo '<div class="line_table">
+                        <?php echo '<div class="line_table">
                             <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                             <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
                             <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
@@ -181,7 +276,7 @@ if (isset($_POST['download_csv'])) {
                             <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
                         </div>
                         </div> ';
-            }
+             } ?>
             echo '</div>';
         ?>
 </body>

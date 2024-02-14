@@ -29,8 +29,9 @@ if(isset($_REQUEST['connaissance'])) {
     $connaissance = htmlentities($_REQUEST['connaissance']);
 }
 if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
-    $where = " moyen='".$connaissance."'";
-    $sql = "SELECT * FROM connaissance WHERE ".$where;
+    $where = "'".$connaissance."%'";
+    $sql = "SELECT * FROM connaissance WHERE moyen LIKE ".$where;
+    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
