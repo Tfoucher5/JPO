@@ -116,7 +116,7 @@ if (isset($_POST['soumettre'])) {
     $temp->execute();
 
     // Effectuer la redirection après la soumission du formulaire
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: " . $_SERVER['admin.php']);
     exit();
 }
 
@@ -181,7 +181,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="enregistrement_reussie.php" method="post">
+        <form action="admin.php" method="post">
 <div class="label_box"></div>
             <div class="label_box">
         <label for="prenom">Prénom : </label>
