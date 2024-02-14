@@ -146,22 +146,16 @@ echo '<div class="content_admin">
                         </form>
                     </div>';
             echo '<div class="line_table">
-                        <div class="content_line">' . $resultats['prenom'] . '</div>
-                        <div class="content_line">' . $resultats['nom'] . '</div>
-                        <div class="content_line">' . $resultats['adresse'] . '</div>
-                        <div class="content_line">' . $resultats['code_postal'] . '</div>
-                        <div class="content_line">' . $resultats['ville'] . '</div>
-                        <div class="content_line">' . $resultats['tel'] . '</div>
-                        <div class="content_line">' . $resultats['email'] . '</div>
-                        <div class="content_line">' . $resultats['equivalent'] . '</div>
-                        <div class="content_line">' . $resultats['projet'] . '</div>
+                        <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['equivalent'] .'</div><div>'. $resultats['projet'] . '</div></div>
                         <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
-                            echo 'oui';
+                            echo '<div>oui</div>';
                         } else{
-                            echo 'non';
+                            echo '<div>non</div>';
                         };
-                        echo '</div>
-                        <div class="content_line">' . $resultats['moyen'] . '</div>
+                        echo '<div>'.$resultats['moyen'] .'</div></div>
                     </div> ';
         }
         echo '</div>
