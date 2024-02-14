@@ -7,7 +7,7 @@ body{
     background-color: #242038;
 }
 nav{
-  position: fixed; /* Modifier la position en fixed */
+  position: fixed;
     float: left;
     display: flex;
     justify-content: space-evenly;
@@ -352,7 +352,7 @@ h1{
   color: white;
   font-size: 30px;
   margin:0 auto;
-  margin-top:80px;
+  margin-top:40px;
   margin-bottom: 40px;
   padding: 20px;
   width: 400px;
@@ -365,10 +365,6 @@ h1{
           0 0 0.8rem #EA7AF4,
           0 0 2.8rem #EA7AF4,
           inset 0 0 1.3rem #EA7AF4;
-  position: absolute; /* Modifier la position en absolute */
-  left: calc(50% - 200px); /* Aligner au centre horizontalement */
-  top: 200px; /* Ajuster la position verticale en fonction de la hauteur de la nav */
-      
 }
 
 .retour_button{
@@ -388,9 +384,6 @@ h1{
   background-color: #EA7AF4;
   color: #242038;
 }
-
-
-.info_enregistre img{
-  width: 200px;
-
+.config_container{
+  float:right;
 }
