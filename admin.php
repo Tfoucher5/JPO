@@ -59,7 +59,7 @@ if (isset($_POST['download_csv'])) {
 
     // Fermeture du fichier CSV
     fclose($output);
-    exit();
+    exit(); 
 }
 ?>
 
@@ -130,9 +130,15 @@ if (isset($_POST['download_csv'])) {
             $id = $_POST['id_prospect'];
             $del = "DELETE FROM prospect WHERE id_prospect='$id'";
             $pdo->exec($del);
-            header('Location: admin.php');
+            echo '<script>
+            if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
+                window.location.href = "admin.php?id_prospect=' . $_POST['id_prospect'] . '";
+            }
+            </script>';
             exit();
-    }
+            }
+            
+    
     echo '<div class="content_admin">';
     echo '<div class="head_admin">';
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
@@ -157,11 +163,13 @@ if (isset($_POST['download_csv'])) {
         echo '<div class="all_table">';
             while ($resultats = $temp -> fetch()){
             echo '<div class="table_container">';
-                echo '<div class="button_table">
-                            <a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            echo '
+            <div class="button_table">
+                <a href="modification.php?id=' . $resultats['id_prospect'] . '">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                              </svg>
-                              </a>
+                                </svg>
+                                </a>
                             <form action="admin.php" method="post">
                                 <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
                                 <input type="submit" class="delete-btn" value="🗑️">
@@ -184,6 +192,27 @@ if (isset($_POST['download_csv'])) {
             }
             echo '</div>';
         ?>
+
+        <script>
+        function confirmDelete(id) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
+                // Use AJAX to delete the record without reloading the page
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "admin.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (xhr.status == 200) {
+                        // Reload the page after successful deletion
+                        window.location.reload();
+                    } else {
+                        // Handle error if necessary
+                        console.error("Error deleting record");
+                    }
+                };
+                xhr.send("id_prospect=" + id + "&confirm_delete=1");
+                }
+            }
+        </script>
 </body>
 
 </html>
