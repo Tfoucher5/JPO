@@ -28,7 +28,7 @@ if (isset($_POST['soumettre'])) {
     $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-    $now = date('Y-m-d H:i:s');
+    $now = date('d-m-Y H:i');
 
     // Add logic to determine and display the appropriate content based on the selected formation
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
