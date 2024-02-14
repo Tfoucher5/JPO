@@ -8,7 +8,10 @@ if(isset($_REQUEST['Mode'])) {
         $_SESSION["Mode"]="jour";
     }
 }
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

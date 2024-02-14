@@ -143,7 +143,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="enregistrement_reussie.php" method="post">
+        <form action="enre.php" method="post">
             <div class="label_box">
         <label for="prenom">Prénom : </label>
         <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
