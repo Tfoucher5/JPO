@@ -8,7 +8,10 @@ if(isset($_REQUEST['Mode'])) {
         $_SESSION["Mode"]="jour";
     }
 }
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +24,7 @@ if(isset($_REQUEST['Mode'])) {
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="nav_hitbox">
 <nav>
         <div>
              <div class="button_active">
@@ -63,6 +67,7 @@ if(isset($_REQUEST['Mode'])) {
             </a>
         </div>
     </nav>
+    </div>
     <div class="info_enregistre">
         <img src="icone-de-coche-violette.png"/>
         </br>

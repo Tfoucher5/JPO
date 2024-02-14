@@ -6,7 +6,13 @@
 body{
     background-color: #FDF7FA;
 }
-nav:hover{
+.nav_hitbox{
+  position: fixed;
+  width: 150px;
+  height: 100vh;
+  float: left;
+}
+.nav_hitbox:hover nav{
   transform: translateX(0%);
 }
 nav{
@@ -146,7 +152,7 @@ h1{
     background: #242000;
   }
 .content_home{
-  width:70vw;
+  width:86vw;
   float: right;
   margin-right:100px;
 }
@@ -281,8 +287,13 @@ h1{
   border-bottom-left-radius: 10px;
   padding:5px;
 }
+.admin_page{
+  height:auto;
+  overflow: hidden;
+}
 .all_table{
-  overflow: auto;
+  max-height:70vh;
+  overflow-y: auto;
 }
 .line_table{
   display:flex;
@@ -295,23 +306,31 @@ h1{
   width:80vw;
   height:100px;
 }
+.index{
+  border:none;
+}
+.index .content_line{
+  background-color: #FDF7FA;
+  height:50%;
+  border:3px solid #242038;
+  border-radius: 100px;
+}
 .content_line{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width:calc(100%/6);
   text-align: center;
 }
 .content_admin{
   margin-left:80px;
-  height:90vh;
+  height:auto;
   color:#242038;
 }
 .button_table{
   display: flex;
   flex-direction: row;
-  position: absolute;
-  right: 10px;
-  margin-top:20px;
+  float:right;
 }
 .button_table a svg, .delete-btn{
   cursor:pointer;
@@ -330,6 +349,7 @@ h1{
   background-color: #FDF7FA;
 }
 .disconnect_button{
+  font-size: 20px;
   cursor: pointer;
   border:3px solid #242038;
   border-radius: 100px;
@@ -348,7 +368,10 @@ h1{
 }
 
 .head_admin{
-  width:35%;
+  font-size:20px;
+  padding-top: 30px;
+  padding-left: 30px;
+  width:50%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -401,5 +424,57 @@ h1{
   color: #FDF7FA;
 }
 .config_container{
-  float:right;
+  width:100vw;
+  height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+/* fichier-formation.php */
+
+.box-download {
+  text-align: center;
+  color: #242038;
+  font-size: 30px;
+  margin:0 auto;
+  margin-top:40px;
+  margin-bottom: 40px;
+  padding: 20px;
+  width: 400px;
+  float:none;
+  border-radius: 20px;
+  border: #75D2B4 5px solid;
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  box-shadow: 0 0 .2rem #fff,
+          0 0 .2rem #fff,
+          0 0 2rem #75D2B4,
+          0 0 0.8rem #75D2B4,
+          0 0 2.8rem #75D2B4,
+          inset 0 0 1.3rem #75D2B4;
+}
+
+.download-link{
+  text-align: center;
+  text-decoration: none;
+  color: #242038;
+  font-size: 20px;
+  margin:0 auto;
+  margin-top:40px;
+  margin-bottom: 40px;
+  padding: 8px;
+  width: 400px;
+  float:none;
+  border-radius: 20px;
+  box-shadow: 0 0 .2rem #fff,
+          0 0 .2rem #fff,
+          0 0 2rem #75D2B4,
+          0 0 0.8rem #75D2B4,
+          0 0 2.8rem #75D2B4,
+          inset 0 0 1.3rem #75D2B4;
 }
