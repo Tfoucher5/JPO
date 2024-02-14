@@ -182,12 +182,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-<<<<<<< HEAD
-        <form action="admin.php" method="post">
-=======
         <form action="home.php" method="post">
->>>>>>> e185b6283cd0b7afe57bfac92d5443731b173dd2
-<div class="label_box"></div>
             <div class="label_box">
         <label for="prenom">Prénom : </label>
             <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
@@ -272,9 +267,9 @@ if (isset($_POST['soumettre'])) {
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
 </div>
-</div>
-    <div class="label_box">
-                <label for="verif_RGPD">j'ai complété et signé la fiche de renseignement RGPD : </label>
+
+<div class="label_box">
+                <label for="verif_RGPD">J'ai complété et signé la fiche de renseignement RGPD : </label>
                 <input type="checkbox" name="verif_RGPD" id="verif_RGPD" />
 </div>
         <input type="submit"  name="soumettre" value="enregistrer" />
