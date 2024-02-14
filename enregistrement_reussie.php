@@ -63,11 +63,9 @@ if(isset($_REQUEST['Mode'])) {
             </a>
         </div>
     </nav>
-    <div class="content_home">
-    <div class="sun">
-        <div class="line"></div>
-    </div>
     <div class="info_enregistre">
+        <img src="icone-de-coche-violette.png"/>
+        </br>
         Vos informations ont bien été enregistrées.
         </br>
         </br>
