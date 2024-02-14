@@ -63,7 +63,7 @@ if (isset($_POST['download_csv'])) {
 }
 ?>
 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
