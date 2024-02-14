@@ -215,11 +215,11 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box_projet">
         <label for="projet">Notes : </label>
-        <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
+        <textarea name="projet" id="projet" style="width:1240px; margin-right:165px;" placeholder="Ajouter une note"></textarea>
     </div>
     <div class="label_box">
-                <label for="send_mail">Envoyer la fiche formation par mail : </label>
-                <input type="checkbox" name="send_mail" id="send_mail" />
+                <input type="checkbox" name="send_mail" style="width:100px;margin-right:1300px" id="send_mail" />
+                <label for="send_mail" style="margin-top:50px;">Envoyer la fiche formation par mail : </label>
 </div>
         <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
