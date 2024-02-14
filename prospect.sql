@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 14 fév. 2024 à 08:59
+-- Généré le : mer. 14 fév. 2024 à 10:06
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `prospect` (
   `decouverte_IIA` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `heure_enregistrement` datetime NOT NULL,
   PRIMARY KEY (`id_prospect`)
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `prospect`
@@ -63,7 +63,8 @@ INSERT INTO `prospect` (`id_prospect`, `prenom`, `nom`, `email`, `tel`, `adresse
 (59, 'Arya', 'Fran&ccedil;ois', 'arya.merlet@gmail.com', '0786373449', '3 rue du Docteur Zamenhof', 'Nantes', 44200, '', 'erer', '', 1, '5', '1', '2024-02-12 14:37:37'),
 (60, 'Arya', 'Bonnet', 'arya.merlet@gmail.com', '48768758758757', '3 rue du Docteur Zamenhof', 'Nantes', 44200, '', 'olujuj', '', 1, '5', '1', '2024-02-12 14:38:09'),
 (61, 'Teo', 'Bonnet', 'arya.merlet@gmail.com', '475875757', '3 rue du Docteur Zamenhof', 'Nantes', 44200, '', '^p&ugrave;p', '', 1, '5', '1', '2024-02-12 14:38:58'),
-(62, 'Claude', 'Bonnet', 't.merlet1996@gmail.com', '535463543', '3 rue du Docteur Zamenhof', 'Nantes', 44200, '', 'esserser', '', 1, '5', '1', '2024-02-12 14:43:00');
+(62, 'Claude', 'Bonnet', 't.merlet1996@gmail.com', '535463543', '3 rue du Docteur Zamenhof', 'Nantes', 44200, '', 'esserser', '', 1, '5', '1', '2024-02-12 14:43:00'),
+(63, 'Arya', 'Merlet', 'arya.merlet@gmail.com', '4755254254', '3 rue du Docteur Zamenhof', 'Nantes', 44350, 'BTS SIO SLAM', '', '', 0, '4', 'Recherche en ligne', '2024-02-14 10:00:30');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
