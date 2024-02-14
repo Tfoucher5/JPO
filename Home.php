@@ -1,11 +1,21 @@
 <?php
-
 // script de connexion
 require_once('base_donnee.php');
 
+include ("session_start.php");
+
+if(isset($_REQUEST['Mode'])) {
+    if ($_REQUEST['Mode'] == 'nuit'){
+        $_SESSION["Mode"]="nuit";
+    }
+    else{
+        $_SESSION["Mode"]="jour";
+    }
+}
+
 if (isset($_POST['soumettre'])) {
 
-    // on récupère les valeurs
+
     $prenom = htmlentities($_POST['prenom']);
     $nom = htmlentities($_POST['nom']);
     $mail = htmlentities($_POST['email']);
@@ -20,30 +30,32 @@ if (isset($_POST['soumettre'])) {
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
     $now = date('Y-m-d H:i:s');
 
-    //Ajouter les valeurs dans la base de données
-    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
+    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
-    $temp = $pdo->prepare($sql);
-    $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
-    $temp->Bindparam(":nom", $nom, PDO::PARAM_STR);
-    $temp->Bindparam(":mail", $mail, PDO::PARAM_STR);
-    $temp->Bindparam(":tel", $tel, PDO::PARAM_STR);
-    $temp->Bindparam(":adresse", $adresse, PDO::PARAM_STR);
-    $temp->Bindparam(":ville", $ville, PDO::PARAM_STR);
-    $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
-    $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
-    $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
-    $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
-    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
-    $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
-    $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
-    $temp->execute();
+    try {
+        $temp = $pdo->prepare($sql);
+        $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
+        $temp->Bindparam(":nom", $nom, PDO::PARAM_STR);
+        $temp->Bindparam(":mail", $mail, PDO::PARAM_STR);
+        $temp->Bindparam(":tel", $tel, PDO::PARAM_STR);
+        $temp->Bindparam(":adresse", $adresse, PDO::PARAM_STR);
+        $temp->Bindparam(":ville", $ville, PDO::PARAM_STR);
+        $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
+        $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
+        $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
+        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
+        $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
+        $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
+        $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
+        $temp->execute();
 
-    // Effectuer la redirection après la soumission du formulaire
-    header("Location: enregistrement_reussie.php ");
-    exit();
+        header("Location: enregistrement_reussie.php ");
+        exit();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        exit();
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -106,80 +118,82 @@ if (isset($_POST['soumettre'])) {
     </div>
         <div class="label_home">
         <form action="Home.php" method="post">
-<div class="label_box"></div>
             <div class="label_box">
         <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+    </div>
+    <div class="label_box">
         <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" placeholder="Nom" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="nom" id="nom" placeholder="Nom" required />
+    </div>
+    <div class="label_box">
         <label for="email">Email : </label> 
-            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+    </div>
+    <div class="label_box">
         <label for="telephone">Téléphone : </label>
-            <input type="number" name="tel" id="tel" placeholder="telephone" required />
-</div>
-            <div class="label_box">
+        <input type="tel" name="tel" id="tel" placeholder="telephone" required />
+    </div>
+    <div class="label_box">
         <label for="adresse">Adresse : </label>
-            <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
+    </div>
+    <div class="label_box">
         <label for="ville">Ville : </label>
-            <input type="text" name="ville" id="ville" placeholder="ville" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="ville" id="ville" placeholder="ville" required />
+    </div>
+    <div class="label_box">
         <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
-</div>
-            
-            <div class="label_box select_box">
-            <label for="pre-inscrit">Pré inscrit : </label>
+        <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
+    </div>
+    <div class="label_box select_box">
+        <label for="pre_inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
             <option value="1">Oui</option>
             <option value="0">Non</option>
         </select>
-        <label for="niveau-etude">Niveau d'étude : </label>
+    </div>
+    <div class="label_box select_box">
+        <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-            <option value="5">CAP</option>
             <option value="4">BAC</option>
             <option value="3">Bac +2</option>
             <option value="2">Licence</option>
             <option value="1">Master</option>
+            <option value="5">CAP</option>
+            <option value="6">Autre</option>
         </select>
-</div>
-        <div class="label_box select_box">
-        <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
+    </div>
+    <div class="label_box select_box">
+        <label for="decouverte_IIA">Comment nous avez-vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
-            <option value="1">Recherches en ligne</option>
-            <option value="2">Publicité en ligne</option>
-            <option value="3">réseaux sociaux</option>
-            <option value="4">Salons</option>
-            <option value="5">Bouche a oreille</option>
-            <option value="6">Autres</option>
+            <?php
+            $sql = "SELECT * FROM connaissance";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat = $temp->fetch()){
+                echo '<option value="'.$resultat['moyen'].'">'.$resultat['moyen'].'</option>';
+            }
+            ?>
         </select>
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
         <select name="formation_envisagee" id="formation_envisagee" required>
-            <option value="1">BTS SIO SLAM</option>
-            <option value="2">BTS SIO SLAM en alternance</option>
-            <option value="3">BTS SIO SISR</option>
-            <option value="4">BTS SIO SISR en alternance</option>
-            <option value="5">Licence SIO SLAM en alternance</option>
-            <option value="6">Licence SIO SISR en alternance</option>
-            <option value="7">Master Lead Developpeur en alternance</option>
-            <option value="8">Master Manager Cybersécurité en alternance</option>
-            <option value="9">Développeur Web et Web mobile</option>
+            <?php
+            $sql = "SELECT nom AS formation FROM formation";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat = $temp->fetch()){
+                echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
+            }
+            ?>
         </select>
-</div>
+    </div>
     <div class="label_box_projet">
-                <label for="projet">Projet : </label>
-                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
-</div>
+        <label for="projet">Notes : </label>
+        <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
+    </div>
     <div class="label_box">
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
@@ -187,11 +201,6 @@ if (isset($_POST['soumettre'])) {
         <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
         </div>
-    </div>
-    <div>
-        <?php
-            
-        ?>
     </div>
 </body>
 </html>
