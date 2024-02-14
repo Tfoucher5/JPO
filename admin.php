@@ -185,6 +185,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             $pdo->exec($del);
             header('Location: admin.php');
             exit();
+
     }
     ?>
     <div class="content_admin">
