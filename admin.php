@@ -133,8 +133,7 @@ if (isset($_POST['download_csv'])) {
             header('Location: admin.php');
             exit();
     }
-    echo '<div class="content_admin">
-    <div class="card" id="makepdf">';
+    echo '<div class="content_admin">';
     echo '<div class="head_admin">';
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
     echo '<form action="deconnexion.php" method="post">
