@@ -3,34 +3,24 @@
 // script de connexion
 require_once('base_donnee.php');
 
-include ("session_start.php");
-if(isset($_REQUEST['Mode'])) {
-    if ($_REQUEST['Mode'] == 'nuit'){
-        $_SESSION["Mode"]="nuit";
-    }
-    else{
-        $_SESSION["Mode"]="jour";
-    }
-}
 if (isset($_POST['soumettre'])) {
 
-     // on récupère les valeurs
-     $prenom = htmlentities($_POST['prenom']);
-     $nom = htmlentities($_POST['nom']);
-     $mail = htmlentities($_POST['email']);
-     $tel = htmlentities($_POST['tel']);
-     $adresse = htmlentities($_POST['adresse']);
-     $ville = htmlentities($_POST['ville']);
-     $code_postal = htmlentities($_POST['code-postal']);
-     $projet = htmlentities($_POST['projet']);
-     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-     $niveau_etude = htmlentities($_POST['niveau_etude']);
-     $connaissance = htmlentities($_POST['decouverte_IIA']);
-     $formation = htmlentities($_POST['formation']);
-     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-     $now = date('Y-m-d H:i:s');
+    // on récupère les valeurs
+    $prenom = htmlentities($_POST['prenom']);
+    $nom = htmlentities($_POST['nom']);
+    $mail = htmlentities($_POST['email']);
+    $tel = htmlentities($_POST['tel']);
+    $adresse = htmlentities($_POST['adresse']);
+    $ville = htmlentities($_POST['ville']);
+    $code_postal = htmlentities($_POST['code-postal']);
+    $projet = htmlentities($_POST['projet']);
+    $pre_inscrit = htmlentities($_POST['pre_inscrit']);
+    $niveau_etude = htmlentities($_POST['niveau_etude']);
+    $connaissance = htmlentities($_POST['decouverte_IIA']);
+    $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
+    $now = date('Y-m-d H:i:s');
 
-    // Ajouter les valeurs dans la base de données
+    //Ajouter les valeurs dans la base de données
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
     $temp = $pdo->prepare($sql);
@@ -44,13 +34,13 @@ if (isset($_POST['soumettre'])) {
     $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
     $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
     $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
-    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
+    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
     $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
     $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
     $temp->execute();
 
     // Effectuer la redirection après la soumission du formulaire
-    header("Location: Home.php");
+    header("Location: enregistrement_reussie.php ");
     exit();
 }
 
@@ -62,7 +52,7 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
+    <link rel="stylesheet" href="stylenuit.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
@@ -90,7 +80,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
         <div class="nav_container">
-        <a href="MentionsLegales.php">
+        <a href="MentionsLegales.html">
             <div class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v.756a49.106 49.106 0 0 1 9.152 1 .75.75 0 0 1-.152 1.485h-1.918l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 18.75 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84l2.474-10.124H12.75v13.28c1.293.076 2.534.343 3.697.776a.75.75 0 0 1-.262 1.453h-8.37a.75.75 0 0 1-.262-1.453c1.162-.433 2.404-.7 3.697-.775V6.24H6.332l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 5.25 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84L4.168 6.241H2.25a.75.75 0 0 1-.152-1.485 49.105 49.105 0 0 1 9.152-1V3a.75.75 0 0 1 .75-.75Zm4.878 13.543 1.872-7.662 1.872 7.662h-3.744Zm-9.756 0L5.25 8.131l-1.872 7.662h3.744Z" clip-rule="evenodd" />
@@ -100,7 +90,7 @@ if (isset($_POST['soumettre'])) {
         </a>
         </div>
         <div class="nav_container">
-            <a href="configuration.php">
+            <a href="#">
                 <div class="button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
@@ -115,7 +105,8 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="home.php" method="post">
+        <form action="Home.php" method="post">
+<div class="label_box"></div>
             <div class="label_box">
         <label for="prenom">Prénom : </label>
             <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
@@ -148,80 +139,59 @@ if (isset($_POST['soumettre'])) {
             <div class="label_box select_box">
             <label for="pre-inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
-            <option value="0">Non</option>
             <option value="1">Oui</option>
+            <option value="0">Non</option>
         </select>
         <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
+            <option value="5">CAP</option>
             <option value="4">BAC</option>
             <option value="3">Bac +2</option>
             <option value="2">Licence</option>
             <option value="1">Master</option>
-            <option value="5">CAP</option>
-            <option value="6">autre</option>
         </select>
 </div>
         <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
-            <?php
-            $sql = "SELECT * FROM connaissance";
-            $temp=$pdo->prepare($sql);
-            $temp->execute(); 
-            while($resultat=$temp->fetch()){
-                if($resultat['moyen']!='autre'){
-                echo '<option value="'.$resultat['moyen'].'">'.$resultat['moyen'].'</option>';
-                }else{
-                    echo '<option value="'.$resultat['moyen'].'" onchange="fonctionAutre()">'.$resultat['moyen'].'</option>';
-                }
-            }
-            ?>
+            <option value="1">Recherches en ligne</option>
+            <option value="2">Publicité en ligne</option>
+            <option value="3">réseaux sociaux</option>
+            <option value="4">Salons</option>
+            <option value="5">Bouche a oreille</option>
+            <option value="6">Autres</option>
         </select>
-        <div id="txtautre"><input style="display:none" type="text" name="decouverte_IIA" id="decouverte_IIA" placeholder="Autre raison" required ></div>
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
         <select name="formation_envisagee" id="formation_envisagee" required>
-        <?php
-            $sql = "SELECT nom AS formation FROM formation";
-            $temp=$pdo->prepare($sql);
-            $temp->execute(); 
-            while($resultat=$temp->fetch()){
-                echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
-            }
-            ?>
+            <option value="1">BTS SIO SLAM</option>
+            <option value="2">BTS SIO SLAM en alternance</option>
+            <option value="3">BTS SIO SISR</option>
+            <option value="4">BTS SIO SISR en alternance</option>
+            <option value="5">Licence SIO SLAM en alternance</option>
+            <option value="6">Licence SIO SISR en alternance</option>
+            <option value="7">Master Lead Developpeur en alternance</option>
+            <option value="8">Master Manager Cybersécurité en alternance</option>
+            <option value="9">Développeur Web et Web mobile</option>
         </select>
 </div>
     <div class="label_box_projet">
-                <label for="projet">Notes : </label>
-                <textarea type="text" name="projet" id="projet" placeholder="ajouter une note" required ></textarea>
+                <label for="projet">Projet : </label>
+                <textarea type="text" name="projet" id="projet" placeholder="votre projet" required ></textarea>
 </div>
     <div class="label_box">
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
 </div>
-
-<div class="label_box">
-                <label for="verif_RGPD">J'ai complété et signé la fiche de renseignement RGPD : </label>
-                <input type="checkbox" name="verif_RGPD" id="verif_RGPD" />
-</div>
-        <input type="submit"  name="soumettre" value="enregistrer" />
+        <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
-<script>
-    function fonctionAutre(str){
-        if (str=="") {
-    document.getElementById("txtautre").innerHTML="";
-    return;
-  }
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("txtautre").innerHTML = this.responseText;
-            }
-        };
-    }
-</script>
+    <div>
+        <?php
+            
+        ?>
+    </div>
 </body>
 </html>
