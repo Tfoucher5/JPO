@@ -80,7 +80,7 @@ require_once('base_donnee.php')
     // renomer les numériques
     // bouton modifier + bouton supprimer
     
-    $sql='SELECT * FROM prospect,connaissance,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau AND connaissance.id_connaissance=prospect.decouverte_IIA ORDER BY id_prospect';
+    $sql='SELECT * FROM prospect ORDER BY id_prospect';
     $temp=$pdo->prepare($sql);
     $temp->execute();
 

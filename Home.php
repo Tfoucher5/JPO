@@ -29,6 +29,7 @@ if (isset($_POST['soumettre'])) {
      $pre_inscrit = htmlentities($_POST['pre_inscrit']);
      $niveau_etude = htmlentities($_POST['niveau_etude']);
      $connaissance = htmlentities($_POST['decouverte_IIA']);
+     $formation = htmlentities($_POST['formation']);
      $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
      $now = date('Y-m-d H:i:s');
     
@@ -110,7 +111,7 @@ if (isset($_POST['soumettre'])) {
     $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
     $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
     $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
-    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_INT);
+    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
     $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
     $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
     $temp->execute();
@@ -181,7 +182,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="enregistrement_reussie.php" method="post">
+        <form action="home.php" method="post">
 <div class="label_box"></div>
             <div class="label_box">
         <label for="prenom">Prénom : </label>
@@ -220,11 +221,12 @@ if (isset($_POST['soumettre'])) {
         </select>
         <label for="niveau-etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-            <option value="5">CAP</option>
             <option value="4">BAC</option>
             <option value="3">Bac +2</option>
             <option value="2">Licence</option>
             <option value="1">Master</option>
+            <option value="5">CAP</option>
+            <option value="6">autre</option>
         </select>
 </div>
         <div class="label_box select_box">
@@ -248,15 +250,14 @@ if (isset($_POST['soumettre'])) {
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
         <select name="formation_envisagee" id="formation_envisagee" required>
-            <option value="1">BTS SIO SLAM</option>
-            <option value="2">BTS SIO SLAM en alternance</option>
-            <option value="3">BTS SIO SISR</option>
-            <option value="4">BTS SIO SISR en alternance</option>
-            <option value="5">Licence SIO SLAM en alternance</option>
-            <option value="6">Licence SIO SISR en alternance</option>
-            <option value="7">Master Lead Developpeur en alternance</option>
-            <option value="8">Master Manager Cybersécurité en alternance</option>
-            <option value="9">Développeur Web et Web mobile</option>
+        <?php
+            $sql = "SELECT nom AS formation FROM formation";
+            $temp=$pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat=$temp->fetch()){
+                echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
+            }
+            ?>
         </select>
 </div>
     <div class="label_box_projet">
@@ -266,6 +267,11 @@ if (isset($_POST['soumettre'])) {
     <div class="label_box">
                 <label for="send_mail">Envoyer la fiche formation par mail : </label>
                 <input type="checkbox" name="send_mail" id="send_mail" />
+</div>
+</div>
+    <div class="label_box">
+                <label for="verif_RGPD">j'ai complété et signé la fiche de renseignement RGPD : </label>
+                <input type="checkbox" name="verif_RGPD" id="verif_RGPD" />
 </div>
         <input type="submit"  name="soumettre" value="enregistrer" />
     </form>
