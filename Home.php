@@ -65,12 +65,13 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="stylenuit.css">
+    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="nav_hitbox">
 <nav>
         <div>
              <div class="button_active">
@@ -113,6 +114,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
     </nav>
+    </div>
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>

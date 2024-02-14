@@ -18,6 +18,7 @@ if(isset($_REQUEST['Mode'])) {
     <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
 </head>
 <body>
+    <div class="nav_hitbox">
     <nav>
         <div class="nav_container">
             <a href="Home.php">
@@ -58,6 +59,7 @@ if(isset($_REQUEST['Mode'])) {
             </a>
         </div>
     </nav>
+    </div>
     <H1>Mentions légales</H1>
     <div class="content_ML">
         <div class="text_content">

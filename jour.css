@@ -6,7 +6,13 @@
 body{
     background-color: #FDF7FA;
 }
-nav:hover{
+.nav_hitbox{
+  position: fixed;
+  width: 150px;
+  height: 100vh;
+  float: left;
+}
+.nav_hitbox:hover nav{
   transform: translateX(0%);
 }
 nav{
@@ -377,6 +383,10 @@ h1{
           0 0 0.8rem #75D2B4,
           0 0 2.8rem #75D2B4,
           inset 0 0 1.3rem #75D2B4;
+}
+
+.info_enregistre img{
+  width: 300px;
 }
 
 .retour_button{
