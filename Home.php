@@ -125,11 +125,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-<<<<<<< HEAD
-        <form action="enre.php" method="post">
-=======
         <form action="Home.php" method="post">
->>>>>>> 03a8c10f705942a03d18d3ba9f472ec1e69a21c4
             <div class="label_box">
         <label for="prenom">Prénom : </label>
         <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
