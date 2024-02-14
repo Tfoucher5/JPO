@@ -54,6 +54,9 @@ if (isset($_POST['soumettre'])) {
             header("Location: fichier-formation.php");
             exit();
         }
+        else 
+            header("Location: enregistrement_reussie.php");
+            exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit();
@@ -122,7 +125,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="enregistrement_reussie.php" method="post">
+        <form action="Home.php" method="post">
             <div class="label_box">
         <label for="prenom">Prénom : </label>
         <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
