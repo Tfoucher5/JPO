@@ -13,16 +13,7 @@ if(isset($_REQUEST['Mode'])) {
     }
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-
-var_dump($_POST);
 if (isset($_POST['soumettre'])) {
-    if(empty($_POST['prenom']) || empty($_POST['nom']) || empty($_POST['email']) || empty($_POST['tel']) || empty($_POST['adresse']) || empty($_POST['ville']) || empty($_POST['code-postal']) || empty($_POST['pre_inscrit']) || empty($_POST['niveau_etude']) || empty($_POST['decouverte_IIA']) || empty($_POST['formation_envisagee'])) {
-        echo "All fields are required.";
-        exit();
-    }
 
 
     $prenom = htmlentities($_POST['prenom']);
@@ -39,7 +30,7 @@ if (isset($_POST['soumettre'])) {
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
     $now = date('Y-m-d H:i:s');
 
-    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
+    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
     try {
         $temp = $pdo->prepare($sql);
@@ -126,7 +117,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="home.php" method="post">
+        <form action="Home.php" method="post">
             <div class="label_box">
         <label for="prenom">Prénom : </label>
         <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
@@ -185,7 +176,6 @@ if (isset($_POST['soumettre'])) {
             }
             ?>
         </select>
-        <div id="txtautre"><input style="display:none" type="text" name="autre_raison" id="autre_raison" placeholder="Autre raison" required /></div>
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
