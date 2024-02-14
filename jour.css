@@ -413,3 +413,28 @@ h1{
   justify-content: center;
   align-items: center;
 }
+
+
+
+
+/* fichier-formation.php */
+
+.box-download {
+  text-align: center;
+  color: #242038;
+  font-size: 30px;
+  margin:0 auto;
+  margin-top:40px;
+  margin-bottom: 40px;
+  padding: 20px;
+  width: 400px;
+  float:none;
+  border-radius: 20px;
+  border: #75D2B4 5px solid;
+  box-shadow: 0 0 .2rem #fff,
+          0 0 .2rem #fff,
+          0 0 2rem #75D2B4,
+          0 0 0.8rem #75D2B4,
+          0 0 2.8rem #75D2B4,
+          inset 0 0 1.3rem #75D2B4;
+}

@@ -27,7 +27,8 @@ if(isset($_REQUEST['Mode'])) {
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<nav>
+<div class="nav_hitbox">
+    <nav>
         <div class="nav_container">
             <a href="Home.php">
                 <div class="button">
@@ -70,30 +71,14 @@ if(isset($_REQUEST['Mode'])) {
             </a>
         </div>
     </nav>
-    <div class="content_home">
+</div>
+    <div class="box-download">
     <?php
-        // Checkbox is checked, display content
-        echo '<h2>Fichier de formation</h2>';
-        
-        // Add logic to determine and display the appropriate content based on the selected formation
-        $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
-        $chemins_fichiers = array(
-            'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
-            'BTS SIO SISR' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
-            'LIC SIO SLAM' => 'Fiches formations/licence-informatique-en-alternance-developpement.pdf',
-            'LIC SIO SISR' => 'Fiches formations/licence-informatique-en-alternance-cybersecurite.pdf',
-            'MASTER LEAD DEVELOPEUR' => 'Fiches formations/lead-dev-bac5.pdf',
-            'MASTER MANAGER CYBERSECURITE' => 'Fiches formations/manager-cybersecurite-bac5.pdf',
-        );
-        
-        $chemin_fichier = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
-
-        echo '<p>Texte explicatif...</p>';
-        if ($chemin_fichier) {
-            echo '<a href="' . $chemin_fichier . '" download>Télécharger la fiche de formation</a>';
-        } else {
-            echo '<p>Aucun fichier disponible pour la formation sélectionnée.</p>';
-        }
+    if ($_SESSION['chemin_fichier']) {
+        echo '<a href="' . $_SESSION['chemin_fichier'] . '" download>Télécharger la fiche de formation</a>';
+    } else {
+        echo '<p>Aucun fichier disponible pour la formation sélectionnée.</p>';
+    }
     ?>
     </div>
 </body>

@@ -30,6 +30,19 @@ if (isset($_POST['soumettre'])) {
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
     $now = date('Y-m-d H:i:s');
 
+    // Add logic to determine and display the appropriate content based on the selected formation
+    $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
+    $chemins_fichiers = array(
+        'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
+        'BTS SIO SISR' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
+        'LIC SIO SLAM' => 'Fiches formations/licence-informatique-en-alternance-developpement.pdf',
+        'LIC SIO SISR' => 'Fiches formations/licence-informatique-en-alternance-cybersecurite.pdf',
+        'MASTER LEAD DEVELOPEUR' => 'Fiches formations/lead-dev-bac5.pdf',
+        'MASTER MANAGER CYBERSECURITE' => 'Fiches formations/manager-cybersecurite-bac5.pdf',
+    );
+    
+    $_SESSION['chemin_fichier'] = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
+
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
     try {
@@ -125,11 +138,7 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-<<<<<<< HEAD
-        <form action="enre.php" method="post">
-=======
         <form action="Home.php" method="post">
->>>>>>> 03a8c10f705942a03d18d3ba9f472ec1e69a21c4
             <div class="label_box">
         <label for="prenom">Prénom : </label>
         <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
