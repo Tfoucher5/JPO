@@ -1,12 +1,9 @@
 <?php
-
 // script de connexion
 require_once('base_donnee.php');
-require_once('vendor/autoload.php');
-
-use PHPMailer\PHPMailer\PHPMailer;
 
 include ("session_start.php");
+
 if(isset($_REQUEST['Mode'])) {
     if ($_REQUEST['Mode'] == 'nuit'){
         $_SESSION["Mode"]="nuit";
@@ -15,112 +12,64 @@ if(isset($_REQUEST['Mode'])) {
         $_SESSION["Mode"]="jour";
     }
 }
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Debug output to check form data
+var_dump($_POST);
 if (isset($_POST['soumettre'])) {
-
-     // on récupère les valeurs
-     $prenom = htmlentities($_POST['prenom']);
-     $nom = htmlentities($_POST['nom']);
-     $mail = htmlentities($_POST['email']);
-     $tel = htmlentities($_POST['tel']);
-     $adresse = htmlentities($_POST['adresse']);
-     $ville = htmlentities($_POST['ville']);
-     $code_postal = htmlentities($_POST['code-postal']);
-     $projet = htmlentities($_POST['projet']);
-     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-     $niveau_etude = htmlentities($_POST['niveau_etude']);
-     $connaissance = htmlentities($_POST['decouverte_IIA']);
-     $formation = htmlentities($_POST['formation']);
-     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-     $now = date('Y-m-d H:i:s');
-    
-    // Définir un tableau des chemins des fichiers correspondant à chaque option de la liste déroulante
-    $chemins_fichiers = array(
-        '1' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
-        '2' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
-        '3' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
-        '4' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
-        '5' => 'Fiches formations/licence-informatique-en-alternance-developpement.pdf',
-        '6' => 'Fiches formations/licence-informatique-en-alternance-cybersecurite.pdf',
-        '7' => 'Fiches formations/lead-dev-bac5.pdf',
-        '8' => 'Fiches formations/manager-cybersecurite-bac5.pdf',
-        '9' => 'Fiches formations/developpeur-web-et-web-mobile-bac2.pdf',
-    );
-
-    // Traitement du fichier et envoi par email
-    if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on' && isset($_POST['formation_envisagee'])) {
-        // Récupérer le chemin du fichier correspondant à la formation sélectionnée
-        $formation_selectionnee = $_POST['formation_envisagee'];
-        $chemin_fichier = $chemins_fichiers[$formation_selectionnee];
-
-        // Destinataire de l'email
-        $destinataire = $mail;
-
-        // Sujet de l'email
-        $sujet = 'Fichier de la formation envisagée';
-
-        // Message de l'email
-        $message = 'Veuillez trouver ci-joint le fichier correspondant à la formation souhaitée.';
-
-        
-
-        // Création de l'objet PHPMailer
-        $mailer = new PHPMailer();
-
-        // Configuration du serveur SMTP (Gmail dans cet exemple)
-        $mailer->isSMTP();
-        $mailer->Host = 'smtp.gmail.com';
-        $mailer->SMTPAuth = true;
-        $mailer->Username = 'testenvoi.mailiia@gmail.com';
-        $mailer->Password = "Testdel'envoi";
-        $mailer->SMTPSecure = 'tls';
-        $mailer->Port = 587;
-
-        // Configuration du message
-        $mailer->setFrom('testenvoi.mailiia@gmail.com', 'Theo');
-        $mailer->addAddress($destinataire);
-        $mailer->Subject = $sujet;
-        $mailer->Body = $message;
-
-        // Ajout du fichier en tant que pièce jointe
-        $mailer->addAttachment($chemin_fichier, basename($chemin_fichier));
-        
-        // En-têtes de l'email
-        $headers = 'From: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'Reply-To: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-        // Envoi de l'e-mail
-        if ($mailer->send()) {
-            echo 'E-mail envoyé avec succès.';
-        } else {
-            echo 'Erreur lors de l\'envoi de l\'e-mail: ' . $mailer->ErrorInfo;
-        }
+    // Server-side validation
+    if(empty($_POST['prenom']) || empty($_POST['nom']) || empty($_POST['email']) || empty($_POST['tel']) || empty($_POST['adresse']) || empty($_POST['ville']) || empty($_POST['code-postal']) || empty($_POST['pre_inscrit']) || empty($_POST['niveau_etude']) || empty($_POST['decouverte_IIA']) || empty($_POST['formation_envisagee'])) {
+        // Handle validation error (you can customize this according to your needs)
+        echo "All fields are required.";
+        exit();
     }
 
-    // Ajouter les valeurs dans la base de données
+    // Sanitize form inputs
+    $prenom = htmlentities($_POST['prenom']);
+    $nom = htmlentities($_POST['nom']);
+    $mail = htmlentities($_POST['email']);
+    $tel = htmlentities($_POST['tel']);
+    $adresse = htmlentities($_POST['adresse']);
+    $ville = htmlentities($_POST['ville']);
+    $code_postal = htmlentities($_POST['code-postal']);
+    $projet = htmlentities($_POST['projet']);
+    $pre_inscrit = htmlentities($_POST['pre_inscrit']);
+    $niveau_etude = htmlentities($_POST['niveau_etude']);
+    $connaissance = htmlentities($_POST['decouverte_IIA']);
+    $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
+    $now = date('Y-m-d H:i:s');
+
+    // Insert data into the database
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
-    $temp = $pdo->prepare($sql);
-    $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
-    $temp->Bindparam(":nom", $nom, PDO::PARAM_STR);
-    $temp->Bindparam(":mail", $mail, PDO::PARAM_STR);
-    $temp->Bindparam(":tel", $tel, PDO::PARAM_STR);
-    $temp->Bindparam(":adresse", $adresse, PDO::PARAM_STR);
-    $temp->Bindparam(":ville", $ville, PDO::PARAM_STR);
-    $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
-    $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
-    $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
-    $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
-    $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
-    $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
-    $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
-    $temp->execute();
+    try {
+        $temp = $pdo->prepare($sql);
+        $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
+        $temp->Bindparam(":nom", $nom, PDO::PARAM_STR);
+        $temp->Bindparam(":mail", $mail, PDO::PARAM_STR);
+        $temp->Bindparam(":tel", $tel, PDO::PARAM_STR);
+        $temp->Bindparam(":adresse", $adresse, PDO::PARAM_STR);
+        $temp->Bindparam(":ville", $ville, PDO::PARAM_STR);
+        $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
+        $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
+        $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
+        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
+        $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
+        $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
+        $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
+        $temp->execute();
 
-    // Effectuer la redirection après la soumission du formulaire
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
+        // Redirect after successful form submission
+        header("Location: enregistrement_reussie.php ");
+        exit();
+    } catch (PDOException $e) {
+        // Handle database error
+        echo "Error: " . $e->getMessage();
+        exit();
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -183,113 +132,91 @@ if (isset($_POST['soumettre'])) {
     </div>
         <div class="label_home">
         <form action="home.php" method="post">
-<div class="label_box"></div>
-            <div class="label_box">
+    <div class="label_box">
         <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+    </div>
+    <div class="label_box">
         <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" placeholder="Nom" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="nom" id="nom" placeholder="Nom" required />
+    </div>
+    <div class="label_box">
         <label for="email">Email : </label> 
-            <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+    </div>
+    <div class="label_box">
         <label for="telephone">Téléphone : </label>
-            <input type="number" name="tel" id="tel" placeholder="telephone" required />
-</div>
-            <div class="label_box">
+        <input type="tel" name="tel" id="tel" placeholder="telephone" required />
+    </div>
+    <div class="label_box">
         <label for="adresse">Adresse : </label>
-            <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
+    </div>
+    <div class="label_box">
         <label for="ville">Ville : </label>
-            <input type="text" name="ville" id="ville" placeholder="ville" required />
-</div>
-            <div class="label_box">
+        <input type="text" name="ville" id="ville" placeholder="ville" required />
+    </div>
+    <div class="label_box">
         <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
-</div>
-            
-            <div class="label_box select_box">
-            <label for="pre-inscrit">Pré inscrit : </label>
+        <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
+    </div>
+    <div class="label_box select_box">
+        <label for="pre_inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
             <option value="0">Non</option>
             <option value="1">Oui</option>
         </select>
-        <label for="niveau-etude">Niveau d'étude : </label>
+    </div>
+    <div class="label_box select_box">
+        <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
             <option value="4">BAC</option>
             <option value="3">Bac +2</option>
             <option value="2">Licence</option>
             <option value="1">Master</option>
             <option value="5">CAP</option>
-            <option value="6">autre</option>
+            <option value="6">Autre</option>
         </select>
-</div>
-        <div class="label_box select_box">
-        <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
+    </div>
+    <div class="label_box select_box">
+        <label for="decouverte_IIA">Comment nous avez-vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
             <?php
             $sql = "SELECT * FROM connaissance";
-            $temp=$pdo->prepare($sql);
+            $temp = $pdo->prepare($sql);
             $temp->execute(); 
-            while($resultat=$temp->fetch()){
-                if($resultat['moyen']!='autre'){
+            while($resultat = $temp->fetch()){
                 echo '<option value="'.$resultat['moyen'].'">'.$resultat['moyen'].'</option>';
-                }else{
-                    echo '<option value="'.$resultat['moyen'].'" onchange="fonctionAutre()">'.$resultat['moyen'].'</option>';
-                }
             }
             ?>
         </select>
-        <div id="txtautre"><input style="display:none" type="text" name="decouverte_IIA" id="decouverte_IIA" placeholder="Autre raison" required ></div>
+        <div id="txtautre"><input style="display:none" type="text" name="autre_raison" id="autre_raison" placeholder="Autre raison" required /></div>
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
         <select name="formation_envisagee" id="formation_envisagee" required>
-        <?php
+            <?php
             $sql = "SELECT nom AS formation FROM formation";
-            $temp=$pdo->prepare($sql);
+            $temp = $pdo->prepare($sql);
             $temp->execute(); 
-            while($resultat=$temp->fetch()){
+            while($resultat = $temp->fetch()){
                 echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
             }
             ?>
         </select>
-</div>
+    </div>
     <div class="label_box_projet">
-                <label for="projet">Notes : </label>
-                <textarea type="text" name="projet" id="projet" placeholder="ajouter une note" required ></textarea>
-</div>
+        <label for="projet">Notes : </label>
+        <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
+    </div>
     <div class="label_box">
-                <label for="send_mail">Envoyer la fiche formation par mail : </label>
-                <input type="checkbox" name="send_mail" id="send_mail" />
-</div>
-</div>
-    <div class="label_box">
-                <label for="verif_RGPD">j'ai complété et signé la fiche de renseignement RGPD : </label>
-                <input type="checkbox" name="verif_RGPD" id="verif_RGPD" />
-</div>
-        <input type="submit"  name="soumettre" value="enregistrer" />
-    </form>
+        <label for="send_mail">Envoyer la fiche formation par mail : </label>
+        <input type="checkbox" name="send_mail" id="send_mail" />
+    </div>
+    <input type="submit" name="soumettre" value="Enregistrer" />
+</form>
+
         </div>
     </div>
-<script>
-    function fonctionAutre(str){
-        if (str=="") {
-    document.getElementById("txtautre").innerHTML="";
-    return;
-  }
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("txtautre").innerHTML = this.responseText;
-            }
-        };
-    }
-</script>
 </body>
 </html>
