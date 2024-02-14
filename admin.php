@@ -132,7 +132,9 @@ if (isset($_POST['download_csv'])) {
             $pdo->exec($del);
             header('Location: admin.php');
             exit();
+
     }
+
     echo '<div class="content_admin">';
     echo '<div class="head_admin">';
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
