@@ -30,6 +30,21 @@ if (isset($_POST['soumettre'])) {
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
     $now = date('Y-m-d H:i:s');
 
+    if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on'); {
+        $email = $_POST['email'];
+        $subject = "Fiche de la formation sélectionnée lors des JPO";
+        $message = "Suite à votre visite lors de nos portes ouvertes, nous vous envoyons ci-joint la fiche de formation correspondante à la formation que vous envisagez à savoir : " . $formation_souhaitee;
+        
+        $header = "MIME-Version:1.0\n";
+        $header .= "FROM: 'Institut Informatique Appliquée'<theonicolas.foucher@gmail.com>";
+        $header .= "Content-Type: text/html;charset = utf-8";
+        $header .= "Content-Transfer-Encoding: 8bit";
+
+        mail($email, $subject, $message, $header);
+
+    }
+
+
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
     try {
