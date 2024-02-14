@@ -71,12 +71,8 @@ if (isset($_POST['download_csv'])) {
 </head>
 
 <body>
-<<<<<<< HEAD
-    <nav>
-=======
     <div class="nav_hitbox">
 <nav>
->>>>>>> 431907ede323df7f8c5145eda471dedfddd0ce87
         <div class="nav_container">
             <a href="Home.php">
                 <div class="button">
@@ -86,11 +82,7 @@ if (isset($_POST['download_csv'])) {
                     </svg>
                 </div>
             </a>
-<<<<<<< HEAD
-        </div>
-=======
              </div>
->>>>>>> 431907ede323df7f8c5145eda471dedfddd0ce87
         <div>
             <div class="button_active">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
