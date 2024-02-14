@@ -73,11 +73,13 @@ if(isset($_REQUEST['Mode'])) {
     </nav>
 </div>
     <div class="box-download">
+    <p class="text-formation">Voici votre fiche correspondant à la formation choisie :</p><br />
     <?php
     if ($_SESSION['chemin_fichier']) {
-        echo '<a href="' . $_SESSION['chemin_fichier'] . '" download>Télécharger la fiche de formation</a>';
+        echo '<a class="download-link" href="' . $_SESSION['chemin_fichier'] . '" download>Télécharger la fiche de formation</a><br /><br />';
+        echo '<a class="retour_button" href="Home.php">retour</a><br />';
     } else {
-        echo '<p>Aucun fichier disponible pour la formation sélectionnée.</p>';
+        echo '<p class="text-error">Aucun fichier disponible pour la formation sélectionnée.</p>';
     }
     ?>
     </div>
