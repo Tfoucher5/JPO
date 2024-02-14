@@ -91,6 +91,7 @@ if (isset($_POST['soumettre'])) {
 
 </head>
 <body>
+    <div class="nav_hitbox">
 <nav>
         <div>
              <div class="button_active">
@@ -133,6 +134,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
     </nav>
+    </div>
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>
