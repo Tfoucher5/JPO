@@ -2,9 +2,6 @@
 
 // script de connexion
 require_once('base_donnee.php');
-require_once('vendor/autoload.php');
-
-use PHPMailer\PHPMailer\PHPMailer;
 
 include ("session_start.php");
 if(isset($_REQUEST['Mode'])) {
@@ -32,70 +29,6 @@ if (isset($_POST['soumettre'])) {
      $formation = htmlentities($_POST['formation']);
      $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
      $now = date('Y-m-d H:i:s');
-    
-    // Définir un tableau des chemins des fichiers correspondant à chaque option de la liste déroulante
-    $chemins_fichiers = array(
-        '1' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
-        '2' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
-        '3' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
-        '4' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
-        '5' => 'Fiches formations/licence-informatique-en-alternance-developpement.pdf',
-        '6' => 'Fiches formations/licence-informatique-en-alternance-cybersecurite.pdf',
-        '7' => 'Fiches formations/lead-dev-bac5.pdf',
-        '8' => 'Fiches formations/manager-cybersecurite-bac5.pdf',
-        '9' => 'Fiches formations/developpeur-web-et-web-mobile-bac2.pdf',
-    );
-
-    // Traitement du fichier et envoi par email
-    if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on' && isset($_POST['formation_envisagee'])) {
-        // Récupérer le chemin du fichier correspondant à la formation sélectionnée
-        $formation_selectionnee = $_POST['formation_envisagee'];
-        $chemin_fichier = $chemins_fichiers[$formation_selectionnee];
-
-        // Destinataire de l'email
-        $destinataire = $mail;
-
-        // Sujet de l'email
-        $sujet = 'Fichier de la formation envisagée';
-
-        // Message de l'email
-        $message = 'Veuillez trouver ci-joint le fichier correspondant à la formation souhaitée.';
-
-        
-
-        // Création de l'objet PHPMailer
-        $mailer = new PHPMailer();
-
-        // Configuration du serveur SMTP (Gmail dans cet exemple)
-        $mailer->isSMTP();
-        $mailer->Host = 'smtp.gmail.com';
-        $mailer->SMTPAuth = true;
-        $mailer->Username = 'testenvoi.mailiia@gmail.com';
-        $mailer->Password = "Testdel'envoi";
-        $mailer->SMTPSecure = 'tls';
-        $mailer->Port = 587;
-
-        // Configuration du message
-        $mailer->setFrom('testenvoi.mailiia@gmail.com', 'Theo');
-        $mailer->addAddress($destinataire);
-        $mailer->Subject = $sujet;
-        $mailer->Body = $message;
-
-        // Ajout du fichier en tant que pièce jointe
-        $mailer->addAttachment($chemin_fichier, basename($chemin_fichier));
-        
-        // En-têtes de l'email
-        $headers = 'From: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'Reply-To: testenvoi.mailiia@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-        // Envoi de l'e-mail
-        if ($mailer->send()) {
-            echo 'E-mail envoyé avec succès.';
-        } else {
-            echo 'Erreur lors de l\'envoi de l\'e-mail: ' . $mailer->ErrorInfo;
-        }
-    }
 
     // Ajouter les valeurs dans la base de données
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation_souhaitee, heure_enregistrement) 
@@ -117,7 +50,7 @@ if (isset($_POST['soumettre'])) {
     $temp->execute();
 
     // Effectuer la redirection après la soumission du formulaire
-    header("Location: " . $_SERVER['admin.php']);
+    header("Location: Home.php");
     exit();
 }
 
