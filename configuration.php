@@ -23,6 +23,7 @@
 
 </head>
 <body>
+<div class="nav_hitbox">
 <nav>
         <div class="nav_container">
             <a href="Home.php">
@@ -65,6 +66,7 @@
         
         </div>
     </nav>
+    </div>
     <div class="config_container">
         <form action="">
             <label for="jour">jour</label>

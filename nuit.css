@@ -6,7 +6,13 @@
 body{
     background-color: #242038;
 }
-nav:hover{
+.nav_hitbox{
+  position: fixed;
+  width: 150px;
+  height: 100vh;
+  float: left;
+}
+.nav_hitbox:hover nav{
   transform: translateX(0%);
 }
 nav{
