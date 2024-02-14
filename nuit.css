@@ -376,6 +376,10 @@ h1{
           inset 0 0 1.3rem #EA7AF4;
 }
 
+.info_enregistre img{
+  width: 300px;
+}
+
 .retour_button{
   border:3px solid #EA7AF4;
   border-radius: 100px;
