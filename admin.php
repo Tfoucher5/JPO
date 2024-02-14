@@ -77,7 +77,7 @@ if (isset($_POST['download_csv'])) {
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="admin_page">
     <div class="nav_hitbox">
 <nav>
         <div class="nav_container">
@@ -138,12 +138,22 @@ if (isset($_POST['download_csv'])) {
     echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
     echo '<form action="deconnexion.php" method="post">
                     <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
-            </form>';
-    echo '<button class="disconnect_button">GeneratePDF</button>
-    </div>';
+            </form>
+        <form method="post">
+            <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
+        </form>';
+            
+    echo '</div>';
     
             
-    
+    echo '<div class="line_table index">
+    <div class="content_line"><span>Prénom</span><span>Nom</span></div>
+    <div class="content_line"><span>Adresse</span></div>
+    <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
+    <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
+    <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
+    <div class="content_line"><span>Date inscription</span></div>
+    </div>';
         echo '<div class="all_table">';
             while ($resultats = $temp -> fetch()){
             echo '<div class="table_container">';
@@ -169,15 +179,11 @@ if (isset($_POST['download_csv'])) {
                             };
                             echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
                             <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
+                        </div>
                         </div> ';
             }
-            echo '</div>
-            </div>';
+            echo '</div>';
         ?>
-
-    <form method="post">
-        <input type="submit" name="download_csv" value="Télécharger CSV">
-    </form>
 </body>
 
 </html>

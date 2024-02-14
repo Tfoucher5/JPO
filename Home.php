@@ -30,16 +30,6 @@ if (isset($_POST['soumettre'])) {
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
     $now = date('Y-m-d H:i:s');
 
-    $chemins_fichiers = array(
-                'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
-                'BTS SIO SISR' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
-                'LIC SIO SLAM' => 'Fiches formations/licence-informatique-en-alternance-developpement.pdf',
-                'LIC SIO SISR' => 'Fiches formations/licence-informatique-en-alternance-cybersecurite.pdf',
-                'MASTER LEAD DEVELOPEUR' => 'Fiches formations/lead-dev-bac5.pdf',
-                'MASTER MANAGER CYBERSECURITE' => 'Fiches formations/manager-cybersecurite-bac5.pdf',
-            );
-
-
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
     try {
@@ -59,11 +49,20 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
         $temp->execute();
 
+        if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on') {
+            // Redirection explicite
+            header("Location: fichier-formation.php");
+            exit();
+        }
+        else 
+            header("Location: enregistrement_reussie.php");
+            exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -72,30 +71,14 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="stylenuit.css">
+    <link rel="stylesheet" href="<?php echo $_SESSION['Mode'] ?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var checkbox = document.getElementById('send_mail');
-        var popup = document.getElementById('filePopup');
-
-        checkbox.addEventListener('change', function () {
-            if (checkbox.checked) {
-                // Affiche le popup
-                popup.style.display = 'block';
-            } else {
-                // Cache le popup
-                popup.style.display = 'none';
-            }
-        });
-    });
-</script>
-
 </head>
 <body>
+    <div class="nav_hitbox">
 <nav>
         <div>
              <div class="button_active">
@@ -138,6 +121,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
     </nav>
+    </div>
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>
@@ -228,18 +212,6 @@ if (isset($_POST['soumettre'])) {
     </form>
         </div>
     </div>
-
-    <div id="filePopup" style="display: none;">
-    <h2>Fiche de formation</h2>
-    <?php
-    // Récupérez le chemin du fichier en fonction de la formation envisagée
-    $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
-    $chemin_fichier = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
-
-    // Affiche le lien de téléchargement
-    echo '<a href="' . $chemin_fichier . '" download>Télécharger la fiche de formation</a>';
-    ?>
 </div>
-
 </body>
 </html>

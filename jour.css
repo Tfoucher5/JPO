@@ -287,8 +287,13 @@ h1{
   border-bottom-left-radius: 10px;
   padding:5px;
 }
+.admin_page{
+  height:auto;
+  overflow: hidden;
+}
 .all_table{
-  overflow: auto;
+  max-height:70vh;
+  overflow-y: auto;
 }
 .line_table{
   display:flex;
@@ -301,23 +306,31 @@ h1{
   width:80vw;
   height:100px;
 }
+.index{
+  border:none;
+}
+.index .content_line{
+  background-color: #FDF7FA;
+  height:50%;
+  border:3px solid #242038;
+  border-radius: 100px;
+}
 .content_line{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width:calc(100%/6);
   text-align: center;
 }
 .content_admin{
   margin-left:80px;
-  height:90vh;
+  height:auto;
   color:#242038;
 }
 .button_table{
   display: flex;
   flex-direction: row;
-  position: absolute;
-  right: 10px;
-  margin-top:20px;
+  float:right;
 }
 .button_table a svg, .delete-btn{
   cursor:pointer;
@@ -336,6 +349,7 @@ h1{
   background-color: #FDF7FA;
 }
 .disconnect_button{
+  font-size: 20px;
   cursor: pointer;
   border:3px solid #242038;
   border-radius: 100px;
@@ -354,7 +368,10 @@ h1{
 }
 
 .head_admin{
-  width:35%;
+  font-size:20px;
+  padding-top: 30px;
+  padding-left: 30px;
+  width:50%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
