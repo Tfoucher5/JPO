@@ -105,6 +105,7 @@ if (isset($_GET['id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="nav_hitbox">
 <nav>
         <div class="nav_container">
             <a href="Home.php">
@@ -116,7 +117,6 @@ if (isset($_GET['id'])) {
                 </div>
             </a>
              </div>
-        </div>
         <div>
             <div class="button_active">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -147,6 +147,7 @@ if (isset($_GET['id'])) {
             </a>
         </div>
     </nav>
+</div>
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>

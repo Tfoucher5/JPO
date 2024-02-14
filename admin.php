@@ -32,6 +32,7 @@ require_once('base_donnee.php')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 </head>
 <body>
+    <div class="nav_hitbox">
 <nav>
         <div class="nav_container">
             <a href="Home.php">
@@ -43,7 +44,6 @@ require_once('base_donnee.php')
                 </div>
             </a>
              </div>
-        </div>
         <div>
             <div class="button_active">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -74,6 +74,7 @@ require_once('base_donnee.php')
             </a>
         </div>
     </nav>
+    </div>
     <?php
     // appeler toute les lignes de la tables prospect
     // les faire apparaitre dans un tableau
