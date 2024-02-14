@@ -121,13 +121,13 @@ echo '<button class="disconnect_button">GeneratePDF</button>
                         <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                        <div class="content_line"><div>' . $resultats['equivalent'] .'</div><div>'. $resultats['projet'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
                         <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
                             echo '<div>oui</div>';
                         } else{
                             echo '<div>non</div>';
                         };
-                        echo '<div>'.$resultats['moyen'] .'</div></div>
+                        echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
                         <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
                     </div> ';
         }
