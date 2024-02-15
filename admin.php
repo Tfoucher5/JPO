@@ -74,7 +74,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $where="";
 
     // variable de recherche
-    if(isset($_REQUEST['q'])){
+    if(isset($_REQUEST['keywords'])){
         $keywords = htmlentities($_REQUEST['keywords']);
     }
     // Date1
@@ -100,6 +100,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     FROM prospect 
     WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
     LIKE '".$keywords."%'".$where;
+    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
