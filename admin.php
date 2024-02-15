@@ -1,4 +1,4 @@
-<?php
+ <?php
 include("session_start.php");
 if (isset($_REQUEST['Mode'])) {
     if ($_REQUEST['Mode'] == 'nuit') {
@@ -59,7 +59,7 @@ if (isset($_POST['download_csv'])) {
 
     // Fermeture du fichier CSV
     fclose($output);
-    exit();
+    exit(); 
 }
 //définition variable bare de recherche 
 $tableau=1;
@@ -337,7 +337,11 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             $id = $_POST['id_prospect'];
             $del = "DELETE FROM prospect WHERE id_prospect='$id'";
             $pdo->exec($del);
-            header('Location: admin.php');
+            echo '<script>
+            if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
+                window.location.href = "admin.php?id_prospect=' . $_POST['id_prospect'] . '";
+            }
+            </script>';
             exit();
 
     }
@@ -446,10 +450,37 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                         echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
                         <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
                     </div>
-                    </div> ';
+                    </div>';
                 }
              } ?>
             </div>
+        <script>
+    function confirmDelete(id) {
+        var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+        
+        if (confirmation) {
+            // Utiliser AJAX pour envoyer la requête de suppression
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "admin.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    // Recharger la page après la suppression réussie
+                    window.location.reload();
+                } else {
+                    // Gérer l'erreur si nécessaire
+                    console.error("Erreur lors de la suppression de l'enregistrement");
+                }
+            }
+            
+            xhr.send("id_prospect=" + id + "&confirm_delete=1");
+        }
+        
+        // Empêcher le formulaire de se soumettre et de recharger la page
+        return false;
+    }
+</script>
 </body>
 
 </html>

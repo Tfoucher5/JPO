@@ -80,6 +80,7 @@ if(isset($_REQUEST['Mode'])) {
         echo '<a class="retour_button" href="Home.php">retour</a><br />';
     } else {
         echo '<p class="text-error">Aucun fichier disponible pour la formation sélectionnée.</p>';
+        echo '<a class="retour_button" href="Home.php">retour</a><br />';
     }
     ?>
     </div>
