@@ -86,7 +86,7 @@
                 checkbox.addEventListener( "change", () => {
                     if ( checkbox.checked ) {
                         var mode = "jour";
-                        document.cookie = "mode=" + mode; 
+                        document.cookie = "mode=" + mode;
                     } else {
                         var mode = "nuit";
                         document.cookie = "mode=" + mode; 
@@ -99,7 +99,5 @@
         $_SESSION['Mode']=$_COOKIE['mode']
         ?>
     </div>
-    
-
 </body>
 </html>
