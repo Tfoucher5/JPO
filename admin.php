@@ -61,14 +61,28 @@ if (isset($_POST['download_csv'])) {
     fclose($output);
     exit();
 }
-//bare de recherche 
+//définition variable bare de recherche 
 $tableau=1;
 $tableau = 1;
-$connaissance = "";
 $valider = "";
 $afficher = "";
 $res = array();
+$prenom = "";
+$nom = "";
+$adresse = "";
+$code_postal = "";
+$ville = "";
+$tel = "";
+$email = "";
+$niveau_etude = "";
+$pre_inscrit = "";
+$connaissance = "";
+$date1 = "";
+$date2 = "";
+$note_prive = "";
+$note = "";
 
+//trsfer vlur si un ou plusieurs champ du formulaire sont remplis
 if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adresse']) || isset($_REQUEST['code_postal']) 
 || isset($_REQUEST['ville']) || isset($_REQUEST['tel']) || isset($_REQUEST['email']) 
 || isset($_REQUEST['niveau_etude']) || isset($_REQUEST['pre_inscrit']) || isset($_REQUEST['connaissance']) 
@@ -88,23 +102,28 @@ if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adre
     $date2 = htmlentities($_REQUEST['date2']);
     $note_prive = htmlentities($_REQUEST['note_prive']);
     $note = htmlentities($_REQUEST['note']);
-
 }
 if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
-    $where = "'".$prenom."%'";
-    $where .= " AND '".$nom."%'";
-    $where .= " AND '".$adresse."%'";
-    $where .= " AND '".$code_postal."%'";
-    $where .= " AND '".$ville."%'";
-    $where .= " AND '".$tel."%'";
-    $where .= " AND '".$email."%'";
-    $where .= " AND '".$niveau_etude."%'";
-    $where .= " AND '".$pre_inscrit."%'";
-    $where .= " AND '".$connaissance."%'";
-    $where .= " AND '".$date1."%'";
-    $where .= " AND '".$date2."%'";
-    $where .= " AND '".$note_prive."%'";
-    $where .= " AND '".$note."%'";
+    if(isset($prenom)){
+        $where = "prenom='".$prenom."'";
+    }
+    if(isset($nom) && isset($prenom)){
+        $where .= " AND nom='".$nom."'";
+    }elif(isset($nom)){
+        $where .= "nom='".$nom."'";
+    }
+    $where .= " AND '".$adresse."'";
+    $where .= " AND '".$code_postal."'";
+    $where .= " AND '".$ville."'";
+    $where .= " AND '".$tel."'";
+    $where .= " AND '".$email."'";
+    $where .= " AND '".$niveau_etude."'";
+    $where .= " AND '".$pre_inscrit."'";
+    $where .= " AND '".$connaissance."'";
+    $where .= " AND '".$date1."'";
+    $where .= " AND '".$date2."'";
+    $where .= " AND '".$note_prive."'";
+    $where .= " AND '".$note."'";
     $sql = "SELECT * FROM prospect WHERE ".$where;
     echo $sql;
     $temp = $pdo->query($sql);
@@ -172,10 +191,6 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <?php
         // bouton modifier + bouton supprimer
     
-        $sql='SELECT * FROM prospect ORDER BY id_prospect';
-        $temp=$pdo->prepare($sql);
-        $temp->execute();
-    
         //Script de suppression d'une ligne
             if (isset($_POST['id_prospect'])) {
             $id = $_POST['id_prospect'];
@@ -212,7 +227,6 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             <input type="text" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher dans date ">
             <input type="text" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher dans date ">
             <input type="text" name="note_prive" value="<?php echo $note_prive;?>" placeholder="Rechercher dans note privé">
-            <input type="text" name="formation" value="<?php echo $date;?>" placeholder="Rechercher dans formation">
             <input type="submit" name="valider" value="rechercher" >            
         </form>
 
@@ -228,7 +242,20 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <table border="1">
             <tr>
                 <?php foreach($res as $r){ ?>
-                <td><?php echo $r['moyen']; ?></td>
+                <td><?php echo $r['prenom']; ?></td>
+                <td><?php echo $r['nom']; ?></td>
+                <td><?php echo $r['adresse']; ?></td>
+                <td><?php echo $r['code_postal']; ?></td>
+                <td><?php echo $r['ville']; ?></td>
+                <td><?php echo $r['tel']; ?></td>
+                <td><?php echo $r['email']; ?></td>
+                <td><?php echo $r['niveau_etude']; ?></td>
+                <td><?php echo $r['note']; ?></td>
+                <td><?php echo $r['pre_inscrit']; ?></td>
+                <td><?php echo $r['connaissance']; ?></td>
+                <td><?php echo $r['note_privé']; ?></td>
+                <td><?php echo $r['formation']; ?></td>
+                <td><?php echo $r['date1']; ?></td>
                 <?php } ?>
             </tr>
         </table>
@@ -248,33 +275,37 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     </div>';
         <div class="all_table">
             <?php
-
-            while ($resultats = $temp -> fetch()){ ?>
-            echo '<div class="table_container">';
-                echo '<div class="button_table">
-                           <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                              </svg>
-                              </a>
-                            <form action="admin.php" method="post">
-                                <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
-                                <input type="submit" class="delete-btn" value="🗑️">
-                            </form>
-                        </div>';
-                        <?php echo '<div class="line_table">
-                            <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
-                            <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
-                            <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                            <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
-                            <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
-                                echo '<div>oui</div>';
-                            } else{
-                                echo '<div>non</div>';
-                            };
-                            echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
-                            <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
-                        </div>
-                        </div> ';
+            if($tableau==1){
+                $sql='SELECT * FROM prospect ORDER BY id_prospect';
+                $temp=$pdo->prepare($sql);
+                $temp->execute();
+                while ($resultats = $temp -> fetch()){ ?>
+                    <div class="table_container">';
+                        <div class="button_table">
+                    <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                        </svg>
+                        </a>
+                        <form action="admin.php" method="post">
+                            <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
+                            <input type="submit" class="delete-btn" value="🗑️">
+                        </form>
+                    </div>';
+                    <?php echo '<div class="line_table">
+                        <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
+                        <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
+                            echo '<div>oui</div>';
+                        } else{
+                            echo '<div>non</div>';
+                        };
+                        echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
+                        <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
+                    </div>
+                    </div> ';
+                }
              } ?>
             echo '</div>';
         ?>
