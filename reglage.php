@@ -129,10 +129,10 @@ if(isset($_POST['supprimer_formation'])) {
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
-            <input type="submit" name="valider" value="rechercher">            
+            <input type="submit" name="valider" class="disconnect_button" value="rechercher">            
         </form>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
-            <input type="submit" name="1" value="reset" >
+            <input type="submit" name="1" class="disconnect_button" value="reset" >
         </form>
     <!-- affichage des résultats -->
     <?php if($afficher=="oui"){ ?>
@@ -151,6 +151,7 @@ if(isset($_POST['supprimer_formation'])) {
                 <?php } ?>
             </tr>
         </table>
+        </div>
         <?php } ?>
         <?php if($afficher=="oui"){ ?>
     <div id="resultat">
@@ -170,7 +171,7 @@ if(isset($_POST['supprimer_formation'])) {
         </table>
         <?php } ?>
 
-</div>
+
 <?php
 //liste de la table connaissance
 if($tableau==1){
@@ -178,23 +179,23 @@ if($tableau==1){
         $sql='SELECT * FROM connaissance';
         $temp=$pdo->prepare($sql);
         $temp->execute();
+        echo '<div class="all_table_reglages">';
         echo '<table border="1">';
-        echo '<tr><th>Moyen</th><th>Modifier</th><th>Ajouter</th><th>Supprimer</th></tr>'; // Entêtes des colonnes
         while($q=$temp->fetch()){
             echo '<tr>';
-            echo '<td>'.$q["moyen"].'</td>';
             echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
             echo '<input type="hidden" name="moyen" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-            echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
+            echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
             echo '</form></td>';
             echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
             echo '<input type="hidden" name="moyen" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-            echo '<input type="submit" class="add-btn" value="➕">'; // Bouton d'ajout
+            echo '<input type="submit" class="add-btn delete-btn" value="➕">'; // Bouton d'ajout
             echo '</form></td>';
             echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
             echo '<input type="hidden" name="moyen" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-            echo '<input type="submit" name="supprimer_connaissance" value="Supprimer">'; // Bouton de suppression
+            echo '<input type="submit" class="delete-btn" name="supprimer_connaissance" value="🗑️">'; // Bouton de suppression
             echo '</form></td>';
+            echo '<td>'.$q["moyen"].'</td>';
             echo '</tr>';
         }
         echo '</table>';
@@ -204,12 +205,21 @@ if($tableau==1){
         $temp->execute();
         echo '<table border="1">';
         while($q=$temp->fetch()){
+<<<<<<< HEAD
             echo '<tr>';
             echo '<td>'.$q["nom"].'</td>';
             if ($q['alternance'] == '1') { 
                 echo '<td>en alternance</td>';
             } else {
                 echo '<td></td>';
+=======
+            echo '<tr>
+            <td>'.$q["nom"]." ";
+            if ($q['alternance']== '1') { 
+                echo 'en alternance</td>';
+            }else{
+                echo '</td>';
+>>>>>>> fe6ffff79813c4089ff2ab553873fed387beb2b4
             }
             echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
             echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
@@ -225,13 +235,21 @@ if($tableau==1){
             echo '</form></td>';
             echo '</tr>';
         }
+<<<<<<< HEAD
         echo '</table>';
     }   
+=======
+        echo '</tr>
+        </table>
+        </div>';
+    }     
+>>>>>>> fe6ffff79813c4089ff2ab553873fed387beb2b4
     catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit();
     }
 } 
 ?>
+</div>
 </body>
 </html>

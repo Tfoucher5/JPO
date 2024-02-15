@@ -28,7 +28,6 @@ if (isset($_POST['soumettre'])) {
     $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-    $now = date('d-m-Y H:i');
 
     // Add logic to determine and display the appropriate content based on the selected formation
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
@@ -44,7 +43,7 @@ if (isset($_POST['soumettre'])) {
     $_SESSION['chemin_fichier'] = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
 
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
-            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
+            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, NOW())';
     try {
         $temp = $pdo->prepare($sql);
         $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
@@ -59,7 +58,6 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
-        $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
         $temp->execute();
 
         if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on') {
@@ -113,7 +111,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
         <div class="nav_container">
-        <a href="MentionsLegales.html">
+        <a href="MentionsLegales.php">
             <div class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v.756a49.106 49.106 0 0 1 9.152 1 .75.75 0 0 1-.152 1.485h-1.918l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 18.75 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84l2.474-10.124H12.75v13.28c1.293.076 2.534.343 3.697.776a.75.75 0 0 1-.262 1.453h-8.37a.75.75 0 0 1-.262-1.453c1.162-.433 2.404-.7 3.697-.775V6.24H6.332l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 5.25 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84L4.168 6.241H2.25a.75.75 0 0 1-.152-1.485 49.105 49.105 0 0 1 9.152-1V3a.75.75 0 0 1 .75-.75Zm4.878 13.543 1.872-7.662 1.872 7.662h-3.744Zm-9.756 0L5.25 8.131l-1.872 7.662h3.744Z" clip-rule="evenodd" />
