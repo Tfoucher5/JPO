@@ -44,12 +44,13 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
 </head>
 <body>
     <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
-            <input type="submit" name="valider" value="rechercher" >            
+            <input type="submit" name="valider" value="rechercher">            
         </form>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
             <input type="submit" name="1" value="reset" >
