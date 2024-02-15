@@ -101,7 +101,7 @@ if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adre
     $date1 = htmlentities($_REQUEST['date1']);
     $date2 = htmlentities($_REQUEST['date2']);
     $note_prive = htmlentities($_REQUEST['note_prive']);
-    $note = htmlentities($_REQUEST['note']);
+    $note = htmlentities($_REQUEST['note']); 
 }
 if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     if(isset($prenom)){
@@ -109,7 +109,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     }
     if(isset($nom) && isset($prenom)){
         $where .= " AND nom='".$nom."'";
-    }elif(isset($nom)){
+    }elseif(isset($nom)){
         $where .= "nom='".$nom."'";
     }
     $where .= " AND '".$adresse."'";
