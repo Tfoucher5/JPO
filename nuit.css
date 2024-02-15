@@ -317,9 +317,10 @@ h1{
   justify-content: center;
   width:calc(100%/6);
   text-align: center;
+  font-size: 15px;
 }
 .content_admin{
-  margin-left:80px;
+  margin-left:110px;
   height:auto;
   color:#fff;
 }
@@ -365,7 +366,6 @@ h1{
 .head_admin{
   font-size:20px;
   padding-top: 30px;
-  padding-left: 30px;
   width:90%;
   display: flex;
   flex-direction: column;
@@ -380,16 +380,28 @@ h1{
   background-color: #242038;
   border:none;
   border-bottom:3px solid #EA7AF4;
+  width: 500px;
+  font-size: 20px;
   color:#fff;
-  width: 200px;
 }
-
+.head_admin_container input[type="text"]::placeholder{
+  color:#fff;
+}
+.head_admin_container input[type="date"]{
+  background-color: #242038;
+  border: none;
+  border:3px solid #EA7AF4;
+  border-radius: 8px;
+  color: #fff;
+}
+.head_admin_container input[type="date"]::-webkit-calendar-picker-indicator{
+  background-color: #EA7AF4;
+}
 .card {
   box-sizing: content-box;
   padding: 30px;
   font-style: sans-serif;
 }
-
 .info_enregistre{
   text-align: center;
   color: white;
@@ -531,6 +543,7 @@ h1{
   border-bottom:3px solid #EA7AF4;
   width: 500px;
   font-size: 20px;
+  color:#fff;
 }
 .content_reglages input[type="text"]::placeholder{
   color:#fff;

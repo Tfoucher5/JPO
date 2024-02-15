@@ -220,14 +220,14 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             <input type="text" name="keywords" value="<?php echo $keywords;?>" placeholder="Rechercher dans la base de donnée">
             <input type="date" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher une date supérieur à ">ET/OU
             <input type="date" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher une date inférieur à ">
-            <input type="submit" name="valider" value="rechercher" >            
+            <input type="submit" class="disconnect_button" name="valider" value="rechercher" >            
         </form>
 
     <!-- bouton reset pour afficher le tableau complet -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
-            <input type="submit" name="1" value="reset" >
+            <input type="submit" class="disconnect_button" name="1" value="reset" >
         </form>
-    </div>    
+    </div>
     
     <!-- tableau chargement page -->
     <div class="line_table index">
@@ -237,6 +237,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
+    </div>
     </div>
         <div class="all_table">
             <?php
@@ -272,7 +273,6 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                     </div>';
                 }
              } ?>
-            </div>
     <!-- affichage des résultats de recherche -->
     <?php if($afficher=="oui"){ ?>
     <div id="resultat">
