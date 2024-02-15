@@ -63,7 +63,6 @@ if (isset($_POST['download_csv'])) {
 }
 //définition variable bare de recherche 
 $tableau=1;
-$tableau = 1;
 $valider = "";
 $afficher = "";
 $res = array();
@@ -75,19 +74,20 @@ $ville = "";
 $tel = "";
 $email = "";
 $niveau_etude = "";
+$note = "";
 $pre_inscrit = "";
 $connaissance = "";
+$note_prive = "";
+$formation="";
 $date1 = "";
 $date2 = "";
-$note_prive = "";
-$note = "";
 
 //trsfer vlur si un ou plusieurs champ du formulaire sont remplis
 if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adresse']) || isset($_REQUEST['code_postal']) 
 || isset($_REQUEST['ville']) || isset($_REQUEST['tel']) || isset($_REQUEST['email']) 
 || isset($_REQUEST['niveau_etude']) || isset($_REQUEST['pre_inscrit']) || isset($_REQUEST['connaissance']) 
 || isset($_REQUEST['date1']) || isset($_REQUEST['date2']) ||isset($_REQUEST['note_prive'])
-|| isset($_REQUEST['note'])) {
+|| isset($_REQUEST['note'])||isset($_REQUEST['formation'])) {
     $prenom = htmlentities($_REQUEST['prenom']);
     $nom = htmlentities($_REQUEST['nom']);
     $adresse = htmlentities($_REQUEST['adresse']);
@@ -96,34 +96,165 @@ if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adre
     $tel = htmlentities($_REQUEST['tel']);
     $email = htmlentities($_REQUEST['email']);
     $niveau_etude = htmlentities($_REQUEST['niveau_etude']);
+    $note_prive = htmlentities($_REQUEST['note_prive']);
     $pre_inscrit = htmlentities($_REQUEST['pre_inscrit']);
     $connaissance = htmlentities($_REQUEST['connaissance']);
+    $note = htmlentities($_REQUEST['note']); 
+    $note = htmlentities($_REQUEST['formation']); 
     $date1 = htmlentities($_REQUEST['date1']);
     $date2 = htmlentities($_REQUEST['date2']);
-    $note_prive = htmlentities($_REQUEST['note_prive']);
-    $note = htmlentities($_REQUEST['note']); 
+
 }
 if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
-    if(isset($prenom)){
-        $where = "prenom='".$prenom."'";
+    $where="";
+    // Prenom
+    if(isset($_REQUEST['prenom'])){
+        $prenom = htmlentities($_REQUEST['prenom']);
+        if(!empty($prenom)){
+            $where = "prenom='".$prenom."'";
+        }
     }
-    if(isset($nom) && isset($prenom)){
-        $where .= " AND nom='".$nom."'";
-    }elseif(isset($nom)){
-        $where .= "nom='".$nom."'";
+    // Nom
+    if(isset($_REQUEST['nom'])){
+        $nom = htmlentities($_REQUEST['nom']);
+        if(!empty($nom)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "nom='".$nom."'";
+        }
     }
-    $where .= " AND '".$adresse."'";
-    $where .= " AND '".$code_postal."'";
-    $where .= " AND '".$ville."'";
-    $where .= " AND '".$tel."'";
-    $where .= " AND '".$email."'";
-    $where .= " AND '".$niveau_etude."'";
-    $where .= " AND '".$pre_inscrit."'";
-    $where .= " AND '".$connaissance."'";
-    $where .= " AND '".$date1."'";
-    $where .= " AND '".$date2."'";
-    $where .= " AND '".$note_prive."'";
-    $where .= " AND '".$note."'";
+    // Adresse
+    if(isset($_REQUEST['adresse'])){
+        $adresse = htmlentities($_REQUEST['adresse']); 
+        if(!empty($adresse)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "adresse='".$adresse."'";
+        }
+    }
+    // Code postal
+    if(isset($_REQUEST['code_postal'])){
+        $code_postal = htmlentities($_REQUEST['code_postal']); 
+        if(!empty($code_postal)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "code_postal='".$code_postal."'";
+        }
+    }
+    // Ville
+    if(isset($_REQUEST['ville'])){
+        $ville = htmlentities($_REQUEST['ville']); 
+        if(!empty($ville)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "ville='".$ville."'";
+        }
+    }
+    // Téléphone
+    if(isset($_REQUEST['tel'])){
+        $tel = htmlentities($_REQUEST['tel']); 
+        if(!empty($tel)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "tel='".$tel."'";
+        }
+    }
+    // Email
+    if(isset($_REQUEST['email'])){
+        $email = htmlentities($_REQUEST['email']); 
+        if(!empty($email)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "email='".$email."'";
+        }
+    }
+    // Niveau d'étude
+    if(isset($_REQUEST['niveau_etude'])){
+        $niveau_etude = htmlentities($_REQUEST['niveau_etude']); 
+        if(!empty($niveau_etude)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "niveau_etude='".$niveau_etude."'";
+        }
+    }
+    // Pré inscrit
+    if(isset($_REQUEST['pre_inscrit'])){
+        $pre_inscrit = htmlentities($_REQUEST['pre_inscrit']); 
+        if(!empty($pre_inscrit)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "pre_inscrit='".$pre_inscrit."'";
+        }
+    }
+    // Connaissance
+    if(isset($_REQUEST['connaissance'])){
+        $connaissance = htmlentities($_REQUEST['connaissance']); 
+        if(!empty($connaissance)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "decouverte_IIA='".$connaissance."'";
+        }
+    }
+    // Note
+    if(isset($_REQUEST['note'])){
+        $note = htmlentities($_REQUEST['note']); 
+        if(!empty($note)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "projet='".$note."'";
+        }
+    }
+    // Note privée
+    if(isset($_REQUEST['note_prive'])){
+        $note_prive = htmlentities($_REQUEST['note_prive']); 
+        if(!empty($note_prive)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "note_prive='".$note_prive."'";
+        }
+    }
+    // Formation
+    if(isset($_REQUEST['formation'])){
+        $formation = htmlentities($_REQUEST['formation']); 
+        if(!empty($formation)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "formation='".$formation."'";
+        }
+    }
+    // Date1
+    if(isset($_REQUEST['date1'])){
+        $date1 = htmlentities($_REQUEST['date1']); 
+        if(!empty($date1)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "heure_enregistrement >= '".$date1."'";
+        }
+    }
+    // Date2
+    if(isset($_REQUEST['date2'])){
+        $date2 = htmlentities($_REQUEST['date2']); 
+        if(!empty($date2)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "heure_enregistrement <= '".$date2."'";
+        }
+    }
+
     $sql = "SELECT * FROM prospect WHERE ".$where;
     echo $sql;
     $temp = $pdo->query($sql);
@@ -219,7 +350,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         </form>
         <form method="post">
             <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
-        </form>';
+        </form>
                   
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
@@ -234,9 +365,10 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             <input type="text" name="note" value="<?php echo $note;?>" placeholder="Rechercher dans note">
             <input type="text" name="pre_inscrit" value="<?php echo $pre_inscrit;?>" placeholder="Recherche dans pré inscrit">
             <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Recherche moyen de decouverte">
-            <input type="text" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher dans date ">
-            <input type="text" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher dans date ">
             <input type="text" name="note_prive" value="<?php echo $note_prive;?>" placeholder="Rechercher dans note privé">
+            <input type="text" name="formation" value="<?php echo $formation;?>" placeholder="Rechercher dans formation">
+            <input type="date" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher une date supérieur à ">ET/OU
+            <input type="date" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher une date inférieur à ">
             <input type="submit" name="valider" value="rechercher" >            
         </form>
 
@@ -260,12 +392,12 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 <td><?php echo $r['tel']; ?></td>
                 <td><?php echo $r['email']; ?></td>
                 <td><?php echo $r['niveau_etude']; ?></td>
-                <td><?php echo $r['note']; ?></td>
+                <td><?php echo $r['projet']; ?></td>
                 <td><?php echo $r['pre_inscrit']; ?></td>
-                <td><?php echo $r['connaissance']; ?></td>
-                <td><?php echo $r['note_privé']; ?></td>
+                <td><?php echo $r['decouverte_IIA']; ?></td>
+                <td><?php echo $r['note_prive']; ?></td>
                 <td><?php echo $r['formation']; ?></td>
-                <td><?php echo $r['date1']; ?></td>
+                <td><?php echo $r['heure_enregistrement']; ?></td>
                 <?php } ?>
             </tr>
         </table>
@@ -282,7 +414,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
-    </div>';
+    </div>
         <div class="all_table">
             <?php
             if($tableau==1){
@@ -290,7 +422,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 $temp=$pdo->prepare($sql);
                 $temp->execute();
                 while ($resultats = $temp -> fetch()){ ?>
-                    <div class="table_container">';
+                    <div class="table_container">
                         <div class="button_table">
                     <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -300,7 +432,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                             <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
                             <input type="submit" class="delete-btn" value="🗑️">
                         </form>
-                    </div>';
+                    </div>
                     <?php echo '<div class="line_table">
                         <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
@@ -317,8 +449,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                     </div> ';
                 }
              } ?>
-            echo '</div>';
-        ?>
+            </div>
 </body>
 
 </html>
