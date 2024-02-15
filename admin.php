@@ -59,7 +59,208 @@ if (isset($_POST['download_csv'])) {
 
     // Fermeture du fichier CSV
     fclose($output);
-    exit();
+    exit(); 
+}
+//définition variable bare de recherche 
+$tableau=1;
+$valider = "";
+$afficher = "";
+$res = array();
+$prenom = "";
+$nom = "";
+$adresse = "";
+$code_postal = "";
+$ville = "";
+$tel = "";
+$email = "";
+$niveau_etude = "";
+$note = "";
+$pre_inscrit = "";
+$connaissance = "";
+$note_prive = "";
+$formation="";
+$date1 = "";
+$date2 = "";
+
+//trsfer vlur si un ou plusieurs champ du formulaire sont remplis
+if(isset($_REQUEST['prenom'])|| isset($_REQUEST['nom']) || isset($_REQUEST['adresse']) || isset($_REQUEST['code_postal']) 
+|| isset($_REQUEST['ville']) || isset($_REQUEST['tel']) || isset($_REQUEST['email']) 
+|| isset($_REQUEST['niveau_etude']) || isset($_REQUEST['pre_inscrit']) || isset($_REQUEST['connaissance']) 
+|| isset($_REQUEST['date1']) || isset($_REQUEST['date2']) ||isset($_REQUEST['note_prive'])
+|| isset($_REQUEST['note'])||isset($_REQUEST['formation'])) {
+    $prenom = htmlentities($_REQUEST['prenom']);
+    $nom = htmlentities($_REQUEST['nom']);
+    $adresse = htmlentities($_REQUEST['adresse']);
+    $code_postal = htmlentities($_REQUEST['code_postal']);
+    $ville = htmlentities($_REQUEST['ville']);
+    $tel = htmlentities($_REQUEST['tel']);
+    $email = htmlentities($_REQUEST['email']);
+    $niveau_etude = htmlentities($_REQUEST['niveau_etude']);
+    $note_prive = htmlentities($_REQUEST['note_prive']);
+    $pre_inscrit = htmlentities($_REQUEST['pre_inscrit']);
+    $connaissance = htmlentities($_REQUEST['connaissance']);
+    $note = htmlentities($_REQUEST['note']); 
+    $note = htmlentities($_REQUEST['formation']); 
+    $date1 = htmlentities($_REQUEST['date1']);
+    $date2 = htmlentities($_REQUEST['date2']);
+
+}
+if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
+    $where="";
+    // Prenom
+    if(isset($_REQUEST['prenom'])){
+        $prenom = htmlentities($_REQUEST['prenom']);
+        if(!empty($prenom)){
+            $where = "prenom='".$prenom."'";
+        }
+    }
+    // Nom
+    if(isset($_REQUEST['nom'])){
+        $nom = htmlentities($_REQUEST['nom']);
+        if(!empty($nom)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "nom='".$nom."'";
+        }
+    }
+    // Adresse
+    if(isset($_REQUEST['adresse'])){
+        $adresse = htmlentities($_REQUEST['adresse']); 
+        if(!empty($adresse)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "adresse='".$adresse."'";
+        }
+    }
+    // Code postal
+    if(isset($_REQUEST['code_postal'])){
+        $code_postal = htmlentities($_REQUEST['code_postal']); 
+        if(!empty($code_postal)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "code_postal='".$code_postal."'";
+        }
+    }
+    // Ville
+    if(isset($_REQUEST['ville'])){
+        $ville = htmlentities($_REQUEST['ville']); 
+        if(!empty($ville)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "ville='".$ville."'";
+        }
+    }
+    // Téléphone
+    if(isset($_REQUEST['tel'])){
+        $tel = htmlentities($_REQUEST['tel']); 
+        if(!empty($tel)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "tel='".$tel."'";
+        }
+    }
+    // Email
+    if(isset($_REQUEST['email'])){
+        $email = htmlentities($_REQUEST['email']); 
+        if(!empty($email)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "email='".$email."'";
+        }
+    }
+    // Niveau d'étude
+    if(isset($_REQUEST['niveau_etude'])){
+        $niveau_etude = htmlentities($_REQUEST['niveau_etude']); 
+        if(!empty($niveau_etude)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "niveau_etude='".$niveau_etude."'";
+        }
+    }
+    // Pré inscrit
+    if(isset($_REQUEST['pre_inscrit'])){
+        $pre_inscrit = htmlentities($_REQUEST['pre_inscrit']); 
+        if(!empty($pre_inscrit)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "pre_inscrit='".$pre_inscrit."'";
+        }
+    }
+    // Connaissance
+    if(isset($_REQUEST['connaissance'])){
+        $connaissance = htmlentities($_REQUEST['connaissance']); 
+        if(!empty($connaissance)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "decouverte_IIA='".$connaissance."'";
+        }
+    }
+    // Note
+    if(isset($_REQUEST['note'])){
+        $note = htmlentities($_REQUEST['note']); 
+        if(!empty($note)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "projet='".$note."'";
+        }
+    }
+    // Note privée
+    if(isset($_REQUEST['note_prive'])){
+        $note_prive = htmlentities($_REQUEST['note_prive']); 
+        if(!empty($note_prive)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "note_prive='".$note_prive."'";
+        }
+    }
+    // Formation
+    if(isset($_REQUEST['formation'])){
+        $formation = htmlentities($_REQUEST['formation']); 
+        if(!empty($formation)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "formation='".$formation."'";
+        }
+    }
+    // Date1
+    if(isset($_REQUEST['date1'])){
+        $date1 = htmlentities($_REQUEST['date1']); 
+        if(!empty($date1)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "heure_enregistrement >= '".$date1."'";
+        }
+    }
+    // Date2
+    if(isset($_REQUEST['date2'])){
+        $date2 = htmlentities($_REQUEST['date2']); 
+        if(!empty($date2)){
+            if(!empty($where)){
+                $where .= " AND "; 
+            }
+            $where .= "heure_enregistrement <= '".$date2."'";
+        }
+    }
+
+    $sql = "SELECT * FROM prospect WHERE ".$where;
+    echo $sql;
+    $temp = $pdo->query($sql);
+    $res = $temp->fetchAll();
+    $afficher = "oui";
+    $tableau = 0;
 }
 ?>
 
@@ -108,6 +309,16 @@ if (isset($_POST['download_csv'])) {
             </a>
         </div>
         <div class="nav_container">
+            <a href="reglage.php">
+                <div class="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                </div>
+            </a>
+        </div>
+        <div class="nav_container">
             <a href="configuration.php">
                 <div class="button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -120,72 +331,171 @@ if (isset($_POST['download_csv'])) {
     </div>
     <?php
         // bouton modifier + bouton supprimer
-    
+
         $sql='SELECT * FROM prospect ORDER BY id_prospect';
         $temp=$pdo->prepare($sql);
         $temp->execute();
-    
-        //Script de suppression d'une ligne
-            if (isset($_POST['id_prospect'])) {
+
+        // Script de suppression d'une ligne
+        if (isset($_POST['id_prospect'])) {
             $id = $_POST['id_prospect'];
-            $del = "DELETE FROM prospect WHERE id_prospect='$id'";
-            $pdo->exec($del);
-            header('Location: admin.php');
-            exit();
-
-    }
-
-    echo '<div class="content_admin">';
-    echo '<div class="head_admin">';
-    echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']);
-    echo '<form action="deconnexion.php" method="post">
-                    <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
-            </form>
+            
+            // Utilisez des requêtes préparées pour éviter les attaques par injection SQL
+            $del = "DELETE FROM prospect WHERE id_prospect=:id";
+            $stmt = $pdo->prepare($del);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                echo '<script>
+                    if (confirm("Élément supprimé avec succès.")) {
+                        window.location.href = "admin.php";
+                    }
+                </script>';
+                exit();
+            } else {
+                echo '<script>
+                    alert("Erreur lors de la suppression de l\'élément.");
+                </script>';
+                exit();
+            }
+        }
+    ?>
+    <div class="content_admin">
+    <div class="head_admin">
+    <div class="head_admin_container">
+    <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
+        <form action="deconnexion.php" method="post">
+            <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
+        </form>
         <form method="post">
             <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
-        </form>';
-            
-    echo '</div>';
+        </form>
+    </div>      
+    <div class="head_admin_container">      
+        <!-- formulaire de recherche -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
+            <input type="text" name="prenom" value="<?php echo $prenom;?>" placeholder="Rechercher dans prenom">
+            <input type="text" name="nom" value="<?php echo $nom;?>" placeholder="Rechercher dans nom">
+            <input type="text" name="adresse" value="<?php echo $adresse;?>" placeholder="Rechercher dans adress">
+            <input type="text" name="code_postal" value="<?php echo $code_postal;?>" placeholder="Rechercher dans code postal">
+            <input type="text" name="ville" value="<?php echo $ville;?>" placeholder="Rechercher dans ville">
+            <input type="text" name="tel" value="<?php echo $tel;?>" placeholder="Rechercher dans tel">
+            <input type="text" name="email" value="<?php echo $email;?>" placeholder="Rechercher dans email">
+            <input type="text" name="niveau_etude" value="<?php echo $niveau_etude;?>" placeholder="Rechercher dans niveau d'étude">
+            <input type="text" name="note" value="<?php echo $note;?>" placeholder="Rechercher dans note">
+            <input type="text" name="pre_inscrit" value="<?php echo $pre_inscrit;?>" placeholder="Recherche dans pré inscrit">
+            <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Recherche moyen de decouverte">
+            <input type="text" name="note_prive" value="<?php echo $note_prive;?>" placeholder="Rechercher dans note privé">
+            <input type="text" name="formation" value="<?php echo $formation;?>" placeholder="Rechercher dans formation">
+            <input type="date" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher une date supérieur à ">ET/OU
+            <input type="date" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher une date inférieur à ">
+            <input type="submit" name="valider" value="rechercher" >            
+        </form>
+
+    <!-- bouton reset pour afficher le tableau complet -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
+            <input type="submit" name="1" value="reset" >
+        </form>
+    </div>
+    <!-- affichage des résultats -->
+    <?php if($afficher=="oui"){ ?>
+    <div id="resultat">
+        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+        <table border="1">
+            <tr>
+                <?php foreach($res as $r){ ?>
+                <td><?php echo $r['prenom']; ?></td>
+                <td><?php echo $r['nom']; ?></td>
+                <td><?php echo $r['adresse']; ?></td>
+                <td><?php echo $r['code_postal']; ?></td>
+                <td><?php echo $r['ville']; ?></td>
+                <td><?php echo $r['tel']; ?></td>
+                <td><?php echo $r['email']; ?></td>
+                <td><?php echo $r['niveau_etude']; ?></td>
+                <td><?php echo $r['projet']; ?></td>
+                <td><?php echo $r['pre_inscrit']; ?></td>
+                <td><?php echo $r['decouverte_IIA']; ?></td>
+                <td><?php echo $r['note_prive']; ?></td>
+                <td><?php echo $r['formation']; ?></td>
+                <td><?php echo $r['heure_enregistrement']; ?></td>
+                <?php } ?>
+            </tr>
+        </table>
+        <?php } ?>
+    
+ 
+    </div>
     
             
-    echo '<div class="line_table index">
+    <div class="line_table index">
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
     <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
     <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
-    </div>';
-        echo '<div class="all_table">';
-            while ($resultats = $temp -> fetch()){
-            echo '<div class="table_container">';
-                echo '<div class="button_table">
-                            <a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                              </svg>
-                              </a>
-                            <form action="admin.php" method="post">
-                                <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
-                                <input type="submit" class="delete-btn" value="🗑️">
-                            </form>
-                        </div>';
-                echo '<div class="line_table">
-                            <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
-                            <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
-                            <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                            <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
-                            <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
-                                echo '<div>oui</div>';
-                            } else{
-                                echo '<div>non</div>';
-                            };
-                            echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
-                            <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
-                        </div>
-                        </div> ';
-            }
-            echo '</div>';
-        ?>
-</body>
+    </div>
+        <div class="all_table">
+            <?php
+            if($tableau==1){
+                $sql='SELECT * FROM prospect ORDER BY id_prospect';
+                $temp=$pdo->prepare($sql);
+                $temp->execute();
+                while ($resultats = $temp -> fetch()){ ?>
+                    <div class="table_container">
+                        <div class="button_table">
+                    <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                        </svg>
+                        </a>
+                        <form onsubmit="return confirmDelete(<?php echo $resultats['id_prospect']; ?>)">
+                            <input type="hidden" name="id_prospect" value="<?php echo $resultats['id_prospect']; ?>">
+                            <input type="submit" class="delete-btn" value="🗑️">
+                        </form>
+                    </div>
+                    <?php echo '<div class="line_table">
+                        <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
+                        <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
+                            echo '<div>oui</div>';
+                        } else{
+                            echo '<div>non</div>';
+                        };
+                        echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
+                        <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
+                    </div>
+                    </div>';
+                }
+             } ?>
+            </div>
+        <script>
+    function confirmDelete(id) {
+        var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
 
+        if (confirmation) {
+            // Utiliser AJAX pour envoyer la requête de suppression
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "admin.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    // Recharger la page après la suppression réussie
+                    window.location.reload();
+                } else {
+                    // Gérer l'erreur si nécessaire
+                    console.error("Erreur lors de la suppression de l'enregistrement");
+            }
+        };
+
+        xhr.send("id_prospect=" + id + "&confirm_delete=1");
+    }
+
+    // Empêcher le formulaire de se soumettre et de recharger la page
+    return false;
+}
+</script>
+</body>
 </html>
