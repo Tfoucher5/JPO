@@ -27,6 +27,11 @@ $res = array();
 if(isset($_REQUEST['connaissance'])) {
     $connaissance = htmlentities($_REQUEST['connaissance']);
 }
+
+if(isset($_REQUEST['formation'])) {
+    $connaissance = htmlentities($_REQUEST['formation']);
+}
+
 if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $where = "'".$connaissance."%'";
     $sql = "SELECT * FROM connaissance WHERE moyen LIKE ".$where;
@@ -37,12 +42,24 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $tableau = 0;
 }
 
+
 // Traitement de la suppression
 if(isset($_POST['supprimer_connaissance'])) {
     $moyen = $_POST['moyen']; // Utiliser la valeur de "moyen" comme identifiant unique
     $sql_delete = "DELETE FROM connaissance WHERE moyen = :moyen"; // Requête de suppression
     $stmt = $pdo->prepare($sql_delete);
     $stmt->bindParam(':moyen', $moyen, PDO::PARAM_STR);
+    $stmt->execute();
+    // Redirection vers la même page après la suppression
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+if(isset($_POST['supprimer_formation'])) {
+    $nom = $_POST['nom']; // Utiliser la valeur de "moyen" comme identifiant unique
+    $sql_delete = "DELETE FROM formation WHERE nom = :nom"; // Requête de suppression
+    $stmt = $pdo->prepare($sql_delete);
+    $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
     $stmt->execute();
     // Redirection vers la même page après la suppression
     header('Location: ' . $_SERVER['PHP_SELF']);
@@ -127,8 +144,25 @@ if(isset($_POST['supprimer_connaissance'])) {
                 <td><?php echo $r['moyen']; ?></td>
                 <td>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input type="hidden" name="moyen" value="<?php echo $r['moyen']; ?>"> <!-- Utilisez la valeur "moyen" comme identifiant unique -->
+                        <input type="hidden" name="moyen" value="<?php echo $r['moyen']; ?>">
                         <input type="submit" name="supprimer_connaissance" value="Supprimer">
+                    </form>
+                </td>
+                <?php } ?>
+            </tr>
+        </table>
+        <?php } ?>
+        <?php if($afficher=="oui"){ ?>
+    <div id="resultat">
+        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+        <table border="1">
+            <tr>
+                <?php foreach($res as $r){ ?>
+                <td><?php echo $r['nom']; ?></td>
+                <td>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <input type="hidden" name="nom" value="<?php echo $r['nom']; ?>">
+                        <input type="submit" name="supprimer_formation" value="Supprimer">
                     </form>
                 </td>
                 <?php } ?>
@@ -165,21 +199,34 @@ if($tableau==1){
         }
         echo '</table>';
     
-        // Affichage de la table formation
         $sql='SELECT * FROM formation';
         $temp=$pdo->prepare($sql);
         $temp->execute();
         echo '<table border="1">';
         while($q=$temp->fetch()){
-            echo '<tr><td>'.$q["nom"]." ";
-            if ($q['alternance']== '1') { 
-                echo 'en alternance</td>';
-            }else{
-                echo '</td>';
+            echo '<tr>';
+            echo '<td>'.$q["nom"].'</td>';
+            if ($q['alternance'] == '1') { 
+                echo '<td>en alternance</td>';
+            } else {
+                echo '<td></td>';
             }
+            echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
+            echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
+            echo '</form></td>';
+            echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
+            echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<input type="submit" class="add-btn" value="➕">'; // Bouton d'ajout
+            echo '</form></td>';
+            echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
+            echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<input type="submit" name="supprimer_connaissance" value="Supprimer">'; // Bouton de suppression
+            echo '</form></td>';
+            echo '</tr>';
         }
         echo '</table>';
-    }     
+    }   
     catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit();
