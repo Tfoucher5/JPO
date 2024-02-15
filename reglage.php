@@ -162,11 +162,10 @@ if(isset($_POST['supprimer'])) {
         </table>
         <?php } ?>
 
-</div>
-<div class="content_reglages">
+
     <!-- Formulaire de recherche -->
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
-        <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
+        <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher une Formation">
         <input type="submit" name="valider" class="disconnect_button" value="rechercher">            
     </form>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
@@ -244,7 +243,7 @@ if(isset($_POST['supprimer'])) {
                 
             }
             echo '</table>';
-            echo '</div>';
+            
     
             $sql='SELECT * FROM formation';
             $temp=$pdo->prepare($sql);
@@ -260,16 +259,16 @@ if(isset($_POST['supprimer'])) {
                 }
                 echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
+                echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
                 echo '<td><form action="ajout_formation.php" method="post">'; // Formulaire pour l'ajout
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="add-btn" value="➕">'; // Bouton d'ajout
+                echo '<input type="submit" class="add-btn delete-btn" value="➕">'; // Bouton d'ajout
                 echo '</form></td>';
                 echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
                 echo '<input type="hidden" name="type" value="formation">'; // Spécifier le type de table
                 echo '<input type="hidden" name="identifiant" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la formation
-                echo '<input type="submit" name="supprimer" value="Supprimer">'; // Bouton de suppression
+                echo '<input type="submit" class="delete-btn" name="supprimer" value="🗑️">'; // Bouton de suppression
                 echo '</tr></form>';
             }
             echo '</tr>
