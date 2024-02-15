@@ -260,7 +260,7 @@ if(isset($_POST['supprimer'])) {
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
-                echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
+                echo '<td><form action="ajout_formation.php" method="post">'; // Formulaire pour l'ajout
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="add-btn" value="➕">'; // Bouton d'ajout
                 echo '</form></td>';
