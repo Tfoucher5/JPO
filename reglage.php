@@ -80,9 +80,11 @@ if(isset($_POST['supprimer'])) {
     $identifiant = $_POST['identifiant']; // Récupérer l'identifiant unique de l'entrée
     if($type === 'connaissance') {
         $sql_delete = "DELETE FROM connaissance WHERE moyen = :identifiant";
+        
     } elseif($type === 'formation') {
         $sql_delete = "DELETE FROM formation WHERE nom = :identifiant";
     }
+
     $stmt = $pdo->prepare($sql_delete);
     $stmt->bindParam(':identifiant', $identifiant, PDO::PARAM_STR);
     $stmt->execute();
@@ -191,8 +193,9 @@ if(isset($_POST['supprimer'])) {
             echo '<input type="submit" class="add-btn delete-btn" value="➕">'; // Bouton d'ajout
             echo '</form></td>';
             echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
-            echo '<input type="hidden" name="moyen" value="' . $r['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-            echo '<input type="submit" class="delete-btn" name="supprimer_connaissance" value="🗑️">'; // Bouton de suppression
+            echo '<input type="hidden" name="type" value="connaissance">'; // Spécifier le type de table
+            echo '<input type="hidden" name="identifiant" value="' . $r['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<input type="submit" class="delete-btn" name="supprimer" value="🗑️">'; // Bouton de suppression
             echo '</form></td>';
             echo '</tr>';
         }
