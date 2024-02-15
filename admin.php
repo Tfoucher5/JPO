@@ -227,37 +227,9 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
             <input type="submit" name="1" value="reset" >
         </form>
-    </div>
-    <!-- affichage des résultats -->
-    <?php if($afficher=="oui"){ ?>
-    <div id="resultat">
-        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-        <table border="1">
-            <tr>
-                <?php foreach($res as $r){ ?>
-                <td><?php echo $r['prenom']; ?></td>
-                <td><?php echo $r['nom']; ?></td>
-                <td><?php echo $r['adresse']; ?></td>
-                <td><?php echo $r['code_postal']; ?></td>
-                <td><?php echo $r['ville']; ?></td>
-                <td><?php echo $r['tel']; ?></td>
-                <td><?php echo $r['email']; ?></td>
-                <td><?php echo $r['niveau_etude']; ?></td>
-                <td><?php echo $r['projet']; ?></td>
-                <td><?php echo $r['pre_inscrit']; ?></td>
-                <td><?php echo $r['decouverte_IIA']; ?></td>
-                <td><?php echo $r['note_prive']; ?></td>
-                <td><?php echo $r['formation']; ?></td>
-                <td><?php echo $r['heure_enregistrement']; ?></td>
-                <?php } ?>
-            </tr>
-        </table>
-        <?php } ?>
+    </div>    
     
- 
-    </div>
-    
-            
+    <!-- tableau chargement page -->
     <div class="line_table index">
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
@@ -301,6 +273,34 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 }
              } ?>
             </div>
+    <!-- affichage des résultats de recherche -->
+    <?php if($afficher=="oui"){ ?>
+    <div id="resultat">
+        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+        <table border="1">
+            <tr>
+                <?php foreach($res as $r){ ?>
+                <td><?php echo $r['prenom']; ?></td>
+                <td><?php echo $r['nom']; ?></td>
+                <td><?php echo $r['adresse']; ?></td>
+                <td><?php echo $r['code_postal']; ?></td>
+                <td><?php echo $r['ville']; ?></td>
+                <td><?php echo $r['tel']; ?></td>
+                <td><?php echo $r['email']; ?></td>
+                <td><?php echo $r['niveau_etude']; ?></td>
+                <td><?php echo $r['projet']; ?></td>
+                <td><?php echo $r['pre_inscrit']; ?></td>
+                <td><?php echo $r['decouverte_IIA']; ?></td>
+                <td><?php echo $r['note_prive']; ?></td>
+                <td><?php echo $r['formation']; ?></td>
+                <td><?php echo $r['heure_enregistrement']; ?></td>
+                <?php } ?>
+            </tr>
+        </table>
+        <?php } ?>
+    </div>
+
+
         <script>
     function confirmDelete(id) {
         var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
