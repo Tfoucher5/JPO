@@ -366,10 +366,22 @@ h1{
   font-size:20px;
   padding-top: 30px;
   padding-left: 30px;
-  width:50%;
+  width:90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.head_admin_container{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+}
+.head_admin_container input[type="text"]{
+  appearance: none;
+  background-color: #242038;
+  border:none;
+  border-bottom:3px solid #EA7AF4;
+  color:#fff;
+  width: 200px;
 }
 
 .card {
@@ -474,8 +486,35 @@ h1{
           inset 0 0 1.3rem #EA7AF4;
 }
 .content_reglages{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width:86vw;
   float: right;
   margin-right:100px;
-  background-color: red;
+  color:#fff
+}
+.content_reglages .all_table_reglages{
+  display: flex;
+  flex-direction: row;
+}
+.content_reglages .all_table_reglages table{
+  border:5px solid #EA7AF4;
+  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin:50px;
+}
+.content_reglages .all_table_reglages tr:not(:last-child) td{
+  border:none;
+  border-bottom: #EA7AF4 5px solid;
+}
+.content_reglages .all_table_reglages td{
+  padding: 10px;
+  text-align: center;
+  width: 400px;
+}
+.content_reglages .all_table_reglages table:last-child tr{
+  height: 100px;
 }

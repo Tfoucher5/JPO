@@ -240,6 +240,7 @@ if (isset($_GET['id'])) {
 </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
+    <a href="admin.php"></a>
         </div>
     </div>
 </body>
