@@ -1,4 +1,4 @@
- <?php
+<?php
 include("session_start.php");
 if (isset($_REQUEST['Mode'])) {
     if ($_REQUEST['Mode'] == 'nuit') {
@@ -331,20 +331,34 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     </div>
     <?php
         // bouton modifier + bouton supprimer
-    
-        //Script de suppression d'une ligne
-            if (isset($_POST['id_prospect'])) {
-            $id = $_POST['id_prospect'];
-            $del = "DELETE FROM prospect WHERE id_prospect='$id'";
-            $pdo->exec($del);
-            echo '<script>
-            if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
-                window.location.href = "admin.php?id_prospect=' . $_POST['id_prospect'] . '";
-            }
-            </script>';
-            exit();
 
-    }
+        $sql='SELECT * FROM prospect ORDER BY id_prospect';
+        $temp=$pdo->prepare($sql);
+        $temp->execute();
+
+        // Script de suppression d'une ligne
+        if (isset($_POST['id_prospect'])) {
+            $id = $_POST['id_prospect'];
+            
+            // Utilisez des requêtes préparées pour éviter les attaques par injection SQL
+            $del = "DELETE FROM prospect WHERE id_prospect=:id";
+            $stmt = $pdo->prepare($del);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                echo '<script>
+                    if (confirm("Élément supprimé avec succès.")) {
+                        window.location.href = "admin.php";
+                    }
+                </script>';
+                exit();
+            } else {
+                echo '<script>
+                    alert("Erreur lors de la suppression de l\'élément.");
+                </script>';
+                exit();
+            }
+        }
     ?>
     <div class="content_admin">
     <div class="head_admin">
@@ -432,8 +446,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                         </svg>
                         </a>
-                        <form action="admin.php" method="post">
-                            <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
+                        <form onsubmit="return confirmDelete(<?php echo $resultats['id_prospect']; ?>)">
+                            <input type="hidden" name="id_prospect" value="<?php echo $resultats['id_prospect']; ?>">
                             <input type="submit" class="delete-btn" value="🗑️">
                         </form>
                     </div>
@@ -457,13 +471,13 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <script>
     function confirmDelete(id) {
         var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
-        
+
         if (confirmation) {
             // Utiliser AJAX pour envoyer la requête de suppression
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "admin.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            
+
             xhr.onload = function () {
                 if (xhr.status == 200) {
                     // Recharger la page après la suppression réussie
@@ -471,16 +485,15 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 } else {
                     // Gérer l'erreur si nécessaire
                     console.error("Erreur lors de la suppression de l'enregistrement");
-                }
             }
-            
-            xhr.send("id_prospect=" + id + "&confirm_delete=1");
-        }
-        
-        // Empêcher le formulaire de se soumettre et de recharger la page
-        return false;
+        };
+
+        xhr.send("id_prospect=" + id + "&confirm_delete=1");
     }
+
+    // Empêcher le formulaire de se soumettre et de recharger la page
+    return false;
+}
 </script>
 </body>
-
 </html>
