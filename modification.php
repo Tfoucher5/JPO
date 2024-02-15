@@ -34,6 +34,7 @@ if (isset($_GET['id'])) {
     $pre_inscrit = $prospect['pre_inscrit'];
     $niveau_etude = $prospect['niveau_etude'];
     $decouverte_IIA =  $prospect['decouverte_IIA'];
+    $formation_envisagee = $prospect['formation'];
 
     // Vérifier si le bouton submit est pressé
     if (isset($_POST['soumettre'])) {
@@ -50,6 +51,7 @@ if (isset($_GET['id'])) {
         $pre_inscrit_updated = htmlentities($_POST['pre_inscrit']);
         $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
         $decouverte_IIA_updated = htmlentities($_POST['decouverte_IIA']);
+        $formation_envisagee_updated = htmlentities($_POST['formation_envisagee']);
 
         //on ajoute les valeurs dans la db
         $sql = "UPDATE prospect
@@ -63,7 +65,8 @@ if (isset($_GET['id'])) {
             projet = :projet,
             pre_inscrit = :inscrit,
             niveau_etude = :etude,
-            decouverte_IIA = :iia
+            decouverte_IIA = :iia,
+            formation = :formenv
         WHERE id_prospect = :id";
         $temp=$pdo->prepare($sql);
         $temp->Bindparam(":nom",$nom_updated,PDO::PARAM_STR);
@@ -77,10 +80,11 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_STR);
         $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_STR);
         $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":formenv",$formation_envisagee_updated,PDO::PARAM_STR);
         $temp->bindParam(':id', $id);
         $temp->execute();
         if ($temp->execute()) {
-            header('Location: connexion.php');
+            header('Location: modification_validée.php');
             exit();
         } else {
             echo 'Modification failed';
@@ -163,7 +167,7 @@ if (isset($_GET['id'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
-        <form action="Home.php" method="post">
+        <form action="modification.php?id=<?php echo $id; ?>" method="post">
 <div class="label_box"></div>
             <div class="label_box">
             <label for="prenom">Prénom : </label>
@@ -190,58 +194,71 @@ if (isset($_GET['id'])) {
             <input type="text" name="ville" id="ville" value="<?php echo $ville; ?>" required />
 </div>
             <div class="label_box">
-        <label for="code-postal">Code postal : </label>
-            <input type="text" name="code-postal" id="code-postal" value="<?php echo $code_postal; ?>" required />
+            <label for="code-postal">Code postal : </label>
+            <input type="text" name="code_postal" id="code-postal" value="<?php echo $code_postal; ?>" required />
 </div>
             
             <div class="label_box select_box">
             <label for="pre-inscrit">Pré inscrit : </label>
             <select name="pre_inscrit" id="pre_inscrit" required>
-    <option value="1" <?php echo ($pre_inscrit == 1) ? 'selected' : ''; ?>>Oui</option>
-    <option value="0" <?php echo ($pre_inscrit == 0) ? 'selected' : ''; ?>>Non</option>
-    </select>
-    <label for="niveau-etude">Niveau d'étude : </label>
-    <select name="niveau_etude" id="niveau_etude" required>
-        <option value="3" <?php echo ($niveau_etude == 3) ? 'selected' : ''; ?>>BAC</option>
-        <option value="2" <?php echo ($niveau_etude == 2) ? 'selected' : ''; ?>>Licence</option>
-        <option value="1" <?php echo ($niveau_etude == 1) ? 'selected' : ''; ?>>Master</option>
-        <option value="4" <?php echo ($niveau_etude == 4) ? 'selected' : ''; ?>>Bac +2</option>
-        <option value="5" <?php echo ($niveau_etude == 5) ? 'selected' : ''; ?>>CAP</option>
-    </select>
+                <?php
+                $preInscritOptions = array(1 => 'Oui', 0 => 'Non');
+                foreach ($preInscritOptions as $value => $label) {
+                    echo "<option value='$value' " . ($pre_inscrit == $value ? 'selected' : '') . ">$label</option>";
+                }
+                ?>
+            </select>
+        <label for="niveau-etude">Niveau d'étude : </label>
+            <select name="niveau_etude" id="niveau_etude" required>
+            <?php
+                $sql = "SELECT * FROM niveau_etude";
+                $temp = $pdo->prepare($sql);
+                $temp->execute();
+                while($resultat = $temp->fetch()){
+                    $selected = ($resultat['equivalent'] == $niveau_etude) ? 'selected' : '';
+                    echo '<option value="'.$resultat['equivalent'].'" '.$selected.'>'.$resultat['equivalent'].'</option>';
+                }
+            ?>
+        </select>
 </div>
         <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
-        <option value="1" <?php echo ($decouverte_IIA == 1) ? 'selected' : ''; ?>>Recherches en ligne</option>
-        <option value="2" <?php echo ($decouverte_IIA == 2) ? 'selected' : ''; ?>>Publicité en ligne</option>
-        <option value="3" <?php echo ($decouverte_IIA == 3) ? 'selected' : ''; ?>>Réseaux sociaux</option>
-        <option value="4" <?php echo ($decouverte_IIA == 4) ? 'selected' : ''; ?>>Salons</option>
-        <option value="5" <?php echo ($decouverte_IIA == 5) ? 'selected' : ''; ?>>Bouche à oreille</option>
-        <option value="6" <?php echo ($decouverte_IIA == 6) ? 'selected' : ''; ?>>Autre</option>
-    </select>
+        <?php
+            $sql = "SELECT * FROM connaissance";
+            $temp = $pdo->prepare($sql);
+            $temp->execute();
+            while($resultat = $temp->fetch()){
+                $selected = ($resultat['moyen'] == $decouverte_IIA) ? 'selected' : '';
+                echo '<option value="'.$resultat['moyen'].'" '.$selected.'>'.$resultat['moyen'].'</option>';
+            }
+        ?>
+        </select>
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
         <select name="formation_envisagee" id="formation_envisagee" required>
-            <option value="1">BTS SIO SLAM</option>
-            <option value="2">BTS SIO SLAM en alternance</option>
-            <option value="3">BTS SIO SISR</option>
-            <option value="4">BTS SIO SISR en alternance</option>
-            <option value="5">Licence SIO SLAM en alternance</option>
-            <option value="6">Licence SIO SISR en alternance</option>
-            <option value="7">Master Lead Developpeur en alternance</option>
-            <option value="8">Master Manager Cybersécurité en alternance</option>
-            <option value="9">Développeur Web et Web mobile</option>
-        </select>
+        <?php
+            $sql = "SELECT * FROM formation";
+            $temp = $pdo->prepare($sql);
+            $temp->execute();
+            while($resultat = $temp->fetch()){
+                $selected = ($resultat['nom'] == $formation_envisagee) ? 'selected' : '';
+                echo '<option value="'.$resultat['nom'].'" '.$selected.'>'.$resultat['nom'].'</option>';
+            }
+        ?>
+    </select>
 </div>
     <div class="label_box_projet">
                 <label for="projet">Notes : </label>
-                <textarea type="text" name="projet" id="projet" required> <?php echo $projet; ?></textarea>
+                <textarea type="text" name="projet" id="projet"  required><?php echo $projet; ?></textarea>
 </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
-    <a href="admin.php"></a>
+        <div class="retour-modif">
+            <a href="admin.php">Retour</a>
         </div>
     </div>
+</div>
 </body>
 </html>

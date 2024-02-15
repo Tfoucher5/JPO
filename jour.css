@@ -205,6 +205,99 @@ margin-right:100px;
   border-bottom-left-radius: 10px;
   padding:5px;
 }
+  .label_home{
+    height: auto;
+    margin:0 auto;
+    margin-top:40px;
+    margin-bottom: 40px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 20px;
+    border: var(--third-color) 5px solid;
+  }
+  .label_home .label_box{
+    color:var(--secondary-color);
+    padding:1px;
+    font-size: 20px;
+    width:90%;
+    margin: 5px;
+    height: 50px;
+  }
+  .label_box label{
+    width:20%;
+    margin-top: 100px;
+  }
+  .label_box_projet{
+    color:var(--secondary-color);
+    padding:1px;
+    font-size: 20px;
+    width:90%;
+    margin: 5px;
+    height: 100px;
+  }
+  .label_box input{
+    color:var(--secondary-color) ;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding:5px;
+    width:80%;
+    float:right;
+    height:40px;
+    font-size:1em; 
+  }
+  .label_box_projet textarea{
+    background-color: var(--background-color);
+    color:var(--secondary-color) ;
+    border-radius: 10px;
+    width:80%;
+    min-height: 100px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    float:right;
+    resize: none;
+    font-size:1em;
+  }
+  .label_box select{
+    text-align: center;
+    appearance: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: var(--background-color);
+    color:var(--secondary-color) ;
+    border-radius: 10px;
+    font-size:1em;
+  }
+  .label_home input[type="submit"]{
+    margin-left:50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size:20px;
+    text-transform: capitalize;
+    margin-top:10px;
+    color: var(--background-color);
+    background:var(--third-color);
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding:5px;
+  }
+
+.retour-modif a{
+  text-decoration: none;
+    margin-left:55%;
+    font-size:20px;
+    text-transform: capitalize;
+    color: var(--background-color);
+    background:var(--third-color);
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding:5px;
+    position: relative;
+    bottom: 31px;
+}
+
 .label_home .select_box{
 text-align: center;
 }

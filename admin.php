@@ -186,7 +186,6 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         if (isset($_POST['id_prospect'])) {
             $id = $_POST['id_prospect'];
             
-            // Utilisez des requêtes préparées pour éviter les attaques par injection SQL
             $del = "DELETE FROM prospect WHERE id_prospect=:id";
             $stmt = $pdo->prepare($del);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -281,26 +280,26 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <?php if($afficher=="oui"){ ?>
     <div id="resultat">
         <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-        <table border="1">
-            <tr>
+            
                 <?php foreach($res as $r){ ?>
-                <td><?php echo $r['prenom']; ?></td>
-                <td><?php echo $r['nom']; ?></td>
-                <td><?php echo $r['adresse']; ?></td>
-                <td><?php echo $r['code_postal']; ?></td>
-                <td><?php echo $r['ville']; ?></td>
-                <td><?php echo $r['tel']; ?></td>
-                <td><?php echo $r['email']; ?></td>
-                <td><?php echo $r['niveau_etude']; ?></td>
-                <td><?php echo $r['projet']; ?></td>
-                <td><?php echo $r['pre_inscrit']; ?></td>
-                <td><?php echo $r['decouverte_IIA']; ?></td>
-                <td><?php echo $r['note_prive']; ?></td>
-                <td><?php echo $r['formation']; ?></td>
-                <td><?php echo $r['heure_enregistrement']; ?></td>
+                    <div class="line_table">
+                <div class="content_line"><?php echo $r['prenom']; ?></div>
+                <div class="content_line"><?php echo $r['nom']; ?></div>
+                <div class="content_line"><?php echo $r['adresse']; ?></div>
+                <div class="content_line"><?php echo $r['code_postal']; ?></div>
+                <div class="content_line"><?php echo $r['ville']; ?></div>
+                <div class="content_line"><?php echo $r['tel']; ?></div>
+                <div class="content_line"><?php echo $r['email']; ?></div>
+                <div class="content_line"><?php echo $r['niveau_etude']; ?></div>
+                <div class="content_line"><?php echo $r['projet']; ?></div>
+                <div class="content_line"><?php echo $r['pre_inscrit']; ?></div>
+                <div class="content_line"><?php echo $r['decouverte_IIA']; ?></div>
+                <div class="content_line"><?php echo $r['note_prive']; ?></div>
+                <div class="content_line"><?php echo $r['formation']; ?></div>
+                <div class="content_line"><?php echo $r['heure_enregistrement']; ?></div>
+                    </div>
                 <?php } ?>
-            </tr>
-        </table>
+            
         <?php } ?>
     </div>
 

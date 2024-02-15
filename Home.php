@@ -161,7 +161,7 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box">
         <label for="telephone">Téléphone : </label>
-        <input type="tel" name="tel" id="tel" placeholder="telephone" required />
+        <input type="tel" name="tel" id="tel" minlength="10" maxlength="10" placeholder="telephone" required />
     </div>
     <div class="label_box">
         <label for="adresse">Adresse : </label>
@@ -185,12 +185,14 @@ if (isset($_POST['soumettre'])) {
    
         <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-            <option value="4">BAC</option>
-            <option value="3">Bac +2</option>
-            <option value="2">Licence</option>
-            <option value="1">Master</option>
-            <option value="5">CAP</option>
-            <option value="6">Autre</option>
+        <?php
+            $sql = "SELECT * FROM niveau_etude";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat = $temp->fetch()){
+                echo '<option value="'.$resultat['equivalent'].'">'.$resultat['equivalent'].'</option>';
+            }
+            ?>
         </select>
     </div>
     <div class="label_box select_box">
