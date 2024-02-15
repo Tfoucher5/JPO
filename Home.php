@@ -170,18 +170,19 @@ if (isset($_POST['soumettre'])) {
         <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
     </div>
     <div class="label_box">
-        <label for="ville">Ville : </label>
-        <input type="text" name="ville" id="ville" placeholder="ville" required />
-    </div>
-    <div class="label_box">
         <label for="code-postal">Code postal : </label>
         <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
     </div>
+    <div class="label_box">
+        <label for="ville">Ville : </label>
+        <input type="text" name="ville" id="ville" placeholder="ville" required />
+    </div>
+
     <div class="label_box select_box">
         <label for="pre_inscrit">Pré inscrit : </label>
         <select name="pre_inscrit" id="pre_inscrit" required>
-            <option value="1">Oui</option>
             <option value="0">Non</option>
+            <option value="1">Oui</option>
         </select>
    
         <label for="niveau_etude">Niveau d'étude : </label>
@@ -227,7 +228,11 @@ if (isset($_POST['soumettre'])) {
     <div class="label_box">
                 <input type="checkbox" name="send_mail" id="send_mail" />
                 <label for="send_mail" >Envoyer la fiche formation par mail : </label>
-</div>
+    </div>
+    <div class="label_box">
+                <input type="checkbox" name="RGPD" id="RPGD" />
+                <label for="RGPD" required>J'ai lu et signé la feuille RGPD </label>
+    </div>
         <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
         </div>
