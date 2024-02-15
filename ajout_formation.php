@@ -9,13 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Récupération de la connaissance saisie dans le formulaire
     if (isset($_POST['formation'])) {
         $formation = htmlentities($_POST['formation']);
+        $alternance = htmlentities($_POST['alternance']);
 
         // Insertion dans la base de données
-        $sql = 'INSERT INTO formation (nom) 
-                VALUES (:formation)';
+        $sql = 'INSERT INTO formation (nom, alternance) 
+                VALUES (:formation,:alternance)';
         try {
             $temp = $pdo->prepare($sql);
             $temp->Bindparam(":formation", $formation, PDO::PARAM_STR);
+            $temp->Bindparam(":alternance", $alternance, PDO::PARAM_STR);
             $temp->execute();
 
             // Redirection après l'ajout
@@ -49,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </nav>
     </div>
     <div class="label_box select_box">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="ajout_formation.php" method="post">
             <label for="formation">Quel formation voulez vous découvrir ? : </label>
             <select name="alternance" id="alternance">
                 <option value="0">Non</option>

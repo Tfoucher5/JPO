@@ -90,6 +90,8 @@ if(isset($_POST['supprimer'])) {
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
