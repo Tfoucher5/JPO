@@ -54,6 +54,8 @@ if(isset($_POST['supprimer'])) {
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -254,7 +256,7 @@ if(isset($_POST['supprimer'])) {
                 if ($q['alternance'] == '1') { 
                     echo '<td>en alternance</td>';
                 } else {
-                    echo '<td></td>';
+                    echo '<td>Pas en alternance</td>';
                 }
                 echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
