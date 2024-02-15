@@ -348,6 +348,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     ?>
     <div class="content_admin">
     <div class="head_admin">
+    <div class="head_admin_container">
     <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
         <form action="deconnexion.php" method="post">
             <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
@@ -355,7 +356,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <form method="post">
             <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
         </form>
-                  
+    </div>      
+    <div class="head_admin_container">      
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="prenom" value="<?php echo $prenom;?>" placeholder="Rechercher dans prenom">
@@ -380,7 +382,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
             <input type="submit" name="1" value="reset" >
         </form>
-
+    </div>
     <!-- affichage des résultats -->
     <?php if($afficher=="oui"){ ?>
     <div id="resultat">

@@ -366,10 +366,22 @@ h1{
   font-size:20px;
   padding-top: 30px;
   padding-left: 30px;
-  width:50%;
+  width:90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.head_admin_container{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+}
+.head_admin_container input[type="text"]{
+  appearance: none;
+  background-color: #242038;
+  border:none;
+  border-bottom:3px solid #EA7AF4;
+  color:#fff;
+  width: 200px;
 }
 
 .card {
