@@ -340,7 +340,6 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         if (isset($_POST['id_prospect'])) {
             $id = $_POST['id_prospect'];
             
-            // Utilisez des requêtes préparées pour éviter les attaques par injection SQL
             $del = "DELETE FROM prospect WHERE id_prospect=:id";
             $stmt = $pdo->prepare($del);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
