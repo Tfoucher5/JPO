@@ -19,7 +19,6 @@ if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
 include_once('base_donnee.php');
 
 $tableau=1;
-$tableau = 1;
 $connaissance = "";
 $valider = "";
 $afficher = "";
@@ -97,7 +96,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         </div>
     </nav>
     </div>
-    <!-- formulaire de recherche -->
+    <div class="content_reglages">
+        <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
             <input type="submit" name="valider" value="rechercher">            
@@ -105,54 +105,55 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
             <input type="submit" name="1" value="reset" >
         </form>
-    <!-- affichage des résultats -->
-    <?php if($afficher=="oui"){ ?>
-    <div id="resultat">
-        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-        <table border="1">
-            <tr>
-                <?php foreach($res as $r){ ?>
-                <td><?php echo $r['moyen']; ?></td>
-                <?php } ?>
-            </tr>
-        </table>
-        <?php } ?>
+        <!-- affichage des résultats -->
+        <?php if($afficher=="oui"){ ?>
+        <div id="resultat">
+            <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+            <table border="1">
+                <tr>
+                    <?php foreach($res as $r){ ?>
+                    <td><?php echo $r['moyen']; ?></td>
+                    <?php } ?>
+                </tr>
+            </table>
+            </div>
+            <?php } ?>
+        
+            <?php
 
-</div>
-<?php
+                //liste de la table connaissance
+                if($tableau==1){
+                    try{
+                        $sql='SELECT * FROM connaissance';
+                        $temp=$pdo->prepare($sql);
+                        $temp->execute();
+                        echo '<table border="1">';
+                        while($q=$temp->fetch()){
+                            echo '<tr><td>'.$q["moyen"].'</td></tr>';
+                        }
+                        echo '</table>';
+                    
+                        $sql='SELECT * FROM formation';
+                        $temp=$pdo->prepare($sql);
+                        $temp->execute();
+                        echo '<table border="1">';
+                        while($q=$temp->fetch()){
+                            echo '<tr><td>'.$q["nom"]." ";
+                            if ($q['alternance']== '1') { 
+                                echo 'en alternance</td>';
+                            }else{
+                                echo '</td></tr>';
+                            }
+                        }
+                        echo '</table>';
+                    }     
+                    catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                        exit();
+                    }
 
-//liste de la table connaissance
-if($tableau==1){
-    try{
-        $sql='SELECT * FROM connaissance';
-        $temp=$pdo->prepare($sql);
-        $temp->execute();
-        echo '<table border="1">';
-        while($q=$temp->fetch()){
-            echo '<tr><td>'.$q["moyen"].'</td>';
-        }
-        echo '</table>';
-    
-        $sql='SELECT * FROM formation';
-        $temp=$pdo->prepare($sql);
-        $temp->execute();
-        echo '<table border="1">';
-        while($q=$temp->fetch()){
-            echo '<tr><td>'.$q["nom"]." ";
-            if ($q['alternance']== '1') { 
-                echo 'en alternance</td>';
-            }else{
-                echo '</td>';
-            }
-        }
-        echo '</table>';
-    }     
-    catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        exit();
-    }
-
-} 
-?>
+                } 
+            ?>
+    </div>
 </body>
 </html>
