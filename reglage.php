@@ -18,24 +18,28 @@ if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
 
 include_once('base_donnee.php');
 
+//initialisation des variables pour la barre de recherche
 $tableau=1;
 $connaissance = "";
+$formation="";
 $valider = "";
 $afficher = "";
 $res = array();
 
 if(isset($_REQUEST['connaissance'])) {
-    $connaissance = htmlentities($_REQUEST['connaissance']);
+    if(!empty($_REQUEST['connaissance'])){
+        $connaissance = htmlentities($_REQUEST['connaissance']);
+    }
 }
-
 if(isset($_REQUEST['formation'])) {
-    $connaissance = htmlentities($_REQUEST['formation']);
+    if(!empty($_REQUEST['formation'])){
+        $formation = htmlentities($_REQUEST['formation']);
+    }
 }
 
 if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $where = "'".$connaissance."%'";
     $sql = "SELECT * FROM connaissance WHERE moyen LIKE ".$where;
-    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
@@ -126,7 +130,7 @@ if(isset($_POST['supprimer_formation'])) {
     </nav>
     </div>
     <div class="content_reglages">
-        <!-- formulaire de recherche -->
+        <!-- formulaire de recherche connaissance -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
             <input type="submit" name="valider" class="disconnect_button" value="rechercher">            
@@ -205,21 +209,12 @@ if($tableau==1){
         $temp->execute();
         echo '<table border="1">';
         while($q=$temp->fetch()){
-<<<<<<< HEAD
-            echo '<tr>';
-            echo '<td>'.$q["nom"].'</td>';
-            if ($q['alternance'] == '1') { 
-                echo '<td>en alternance</td>';
-            } else {
-                echo '<td></td>';
-=======
             echo '<tr>
             <td>'.$q["nom"]." ";
             if ($q['alternance']== '1') { 
                 echo 'en alternance</td>';
             }else{
                 echo '</td>';
->>>>>>> fe6ffff79813c4089ff2ab553873fed387beb2b4
             }
             echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
             echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
@@ -235,15 +230,10 @@ if($tableau==1){
             echo '</form></td>';
             echo '</tr>';
         }
-<<<<<<< HEAD
-        echo '</table>';
-    }   
-=======
         echo '</tr>
         </table>
         </div>';
     }     
->>>>>>> fe6ffff79813c4089ff2ab553873fed387beb2b4
     catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit();
