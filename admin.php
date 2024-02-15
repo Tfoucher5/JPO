@@ -61,7 +61,7 @@ if (isset($_POST['download_csv'])) {
     fclose($output);
     exit(); 
 }
-//définition variable bare de recherche 
+//définition variable barre de recherche 
 $tableau=1;
 $valider = "";
 $afficher = "";
@@ -74,7 +74,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $where="";
 
     // variable de recherche
-    if(isset($_REQUEST['q'])){
+    if(isset($_REQUEST['keywords'])){
         $keywords = htmlentities($_REQUEST['keywords']);
     }
     // Date1
@@ -95,11 +95,12 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             $where .= "heure_enregistrement <= '".$date2."'";
         }
     }
-
+    //requete SQL barre de recherche 
     $sql = "SELECT * 
     FROM prospect 
     WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
     LIKE '".$keywords."%'".$where;
+    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
@@ -122,6 +123,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
 </head>
 
 <body class="admin_page">
+    <!--Nav barre-->
     <div class="nav_hitbox">
 <nav>
         <div class="nav_container">
@@ -172,6 +174,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         </div>
     </nav>
     </div>
+    <!--Fin nav barre-->
     <?php
         // bouton modifier + bouton supprimer
 
@@ -214,7 +217,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
         </form>
     </div>      
-    <div class="head_admin_container">      
+    <div class="head_admin_container">   
+   
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="keywords" value="<?php echo $keywords;?>" placeholder="Rechercher dans la base de donnée">
@@ -301,8 +305,9 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     </div>
 
 
-        <script>
-    function confirmDelete(id) {
+    <script>
+        //script confirmation de suppression
+        function confirmDelete(id) {
         var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
 
         if (confirmation) {
@@ -322,11 +327,11 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         };
 
         xhr.send("id_prospect=" + id + "&confirm_delete=1");
-    }
+        }
 
-    // Empêcher le formulaire de se soumettre et de recharger la page
-    return false;
-}
-</script>
+        // Empêcher le formulaire de se soumettre et de recharger la page
+        return false;
+    }
+    </script>
 </body>
 </html>
