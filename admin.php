@@ -1,4 +1,4 @@
-<?php
+ <?php
 include("session_start.php");
 if (isset($_REQUEST['Mode'])) {
     if ($_REQUEST['Mode'] == 'nuit') {
@@ -170,10 +170,10 @@ if (isset($_POST['download_csv'])) {
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
                                 </a>
-                            <form action="admin.php" method="post">
-                                <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
-                                <input type="submit" class="delete-btn" value="🗑️">
-                            </form>
+                                <form onsubmit="return confirmDelete(' . $resultats['id_prospect']. ')">
+                                    <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect']. '">
+                                    <input type="submit" class="delete-btn" value="🗑️">
+                                </form>
                         </div>';
                 echo '<div class="line_table">
                             <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
@@ -192,27 +192,33 @@ if (isset($_POST['download_csv'])) {
             }
             echo '</div>';
         ?>
-
         <script>
-        function confirmDelete(id) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
-                // Use AJAX to delete the record without reloading the page
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "admin.php", true);
-                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhr.onload = function () {
-                    if (xhr.status == 200) {
-                        // Reload the page after successful deletion
-                        window.location.reload();
-                    } else {
-                        // Handle error if necessary
-                        console.error("Error deleting record");
-                    }
-                };
-                xhr.send("id_prospect=" + id + "&confirm_delete=1");
+    function confirmDelete(id) {
+        var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+        
+        if (confirmation) {
+            // Utiliser AJAX pour envoyer la requête de suppression
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "admin.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    // Recharger la page après la suppression réussie
+                    window.location.reload();
+                } else {
+                    // Gérer l'erreur si nécessaire
+                    console.error("Erreur lors de la suppression de l'enregistrement");
                 }
-            }
-        </script>
+            };
+            
+            xhr.send("id_prospect=" + id + "&confirm_delete=1");
+        }
+        
+        // Empêcher le formulaire de se soumettre et de recharger la page
+        return false;
+    }
+</script>
 </body>
 
 </html>
