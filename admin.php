@@ -81,9 +81,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     if(isset($_REQUEST['date1'])){
         $date1 = htmlentities($_REQUEST['date1']); 
         if(!empty($date1)){
-            if(!empty($keywords)){
-                $where .= " AND "; 
-            }
+            $where .= " AND "; 
             $where .= "heure_enregistrement >= '".$date1."'";
         }
     }
@@ -102,7 +100,6 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     FROM prospect 
     WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
     LIKE '".$keywords."%'".$where;
-    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
@@ -220,7 +217,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="head_admin_container">      
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
-            <input type="text" name="keywords" value="<?php echo $keywordsh;?>" placeholder="Rechercher dans la base de donnée">
+            <input type="text" name="keywords" value="<?php echo $keywords;?>" placeholder="Rechercher dans la base de donnée">
             <input type="date" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher une date supérieur à ">ET/OU
             <input type="date" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher une date inférieur à ">
             <input type="submit" name="valider" value="rechercher" >            
