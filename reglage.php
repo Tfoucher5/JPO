@@ -226,7 +226,7 @@ if(isset($_POST['supprimer'])) {
             echo '<table border="1">';
             while ($q = $temp->fetch()) {
                 echo '<tr>';
-                echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
+                echo '<td><form action="modifier_connaissance.php?moyen=' . $q['moyen'] . '" method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="moyen" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
@@ -258,7 +258,7 @@ if(isset($_POST['supprimer'])) {
                 } else {
                     echo '<td>Pas en alternance</td>';
                 }
-                echo '<td><form action="modifier_connaissance.php" method="post">'; // Formulaire pour la modification
+                echo '<td><form action= method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
