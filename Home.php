@@ -28,7 +28,6 @@ if (isset($_POST['soumettre'])) {
     $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
-    $now = date('d-m-Y H:i');
 
     // Add logic to determine and display the appropriate content based on the selected formation
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
@@ -44,7 +43,7 @@ if (isset($_POST['soumettre'])) {
     $_SESSION['chemin_fichier'] = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
 
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
-            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :heure)';
+            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, NOW())';
     try {
         $temp = $pdo->prepare($sql);
         $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
@@ -59,7 +58,6 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
-        $temp->Bindparam(":heure", $now, PDO::PARAM_STR);
         $temp->execute();
 
         if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on') {
