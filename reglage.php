@@ -127,6 +127,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                         $sql='SELECT * FROM connaissance';
                         $temp=$pdo->prepare($sql);
                         $temp->execute();
+                        echo '<div class="all_table_reglages">';
                         echo '<table border="1">';
                         while($q=$temp->fetch()){
                             echo '<tr><td>'.$q["moyen"].'</td></tr>';
@@ -145,7 +146,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                                 echo '</td></tr>';
                             }
                         }
-                        echo '</table>';
+                        echo '</table>
+                        </div>';
                     }     
                     catch (PDOException $e) {
                         echo "Error: " . $e->getMessage();
