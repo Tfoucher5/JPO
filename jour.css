@@ -8,7 +8,6 @@
 }
 body{
   background-color: var(--background-color);
-  overflow-x: hidden;
 }
 .nav_hitbox{
 position: fixed;
@@ -351,6 +350,7 @@ overflow: hidden;
 .all_table{
 max-height:70vh;
 overflow-y: auto;
+overflow-x: hidden;
 }
 .line_table{
 display:flex;
