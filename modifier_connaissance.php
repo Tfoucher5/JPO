@@ -33,7 +33,7 @@ if (isset($_REQUEST['id'])) {
         $temp->bindParam(':moyen', $moyen_updated);
         echo $sql;
         if ($temp->execute()) {
-            header('Location: modification_validée.php');
+            header('Location: modification_validée_reglage.php');
             exit();
         } else {
             echo 'Modification failed';

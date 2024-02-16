@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $temp->execute();
 
             // Redirection après l'ajout
-            header("Location: ajout_reussie.php");
+            header("Location: modification_validée_reglage.php");
             exit();
         } catch (PDOException $e) {
             // Gestion des erreurs d'insertion
