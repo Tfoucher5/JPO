@@ -108,13 +108,14 @@ if(isset($_POST['supprimer'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reglages</title>
 
     <?php
         include ("css.php");
     ?>
 </head>
 <body>
+    <!-- nav-bar -->
 <div class="nav_hitbox">
     <nav>
         <div class="nav_container">
@@ -169,6 +170,7 @@ if(isset($_POST['supprimer'])) {
     <div class="content_reglages">
     <div class="head_admin">
     <div class="head_admin_container">
+        <!-- qui est connecté + bouton deconnecter -->
     <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
         <form action="deconnexion-reglages.php" method="post">
             <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />

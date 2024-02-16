@@ -11,7 +11,7 @@ include ("session_start.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fichier formation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
@@ -69,6 +69,7 @@ include ("session_start.php");
     <div class="box-download">
     <p class="text-formation">Voici votre fiche correspondant à la formation choisie :</p><br />
     <?php
+    // I le chemin du fichier existe et  a été envoyé dans la session, alors on fait un lien de téléchargement du fichier en question sinon, on dit qu'il n'y a pas de fichier correspondant
     if ($_SESSION['chemin_fichier']) {
         echo '<a class="download-link" href="' . $_SESSION['chemin_fichier'] . '" download>Télécharger la fiche de formation</a><br /><br />';
         echo '<a class="retour_button" href="Home.php">retour</a><br />';

@@ -82,6 +82,8 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":formenv",$formation_envisagee_updated,PDO::PARAM_STR);
         $temp->bindParam(':id', $id);
         $temp->execute();
+
+        // Si la requête a bien été effectuée alors on redirige vers une page qui nous le confirme sinon, on echo une erreur
         if ($temp->execute()) {
             header('Location: modification_validée.php');
             exit();
@@ -89,9 +91,6 @@ if (isset($_GET['id'])) {
             echo 'Modification failed';
         }
     }
-
-        // Rediriger vers la page d'affichage après la mise à jour
-
     }
 
 ?>
@@ -111,6 +110,8 @@ if (isset($_GET['id'])) {
     ?>
 </head>
 <body>
+
+<!-- Menu de navigation -->
 <div class="nav_hitbox">
 <nav>
         <div class="nav_container">
@@ -169,6 +170,8 @@ if (isset($_GET['id'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
+        
+        <!-- Le formulaire contenant les valeurs que l'on a récupéré depuis la base de données correspondant à l'id présent dans l'url -->
         <form action="modification.php?id=<?php echo $id; ?>" method="post">
 <div class="label_box"></div>
             <div class="label_box">
@@ -212,6 +215,8 @@ if (isset($_GET['id'])) {
             </select>
         <label for="niveau-etude">Niveau d'étude : </label>
             <select name="niveau_etude" id="niveau_etude" required>
+
+            <!-- Pour les select on récupère depuis la db directement puis on selectionne celui qui est déja sélectionné dans la db -->
             <?php
                 $sql = "SELECT * FROM niveau_etude";
                 $temp = $pdo->prepare($sql);

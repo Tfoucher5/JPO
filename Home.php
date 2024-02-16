@@ -4,9 +4,11 @@ require_once('base_donnee.php');
 
 include ("session_start.php");
 
-// si on appuie sur le bouton soumettre 
+
+//Si bouton submit pressé, soumettre le formulaire à la base de données
 if (isset($_POST['soumettre'])) {
 
+    //récupérer les valeurs saisies
     $prenom = htmlentities($_POST['prenom']);
     $nom = htmlentities($_POST['nom']);
     $mail = htmlentities($_POST['email']);
@@ -20,7 +22,7 @@ if (isset($_POST['soumettre'])) {
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
 
-    // chemin pour les fiche de présentation de formation
+    //définir le chemin vers les fichiers correspondant aux formations proposées
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
     $chemins_fichiers = array(
         'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
@@ -33,6 +35,7 @@ if (isset($_POST['soumettre'])) {
     
     $_SESSION['chemin_fichier'] = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
 
+    //On définit la requête sql qui va envoyer toutes les données a la base de données
     $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
             VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, NOW())';
     try {
@@ -51,6 +54,7 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
         $temp->execute();
 
+        //Si send-mail est cliqué, alors on renvoie sur une page qui contient un lien de téléchargement du fichier correspondant a la formation souhaitée
         if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on') {
             // Redirection explicite
             header("Location: fichier-formation.php");
@@ -72,7 +76,7 @@ if (isset($_POST['soumettre'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
@@ -85,6 +89,7 @@ if (isset($_POST['soumettre'])) {
 
 </head>
 <body>
+    <!-- Menu de navigation -->
     <div class="nav_hitbox">
 <nav>
         <div>
@@ -143,6 +148,8 @@ if (isset($_POST['soumettre'])) {
         <div class="line"></div>
     </div>
         <div class="label_home">
+
+        <!-- Formulaire -->
         <form action="Home.php" method="post">
             <div class="label_box">
         <label for="prenom">Prénom : </label>
@@ -182,11 +189,15 @@ if (isset($_POST['soumettre'])) {
    
         <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-        <option value="bac">bac</option>
-        <option value="Bac +2">bac +2</option>
-        <option value="licence">licence</option>
-        <option value="master">master</option>
-        <option value="CAP">CAP</option>
+        <!-- Pour les select on vient récupérer directement les valeurs depuis la base de données pour que les options soient bien a jour avec la bdd tout le temps -->
+        <?php
+            $sql = "SELECT * FROM niveau_etude";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat = $temp->fetch()){
+                echo '<option value="'.$resultat['equivalent'].'">'.$resultat['equivalent'].'</option>';
+            }
+            ?>
         </select>
     </div>
     <div class="label_box select_box">
