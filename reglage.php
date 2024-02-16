@@ -101,7 +101,10 @@ if(isset($_POST['supprimer'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
+
+    <?php
+        include ("css.php");
+    ?>
 </head>
 <body>
 <div class="nav_hitbox">
