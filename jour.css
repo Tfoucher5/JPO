@@ -456,7 +456,7 @@ font-size: 20px;
   color:var(--secondary-color);
 }
 .head_admin_container input[type="date"]::-webkit-calendar-picker-indicator{
-  background-color: var(--secondary-color);
+  background-color: var(--background-color);
 }
 .card {
 box-sizing: content-box;
@@ -576,7 +576,7 @@ width: 400px;
 .content_reglages .all_table_reglages table:last-child tr{
 height: 100px;
 }
-.content_reglages .all_table_reglages td:not(:last-child){
+.content_reglages .all_table_reglages td:not(:first-child){
 width: 50px;
 }
 .content_reglages input[type="text"]{
