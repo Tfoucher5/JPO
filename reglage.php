@@ -10,32 +10,68 @@ if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
 
 include_once('base_donnee.php');
 
-//initialisation des variables pour la barre de recherche
-$tableau=1;
+//initialisation des variables pour les barres de recherche
 $connaissance = "";
 $formation="";
 $valider = "";
 $afficher = "";
-$res = array();
+$resco = array();
+$resfo = array();
+$reset="";
+$afficherco="";
+$afficherfo="";
 
+//table connaissance
 if(isset($_REQUEST['connaissance'])) {
     if(!empty($_REQUEST['connaissance'])){
         $connaissance = htmlentities($_REQUEST['connaissance']);
     }
 }
+
+//construction de la requete SQL connaissance
+if(isset($_REQUEST['validerco']) && $_REQUEST['validerco'] == "rechercher") {
+    if(!empty($connaissance)){
+        $where = "'".$connaissance."%'";
+        $sql = "SELECT * FROM connaissance WHERE moyen LIKE ".$where;
+        $temp = $pdo->query($sql);
+        $resco = $temp->fetchAll();
+        $afficherco = "oui";
+    }
+}else{
+    $sql='SELECT * FROM connaissance';
+    $temp=$pdo->query($sql);
+    $resco = $temp->fetchAll();
+}
+
+//table formation
 if(isset($_REQUEST['formation'])) {
     if(!empty($_REQUEST['formation'])){
         $formation = htmlentities($_REQUEST['formation']);
     }
 }
 
-if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
-    $where = "'".$connaissance."%'";
-    $sql = "SELECT * FROM connaissance WHERE moyen LIKE ".$where;
+//construction de la requete SQL formation
+if(isset($_REQUEST['validerfo']) && $_REQUEST['validerfo'] == "rechercher") {
+    if(!empty($formation)){
+    $where = "'".$formation."%'";
+    $sql = "SELECT * FROM formation WHERE CONCAT(nom,alternance) LIKE ".$where;
     $temp = $pdo->query($sql);
-    $res = $temp->fetchAll();
-    $afficher = "oui";
-    $tableau = 0;
+    $resfo = $temp->fetchAll();
+    $afficherfo = "oui";
+    }
+}else{
+    $sql='SELECT * FROM formation';
+    $temp=$pdo->query($sql);
+    $resfo = $temp->fetchAll();
+}
+
+
+//reset des valeurs $conaissance et $formation
+if(isset($_REQUEST['reset'])) {
+    if(!empty($_REQUEST['reset'])){
+        $formation = "";
+        $connaissance = "";
+    }
 }
 
 // Traitement de la suppression
@@ -121,49 +157,21 @@ if(isset($_POST['supprimer'])) {
     <div class="content_reglages">
         <!-- formulaire de recherche connaissance -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
-            <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
-            <input type="submit" name="valider" class="disconnect_button" value="rechercher">            
+            <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher une connaissance">
+            <input type="submit" name="validerco" class="disconnect_button" value="rechercher">                        
+        </form>
+
+        <!-- formulaire de recherche formation -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
+            <input type="text" name="formation" value="<?php echo $formation;?>" placeholder="Rechercher une formation">
+            <input type="submit" name="validerfo" class="disconnect_button" value="rechercher">            
+                      
         </form>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
-            <input type="submit" name="1" class="disconnect_button" value="reset" >
+            <input type="submit" name="reset" class="disconnect_button" value="reset">  
         </form>
-    <!-- affichage des résultats -->
-    <?php if($afficher=="oui"){ ?>
-    <div id="resultat">
-        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-        <table border="1">
-            <tr>
-                <?php foreach($res as $r){ ?>
-                <td><?php echo $r['moyen']; ?></td>
-                <td>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input type="hidden" name="moyen" value="<?php echo $r['moyen']; ?>">
-                        <input type="submit" name="supprimer_connaissance" value="Supprimer">
-                    </form>
-                </td>
-                <?php } ?>
-            </tr>
-        </table>
-        </div>
-        <?php } ?>
-        <?php if($afficher=="oui"){ ?>
-    <div id="resultat">
-        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-        <table border="1">
-            <tr>
-                <?php foreach($res as $r){ ?>
-                <td><?php echo $r['nom']; ?></td>
-                <td>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input type="hidden" name="nom" value="<?php echo $r['nom']; ?>">
-                        <input type="submit" name="supprimer_formation" value="Supprimer">
-                    </form>
-                </td>
-                <?php } ?>
-            </tr>
-        </table>
-        <?php } ?>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 </div>
 <div class="content_reglages">
@@ -176,6 +184,8 @@ if(isset($_POST['supprimer'])) {
         <input type="submit" name="1" class="disconnect_button" value="reset" >
     </form>
 =======
+=======
+>>>>>>> b1a76343d20863f8377dc87c2118fb5c46e9b574
 <?php
 //liste de la table connaissance
     try{
@@ -189,7 +199,11 @@ if(isset($_POST['supprimer'])) {
         foreach($resco as $r){
             echo '<tr>';
             echo '<td>'.$r["moyen"].'</td>';
+<<<<<<< HEAD
             echo '<td><form action="modifier_connaissance.php?id='.$r['id_connaissance'].'" method="post">'; // Formulaire pour la modification
+=======
+            echo '<td><form action="modifier_connaissance.php?id='.$r["id_connaissance"].'" method="post">'; // Formulaire pour la modification
+>>>>>>> b1a76343d20863f8377dc87c2118fb5c46e9b574
             echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
             echo '</form></td>';
             echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
@@ -204,115 +218,49 @@ if(isset($_POST['supprimer'])) {
             echo '</tr>';
         }
         echo '</table>';
+<<<<<<< HEAD
 >>>>>>> c9db56b515f353863b7c2f34073fd0bd8b8487cb
+=======
+>>>>>>> b1a76343d20863f8377dc87c2118fb5c46e9b574
 
-    <?php if($afficher == "oui"): ?>
-        <div id="resultat">
-            <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-            <table border="1">
-                <tr>
-                    <?php foreach($res as $r): ?>
-                        <td><?php echo $r['moyen']; ?></td>
-                        <td>
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="hidden" name="type" value="connaissance">
-                                <input type="hidden" name="identifiant" value="<?php echo $r['moyen']; ?>">
-                                <input type="submit" name="supprimer" value="Supprimer">
-                            </form>
-                        </td>
-                    <?php endforeach; ?>
-                </tr>
-            </table>
-        </div>
-    <?php endif; ?>
-
-    <!-- Affichage des résultats -->
-    <?php if($afficher == "oui"): ?>
-        <div id="resultat">
-            <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
-            <table border="1">
-                <tr>
-                    <?php foreach($res as $r): ?>
-                        <td><?php echo $r['nom']; ?></td>
-                        <td>
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="hidden" name="type" value="formation">
-                                <input type="hidden" name="identifiant" value="<?php echo $r['nom']; ?>">
-                                <input type="submit" name="supprimer" value="Supprimer">
-                            </form>
-                        </td>
-                    <?php endforeach; ?>
-                </tr>
-            </table>
-        </div>
-    <?php endif; ?>
-
-    <!-- Liste de la table connaissance -->
-    <?php if($tableau == 1): ?>
-        <?php
-        try {
-            $sql = 'SELECT * FROM connaissance';
-            $temp = $pdo->prepare($sql);
-            $temp->execute();
-            echo '<div class="all_table_reglages">';
-            echo '<table border="1">';
-            while ($q = $temp->fetch()) {
-                echo '<tr>';
-                echo '<td><form action="modifier_connaissance.php?moyen=' . $q['moyen'] . '" method="post">'; // Formulaire pour la modification
-                echo '<input type="hidden" name="moyen" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
-                echo '</form></td>';
-                echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
-                echo '<input type="hidden" name="moyen" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="add-btn delete-btn" value="➕">'; // Bouton d'ajout
-                echo '</form></td>';
-                echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
-                echo '<input type="hidden" name="type" value="connaissance">'; // Champ caché pour le type de la table
-                echo '<input type="hidden" name="identifiant" value="' . $q['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="delete-btn" name="supprimer" value="🗑️">'; // Bouton de suppression
-                echo '</form></td>';
-                echo '<td>'.$q["moyen"].'</td>';
-                echo '</tr>';
-                
+//liste table formation
+        if($afficherfo=='oui'){
+            echo '<div id="resultat">';?>
+                <div id="nbr"><?=count($resfo)." ".(count($resfo)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+            </div>
+        <?php }
+        echo '<table border="1">';
+        foreach($resfo as $r){
+            echo '<tr>
+            <td>'.$r["nom"]." ";
+            if ($r['alternance']== '1') { 
+                echo 'en alternance</td>';
+            }else{
+                echo '</td>';
             }
-            echo '</table>';
-            echo '</div>';
-    
-            $sql='SELECT * FROM formation';
-            $temp=$pdo->prepare($sql);
-            $temp->execute();
-            echo '<table border="1">';
-            while($q=$temp->fetch()){
-                echo '<tr>';
-                echo '<td>'.$q["nom"].'</td>';
-                if ($q['alternance'] == '1') { 
-                    echo '<td>en alternance</td>';
-                } else {
-                    echo '<td>Pas en alternance</td>';
-                }
-                echo '<td><form action= modifier_formation.php>'; // Formulaire pour la modification
-                echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
+                echo '<td><form action="modifier_formation.php" method="post">'; // Formulaire pour la modification
+                echo '<input type="hidden" name="nom" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
+                echo '<input type="submit" class="edit-btn delete-btn"" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
                 echo '<td><form action="ajout_formation.php" method="post">'; // Formulaire pour l'ajout
-                echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
-                echo '<input type="submit" class="add-btn" value="➕">'; // Bouton d'ajout
+                echo '<input type="hidden" name="nom" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
+                echo '<input type="submit" class="add-btn delete-btn"" value="➕">'; // Bouton d'ajout
                 echo '</form></td>';
                 echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
                 echo '<input type="hidden" name="type" value="formation">'; // Spécifier le type de table
-                echo '<input type="hidden" name="identifiant" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la formation
-                echo '<input type="submit" name="supprimer" value="Supprimer">'; // Bouton de suppression
+                echo '<input type="hidden" name="identifiant" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la formation
+                echo '<input type="submit" name="supprimer" class="delete-btn" value="🗑️">'; // Bouton de suppression
                 echo '</tr></form>';
             }
             echo '</tr>
             </table>
             </div>';
-        } catch (PDOException $e) {
+        }catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             exit();
         }
-        ?>
-    <?php endif; ?>
+?>
+</div>
 </div>
 </body>
 </html>
