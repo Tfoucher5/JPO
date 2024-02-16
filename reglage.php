@@ -164,6 +164,7 @@ if(isset($_POST['supprimer'])) {
         </table>
         <?php } ?>
 
+<<<<<<< HEAD
 </div>
 <div class="content_reglages">
     <!-- Formulaire de recherche -->
@@ -174,6 +175,36 @@ if(isset($_POST['supprimer'])) {
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
         <input type="submit" name="1" class="disconnect_button" value="reset" >
     </form>
+=======
+<?php
+//liste de la table connaissance
+    try{
+        if($afficherco=='oui'){?>
+            <div id="resultat">
+                <div id="nbr"><?=count($resco)." ".(count($resco)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+            </div>
+        <?php }
+        echo '<div class="all_table_reglages">';
+        echo '<table border="1">';
+        foreach($resco as $r){
+            echo '<tr>';
+            echo '<td>'.$r["moyen"].'</td>';
+            echo '<td><form action="modifier_connaissance.php?id='.$r['id_connaissance'].'" method="post">'; // Formulaire pour la modification
+            echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
+            echo '</form></td>';
+            echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
+            echo '<input type="hidden" name="moyen" value="' . $r['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<input type="submit" class="add-btn delete-btn" value="➕">'; // Bouton d'ajout
+            echo '</form></td>';
+            echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
+            echo '<input type="hidden" name="type" value="connaissance">'; // Spécifier le type de table
+            echo '<input type="hidden" name="identifiant" value="' . $r['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<input type="submit" class="delete-btn" name="supprimer" value="🗑️">'; // Bouton de suppression
+            echo '</form></td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+>>>>>>> c9db56b515f353863b7c2f34073fd0bd8b8487cb
 
     <?php if($afficher == "oui"): ?>
         <div id="resultat">
