@@ -462,6 +462,7 @@ font-style: sans-serif;
 .info_enregistre{
 text-align: center;
 font-size: 30px;
+color:var(--third-color);
 margin:0 auto;
 margin-top:40px;
 margin-bottom: 40px;

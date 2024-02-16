@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
         $ville_updated = htmlentities($_POST['ville']);
         $code_postal_updated = htmlentities($_POST['code_postal']);
         $projet_updated = htmlentities($_POST['projet']);
-        $note_prv_updated = htmlentities($_POST['note_prv']);
+        $note_prv_updated = htmlentities($_POST['note_prive']);
         $pre_inscrit_updated = htmlentities($_POST['pre_inscrit']);
         $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
         $decouverte_IIA_updated = htmlentities($_POST['decouverte_IIA']);
@@ -263,7 +263,6 @@ if (isset($_GET['id'])) {
                 <label for="note_prv">Note privée : </label>
                 <textarea type="note_prv" name="note_prv" id="note_prv" placeholder="Insérez une note privée"><?php echo $note_prv; ?></textarea>
 </div>
-    </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
         <div class="retour-modif">

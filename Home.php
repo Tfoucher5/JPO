@@ -233,7 +233,7 @@ if (isset($_POST['soumettre'])) {
                 <input type="checkbox" name="RGPD" id="RPGD" />
                 <label for="RGPD" required>J'ai lu et signé la feuille RGPD </label>
     </div>
-        <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
+        <input type="submit" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>
