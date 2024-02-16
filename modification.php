@@ -263,6 +263,7 @@ if (isset($_GET['id'])) {
                 <label for="note_prv">Note privée : </label>
                 <textarea type="note_prv" name="note_prv" id="note_prv" placeholder="Insérez une note privée"><?php echo $note_prv; ?></textarea>
 </div>
+    </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
         <div class="retour-modif">

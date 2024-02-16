@@ -73,7 +73,7 @@ if(isset($_GET['id_connaissance'])) {
             <label for="connaissance">Comment nous avez-vous découvert ? : </label>
             <input type="text" name="connaissance" id="connaissance" value="<?php echo $connaissance_existante; ?>" placeholder="Donner une nouvelle façon de nous connaitre." required />
             <!-- Champ caché pour l'identifiant -->
-            <input type="hidden" name="id_connaissance" value="<?php echo $id_connaissance; ?>" />
+            <input type="hidden" name="id_connaissance" value="<?php echo $id_formation; ?>" />
             <div style="text-align:center;">
                 <input type="submit" name="soumettre" value="Enregistrer" />
             </div>
