@@ -82,24 +82,51 @@ if(isset($_REQUEST['reset'])) {
     }
 }
 
-// Traitement de la suppression
-if(isset($_POST['supprimer'])) {
-    $type = $_POST['type']; // Récupérer le type de la table (connaissance ou formation)
-    $identifiant = $_POST['identifiant']; // Récupérer l'identifiant unique de l'entrée
-    if($type === 'connaissance') {
-        $sql_delete = "DELETE FROM connaissance WHERE moyen = :identifiant";
-        
-    } elseif($type === 'formation') {
-        $sql_delete = "DELETE FROM formation WHERE nom = :identifiant";
-    }
+        // Script de suppression ligne formation
+        if (isset($_REQUEST['id_formation'])) {
+            $id = $_REQUEST['id_formation'];
+            
+            $del = "DELETE FROM formation WHERE id_formation=:id";
+            $stmt = $pdo->prepare($del);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                echo '<script>
+                    if (confirm("Élément supprimé avec succès.")) {
+                        window.location.href = "reglage.php";
+                    }
+                </script>';
+                exit();
+            } else {
+                echo '<script>
+                    alert("Erreur lors de la suppression de l\'élément.");
+                </script>';
+                exit();
+            }
+        }
 
-    $stmt = $pdo->prepare($sql_delete);
-    $stmt->bindParam(':identifiant', $identifiant, PDO::PARAM_STR);
-    $stmt->execute();
-    // Redirection vers la même page après la suppression
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit();
-}
+        // Script de suppression ligne connaissance
+        if (isset($_REQUEST['id_connaissance'])) {
+            $id = $_REQUEST['id_connaissance'];
+            
+            $del = "DELETE FROM connaissance WHERE id_connaissance=:id";
+            $stmt = $pdo->prepare($del);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                echo '<script>
+                    if (confirm("Élément supprimé avec succès.")) {
+                        window.location.href = "reglage.php";
+                    }
+                </script>';
+                exit();
+            } else {
+                echo '<script>
+                    alert("Erreur lors de la suppression de l\'élément.");
+                </script>';
+                exit();
+            }
+        }
 
 
 ?>
@@ -213,9 +240,8 @@ if(isset($_POST['supprimer'])) {
             echo '<input type="hidden" name="moyen" value="' . $r['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
             echo '<input type="submit" class="add-btn delete-btn" value="➕">'; // Bouton d'ajout
             echo '</form></td>';
-            echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
-            echo '<input type="hidden" name="type" value="connaissance">'; // Spécifier le type de table
-            echo '<input type="hidden" name="identifiant" value="' . $r['moyen'] . '">'; // Champ caché pour l'identifiant de la connaissance
+            echo '<td><form onsubmit="return confirmDeleteco('.$r['id_connaissance'].')" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
+            echo '<input type="hidden" name="id_connaissance" value="<'. $r['id_connaissance'].'">';
             echo '<input type="submit" class="delete-btn" name="supprimer" value="🗑️">'; // Bouton de suppression
             echo '</form></td>';
             echo '</tr>';
@@ -236,7 +262,7 @@ if(isset($_POST['supprimer'])) {
                 echo 'en alternance</td>';
             }else{
                 echo '</td>';
-            }
+            }                        
                 echo '<td><form action="modifier_formation.php?id='.$r['id_formation'].'" method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="nom" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="edit-btn delete-btn"" value="✏️">'; // Bouton de modification
@@ -245,9 +271,8 @@ if(isset($_POST['supprimer'])) {
                 echo '<input type="hidden" name="nom" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="add-btn delete-btn"" value="➕">'; // Bouton d'ajout
                 echo '</form></td>';
-                echo '<td><form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
-                echo '<input type="hidden" name="type" value="formation">'; // Spécifier le type de table
-                echo '<input type="hidden" name="identifiant" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la formation
+                echo '<td><form onsubmit="return confirmDeletefo('.$r['id_formation'].')" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">'; // Formulaire pour la suppression
+                echo '<input type="hidden" name="id_formation" value="<'. $r['id_formation'].'">';
                 echo '<input type="submit" name="supprimer" class="delete-btn" value="🗑️">'; // Bouton de suppression
                 echo '</tr></form>';
             }
@@ -258,8 +283,63 @@ if(isset($_POST['supprimer'])) {
             echo "Error: " . $e->getMessage();
             exit();
         }
-?>
+    ?>
+    </div>
 </div>
-</div>
+<script>
+        //script confirmation de suppression formation
+        function confirmDeletefo(id) {
+        var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+
+        if (confirmation) {
+            // Utiliser AJAX pour envoyer la requête de suppression
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "reglage.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    // Recharger la page après la suppression réussie
+                    window.location.reload();
+                } else {
+                    // Gérer l'erreur si nécessaire
+                    console.error("Erreur lors de la suppression de l'enregistrement");
+            }
+        };
+
+        xhr.send("id_formation=" + id + "&confirm_delete=1");
+        }
+
+        // Empêcher le formulaire de se soumettre et de recharger la page
+        return false;
+    }
+
+            //script confirmation de suppression connaissance
+            function confirmDeleteco(id) {
+        var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+
+        if (confirmation) {
+            // Utiliser AJAX pour envoyer la requête de suppression
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "reglage.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    // Recharger la page après la suppression réussie
+                    window.location.reload();
+                } else {
+                    // Gérer l'erreur si nécessaire
+                    console.error("Erreur lors de la suppression de l'enregistrement");
+            }
+        };
+
+        xhr.send("id_connaissance=" + id + "&confirm_delete=1");
+        }
+
+        // Empêcher le formulaire de se soumettre et de recharger la page
+        return false;
+    }
+    </script>
 </body>
 </html>
