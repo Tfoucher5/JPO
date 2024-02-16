@@ -182,11 +182,11 @@ if (isset($_POST['soumettre'])) {
    
         <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-        <option value="bac">BAC</option>
-        <option value="Bac +2">BAC</option>
-        <option value="bac">BAC</option>
-        <option value="bac">BAC</option>
-        <option value="bac">BAC</option>
+        <option value="bac">bac</option>
+        <option value="Bac +2">bac +2</option>
+        <option value="licence">licence</option>
+        <option value="master">master</option>
+        <option value="CAP">CAP</option>
         </select>
     </div>
     <div class="label_box select_box">
