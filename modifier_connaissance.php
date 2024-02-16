@@ -4,12 +4,6 @@ require_once('base_donnee.php');
 
 include ("session_start.php");
 
-// Vérification de la méthode de requête HTTP
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Récupération de la connaissance saisie dans le formulaire
-    if (isset($_POST['connaissance']) && isset($_POST['id_connaissance'])) {
-        $connaissance = htmlentities($_POST['connaissance']);
-        $id_connaissance = $_POST['id_connaissance']; // Récupération de l'identifiant
 
 if (isset($_REQUEST['id'])) {
     $id = htmlentities($_REQUEST['id']);
