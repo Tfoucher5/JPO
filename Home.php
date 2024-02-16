@@ -4,8 +4,8 @@ require_once('base_donnee.php');
 
 include ("session_start.php");
 
+// si on appuie sur le bouton soumettre 
 if (isset($_POST['soumettre'])) {
-
 
     $prenom = htmlentities($_POST['prenom']);
     $nom = htmlentities($_POST['nom']);
@@ -20,7 +20,7 @@ if (isset($_POST['soumettre'])) {
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
 
-    // Add logic to determine and display the appropriate content based on the selected formation
+    // chemin pour les fiche de présentation de formation
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
     $chemins_fichiers = array(
         'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
@@ -77,7 +77,9 @@ if (isset($_POST['soumettre'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 
+    
     <?php
+    // style de page
         include ("css.php");
     ?>
 
@@ -135,6 +137,7 @@ if (isset($_POST['soumettre'])) {
         </div>
     </nav>
     </div>
+    <!--Formulaire pour la prise d'info-->
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>
@@ -179,14 +182,11 @@ if (isset($_POST['soumettre'])) {
    
         <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-        <?php
-            $sql = "SELECT * FROM niveau_etude";
-            $temp = $pdo->prepare($sql);
-            $temp->execute(); 
-            while($resultat = $temp->fetch()){
-                echo '<option value="'.$resultat['equivalent'].'">'.$resultat['equivalent'].'</option>';
-            }
-            ?>
+        <option value="bac">BAC</option>
+        <option value="Bac +2">BAC</option>
+        <option value="bac">BAC</option>
+        <option value="bac">BAC</option>
+        <option value="bac">BAC</option>
         </select>
     </div>
     <div class="label_box select_box">
