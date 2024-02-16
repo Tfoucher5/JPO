@@ -25,7 +25,7 @@ if (isset($_POST['soumettre'])) {
     $code_postal = htmlentities($_POST['code-postal']);
     $projet = htmlentities($_POST['projet']);
     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-    $niveau_etude = htmlentities($_POST['niveau_etude']);
+    $niveau_etude = $_POST['niveau_etude'];
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
 
