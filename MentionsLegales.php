@@ -1,13 +1,6 @@
 <?php
 include ("session_start.php");
-if(isset($_REQUEST['Mode'])) {
-    if ($_REQUEST['Mode'] == 'nuit'){
-        $_SESSION["Mode"]="nuit";
-    }
-    else{
-        $_SESSION["Mode"]="jour";
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +8,10 @@ if(isset($_REQUEST['Mode'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
+    
+    <?php
+        include ("css.php");
+    ?>
 </head>
 <body>
     <div class="nav_hitbox">

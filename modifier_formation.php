@@ -18,6 +18,7 @@ if (isset($_REQUEST['id'])) {
         // Assigner les valeurs à des variables
         $nom = $res['nom'];
         $id=$res['id_formation'];
+        $alternance=$res['alternance'];
 
     // Vérifier si le bouton submit est pressé
     if (isset($_POST['soumettre'])) {
@@ -33,15 +34,12 @@ if (isset($_REQUEST['id'])) {
         $temp->bindParam(':nom', $nom_updated);
         echo $sql;
         if ($temp->execute()) {
-            header('Location: modification_validée.php');
+            header('Location: modification_validée_reglage.php');
             exit();
         } else {
             echo 'Modification failed';
         }
     }
-
-        // Rediriger vers la page d'affichage après la mise à jour
-
     }?>
 
 
@@ -51,10 +49,13 @@ if (isset($_REQUEST['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modification</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
+
+    <?php
+        include ("css.php");
+    ?>
 </head>
 <body>
 <div class="nav_hitbox">
@@ -120,6 +121,18 @@ if (isset($_REQUEST['id'])) {
                 <label for="nom">nom : </label>
                 <input type="text" name="nom" id="nom" value="<?php echo $nom; ?>" required />
         </div>
+        <div class="label_box select_box">
+            <label for="alternance">Formation en alternance ? : </label>
+            <select name="alternance" id="alternance" required>
+            <?php
+                $alternanceOptions = array(1 => 'Oui', 0 => 'Non');
+                foreach ($alternanceOptions as $value => $label) {
+                    echo "<option value='$value' " . ($alternance == $value ? 'selected' : '') . ">$label</option>";
+                }
+                ?>
+        </div>
+        </select>
+    </div>
             <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
         </form>
             <div class="retour-modif">

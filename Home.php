@@ -4,17 +4,8 @@ require_once('base_donnee.php');
 
 include ("session_start.php");
 
-if(isset($_REQUEST['Mode'])) {
-    if ($_REQUEST['Mode'] == 'nuit'){
-        $_SESSION["Mode"]="nuit";
-    }
-    else{
-        $_SESSION["Mode"]="jour";
-    }
-}
-
+// si on appuie sur le bouton soumettre 
 if (isset($_POST['soumettre'])) {
-
 
     $prenom = htmlentities($_POST['prenom']);
     $nom = htmlentities($_POST['nom']);
@@ -25,11 +16,11 @@ if (isset($_POST['soumettre'])) {
     $code_postal = htmlentities($_POST['code-postal']);
     $projet = htmlentities($_POST['projet']);
     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-    $niveau_etude = $_POST['niveau_etude'];
+    $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
 
-    // Add logic to determine and display the appropriate content based on the selected formation
+    // chemin pour les fiche de présentation de formation
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
     $chemins_fichiers = array(
         'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
@@ -55,7 +46,7 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
         $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
         $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
-        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
+        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_STR);
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
         $temp->execute();
@@ -82,10 +73,15 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode'] ?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
+
+    
+    <?php
+    // style de page
+        include ("css.php");
+    ?>
 
 </head>
 <body>
@@ -141,6 +137,7 @@ if (isset($_POST['soumettre'])) {
         </div>
     </nav>
     </div>
+    <!--Formulaire pour la prise d'info-->
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>
@@ -185,14 +182,11 @@ if (isset($_POST['soumettre'])) {
    
         <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-        <?php
-            $sql = "SELECT * FROM niveau_etude";
-            $temp = $pdo->prepare($sql);
-            $temp->execute(); 
-            while($resultat = $temp->fetch()){
-                echo '<option value="'.$resultat['equivalent'].'">'.$resultat['equivalent'].'</option>';
-            }
-            ?>
+        <option value="bac">BAC</option>
+        <option value="Bac +2">BAC</option>
+        <option value="bac">BAC</option>
+        <option value="bac">BAC</option>
+        <option value="bac">BAC</option>
         </select>
     </div>
     <div class="label_box select_box">
