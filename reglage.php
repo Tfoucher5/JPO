@@ -44,9 +44,11 @@ if(isset($_POST['supprimer'])) {
     $identifiant = $_POST['identifiant']; // Récupérer l'identifiant unique de l'entrée
     if($type === 'connaissance') {
         $sql_delete = "DELETE FROM connaissance WHERE moyen = :identifiant";
+        
     } elseif($type === 'formation') {
         $sql_delete = "DELETE FROM formation WHERE nom = :identifiant";
     }
+
     $stmt = $pdo->prepare($sql_delete);
     $stmt->bindParam(':identifiant', $identifiant, PDO::PARAM_STR);
     $stmt->execute();
@@ -173,7 +175,6 @@ if(isset($_POST['supprimer'])) {
         <input type="submit" name="1" class="disconnect_button" value="reset" >
     </form>
 
-    <!-- Affichage des résultats -->
     <?php if($afficher == "oui"): ?>
         <div id="resultat">
             <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
