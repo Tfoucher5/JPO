@@ -53,8 +53,6 @@ if (isset($_POST['download_csv'])) {
             $resultats['projet'],
             $resultats['pre_inscrit'] == '1' ? 'oui' : 'non',
             $resultats['decouverte_IIA'],
-            $resultats['note_prive'],
-            $resultats['formation'],
             '"'. $heure_enregistrement.'"' // Utilisation de l'heure formatée
         ), ";");
     }
@@ -102,6 +100,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     FROM prospect 
     WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
     LIKE '".$keywords."%'".$where;
+    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
@@ -238,9 +237,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
     <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
-    <div class="content_line"><span>Niveau étude</span><span>Formation souhaitée</span></div>
+    <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
-    <div class="content_line"><span>Note</span><span>Note privé</span></div>
     <div class="content_line"><span>Date inscription</span></div>
     </div>
     </div>
@@ -266,14 +264,13 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                         <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['formation'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
                         <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
                             echo '<div>oui</div>';
                         } else{
                             echo '<div>non</div>';
                         };
                         echo '<div>'.$resultats['decouverte_IIA'] .'</div></div>
-                        <div class="content_line"><div>' . $resultats['projet'] .'</div><div>'. $resultats['note_prive'] . '</div></div>
                         <div class="content_line">'.$resultats['heure_enregistrement'].'</div>
                     </div>
                     </div>';
