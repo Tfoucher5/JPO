@@ -5,6 +5,7 @@
 }
 body{
     background-color: #242038;
+    overflow-x: hidden;
 }
 .nav_hitbox{
   position: fixed;

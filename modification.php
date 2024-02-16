@@ -188,7 +188,7 @@ if (isset($_GET['id'])) {
 </div>
             <div class="label_box">
         <label for="telephone">Téléphone : </label>
-            <input type="number" name="tel" id="tel" value="<?php echo $tel; ?>" required />
+            <input type="tel" name="tel" id="tel" minlength="10" maxlength="10" value="<?php echo $tel; ?>" required />
 </div>
             <div class="label_box">
         <label for="adresse">Adresse : </label>

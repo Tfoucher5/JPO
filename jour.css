@@ -8,6 +8,7 @@
 }
 body{
   background-color: var(--background-color);
+  overflow-x: hidden;
 }
 .nav_hitbox{
 position: fixed;
@@ -511,7 +512,6 @@ align-items: center;
 
 .box-download {
 text-align: center;
-color: white;
 font-size: 30px;
 margin:0 auto;
 margin-top:40px;
