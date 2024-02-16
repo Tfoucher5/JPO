@@ -4,7 +4,7 @@ include ("session_start.php");
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
     // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    header('Location: connexion.php');
+    header('Location: connexion-reglages.php');
     exit();
 }
 
@@ -101,7 +101,10 @@ if(isset($_POST['supprimer'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode']?>.css">
+
+    <?php
+        include ("css.php");
+    ?>
 </head>
 <body>
 <div class="nav_hitbox">
@@ -154,7 +157,16 @@ if(isset($_POST['supprimer'])) {
         </div>
     </nav>
     </div>
+    
     <div class="content_reglages">
+    <div class="head_admin">
+    <div class="head_admin_container">
+    <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
+        <form action="deconnexion-reglages.php" method="post">
+            <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
+        </form>
+    </div>
+    </div>
         <!-- formulaire de recherche connaissance -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
             <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher dans les moyens de connaitre l'école">

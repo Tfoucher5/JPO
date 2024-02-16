@@ -4,15 +4,6 @@ require_once('base_donnee.php');
 
 include ("session_start.php");
 
-if(isset($_REQUEST['Mode'])) {
-    if ($_REQUEST['Mode'] == 'nuit'){
-        $_SESSION["Mode"]="nuit";
-    }
-    else{
-        $_SESSION["Mode"]="jour";
-    }
-}
-
 if (isset($_POST['soumettre'])) {
 
 
@@ -25,7 +16,7 @@ if (isset($_POST['soumettre'])) {
     $code_postal = htmlentities($_POST['code-postal']);
     $projet = htmlentities($_POST['projet']);
     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-    $niveau_etude = $_POST['niveau_etude'];
+    $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
 
@@ -55,7 +46,7 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
         $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
         $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
-        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
+        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_STR);
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
         $temp->execute();
@@ -82,10 +73,13 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo $_SESSION['Mode'] ?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
+
+    <?php
+        include ("css.php");
+    ?>
 
 </head>
 <body>
