@@ -84,7 +84,7 @@ if(isset($_REQUEST['Mode'])) {
         Vos informations ont bien été enregistrées.
         </br>
         </br>
-        <a class="retour_button" href="reglage.php">Retour</a>
+        <a class="retour_button" href="admin.php">Retour</a>
     </div>
 </body>
 </html>

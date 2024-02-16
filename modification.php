@@ -252,7 +252,7 @@ if (isset($_GET['id'])) {
     <div class="label_box_projet">
                 <label for="projet">Notes : </label>
                 <textarea type="text" name="projet" id="projet"  required><?php echo $projet; ?></textarea>
-    </div>
+</div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
         <div class="retour-modif">
