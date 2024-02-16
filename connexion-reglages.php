@@ -51,6 +51,7 @@ if (isset($_POST['soumettre'])) {
 </head>
 <body>
 
+<!-- Menu de navigation -->
 <div class="nav_hitbox">
     <nav>
             <div class="nav_container">
@@ -107,6 +108,7 @@ if (isset($_POST['soumettre'])) {
             <div class="line"></div>
         </div>
 
+        <!-- Formulaire pour récupérer les informations de connexion -->
         <div class="label_connexion">
             <form action="connexion-reglages.php" method="post">
                 
