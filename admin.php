@@ -23,7 +23,7 @@ if (isset($_POST['download_csv'])) {
     fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
     // Entêtes du CSV
-    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
+    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude','Formation','Note privé', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
 
     // Sélection des données depuis la base de données
     $sql = 'SELECT * FROM prospect ORDER BY id_prospect';
@@ -44,6 +44,8 @@ if (isset($_POST['download_csv'])) {
             $resultats['tel'],
             $resultats['email'],
             $resultats['niveau_etude'],
+            $resultats['formation'],
+            $resultats['note_prive'],
             $resultats['projet'],
             $resultats['pre_inscrit'] == '1' ? 'oui' : 'non',
             $resultats['decouverte_IIA'],
