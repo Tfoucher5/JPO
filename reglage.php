@@ -36,7 +36,11 @@ if(isset($_REQUEST['validerco']) && $_REQUEST['validerco'] == "rechercher") {
         $temp = $pdo->query($sql);
         $resco = $temp->fetchAll();
         $afficherco = "oui";
-    }
+    }else{
+        $sql='SELECT * FROM connaissance';
+        $temp=$pdo->query($sql);
+        $resco = $temp->fetchAll();
+}
 }else{
     $sql='SELECT * FROM connaissance';
     $temp=$pdo->query($sql);
@@ -58,7 +62,11 @@ if(isset($_REQUEST['validerfo']) && $_REQUEST['validerfo'] == "rechercher") {
     $temp = $pdo->query($sql);
     $resfo = $temp->fetchAll();
     $afficherfo = "oui";
-    }
+    }else{
+        $sql='SELECT * FROM formation';
+        $temp=$pdo->query($sql);
+        $resfo = $temp->fetchAll();
+}
 }else{
     $sql='SELECT * FROM formation';
     $temp=$pdo->query($sql);
