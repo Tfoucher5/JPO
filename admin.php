@@ -205,6 +205,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="content_admin">
     <div class="head_admin">
     <div class="head_admin_container">
+    <!-- qui est connecté + boutons de fonctionnalités -->
     <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
         <form action="deconnexion.php" method="post">
             <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
@@ -229,16 +230,18 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         </form>
     </div>
     
-    <!-- tableau chargement page -->
+    <!-- ligne de description de chaques colonnes -->
     <div class="line_table index">
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
     <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
-    <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
+    <div class="content_line"><span>Niveau étude</span><span>Formation souhaitée</span></div>
+    <div class="content_line"><span>Note</span><span>Note privée</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
     </div>
     </div>
+    <!-- toutes les lignes du tableau -->
         <div class="all_table">
             <?php
             if($tableau==1){
@@ -246,22 +249,27 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 $temp=$pdo->prepare($sql);
                 $temp->execute();
                 while ($resultats = $temp -> fetch()){ ?>
+                <!-- chaques ligne du tableau -->
                     <div class="table_container">
                         <div class="button_table">
+                        <!-- bouton modification -->
                     <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                         </svg>
                         </a>
+                        <!-- bouton suppression -->
                         <form onsubmit="return confirmDelete(<?php echo $resultats['id_prospect']; ?>)">
                             <input type="hidden" name="id_prospect" value="<?php echo $resultats['id_prospect']; ?>">
                             <input type="submit" class="delete-btn" value="🗑️">
                         </form>
                     </div>
+                    <!-- contenu de chaques lignes -->
                     <?php echo '<div class="line_table">
                         <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['projet'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['formation'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['projet'] .'</div><div>'. $resultats['note_prive'] . '</div></div>
                         <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
                             echo '<div>oui</div>';
                         } else{
