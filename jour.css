@@ -590,3 +590,15 @@ color:var(--secondary-color);
 .content_reglages input[type="submit"]:last-child{
 margin-top: 20px;
 }
+
+.label_formation{
+  width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.soumettre{
+  width: 100px;
+  margin: 0 auto;
+
+}

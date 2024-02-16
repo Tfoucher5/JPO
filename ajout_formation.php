@@ -50,18 +50,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Vos boutons de navigation ici -->
         </nav>
     </div>
-    <div class="label_box select_box">
-        <form action="ajout_formation.php" method="post">
-            <label for="formation">Quel formation voulez vous découvrir ? : </label>
-            <select name="alternance" id="alternance">
-                <option value="0">Non</option>
-                <option value="1">Oui</option>
-            </select>
-            <input type="text" name="formation" id="formation" placeholder="Donner une nouvelle façon de nous connaitre." required />
-            <div style="text-align:center;">
-                <input type="submit" name="soumettre" value="Enregistrer" />
-            </div>
-        </form>
+    <div class="content_home">
+    <div class="sun">
+        <div class="line"></div>
     </div>
+        <div class="label_home">
+        <form action="ajout_formation.php" method="post">
+            <div class="label_box">
+        <label for="formation">Quel formation voulez vous découvrir ? : </label>
+        <input type="text" name="formation" id="formation" placeholder="Donner une nouvelle formation à découvrir." required />
+    </div>
+    <div class="label_box">
+            <label for="alternance">En alternance ? : </label>
+                <select name="alternance" id="alternance">
+                    <option value="0">Non</option>
+                    <option value="1">Oui</option>
+                </select>
+    </div>
+    <div class="soumettre">
+        <input type="submit" name="soumettre" value="Enregistrer" />
+    </div>
+
+        </form>
 </body>
 </html>
