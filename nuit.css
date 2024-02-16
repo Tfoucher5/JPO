@@ -310,6 +310,7 @@ background-color: #EA7AF4;
 .all_table{
   max-height:70vh;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .line_table{
   display:flex;
@@ -553,7 +554,7 @@ background-color: #EA7AF4;
 .content_reglages .all_table_reglages table:last-child tr{
   height: 100px;
 }
-.content_reglages .all_table_reglages td:not(:last-child){
+.content_reglages .all_table_reglages td:not(:first-child){
   width: 50px;
 }
 .content_reglages input[type="text"]{
@@ -572,8 +573,63 @@ background-color: #EA7AF4;
   margin-top: 20px;
 }
 
+.label_formation label{
+  color:var(--secondary-color) ;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  color: white;
+  padding:5px;
+  width:50%;
+  margin-left: 20px;
+  height:40px;
+  font-size:1em;
+}
 
+.label_formation input{
+  color:var(--secondary-color) ;
+  background-color: #EA7AF4;
+  border-radius: 10px;
+  padding:5px;
+  width:50%;
+  margin-left: 20px;
+  height:40px;
+  font-size:1em;
+}
 
+.label_formation_alternance{
+  color: white;
+  width:20%;
+  margin-top: 100px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.label_formation_alternance select{
+  text-align: center;
+  appearance: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #EA7AF4;
+  border-radius: 10px;
+  font-size:1em;
+}
+
+.retour-modif a{
+  text-decoration: none;
+    margin-left:55%;
+    font-size:20px;
+    text-transform: capitalize;
+    color: black;
+    background: linear-gradient(#F7E733, #F78533);
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding:5px;
+    position: relative;
+    bottom: 31px;
+    border: 1px solid black;
+}
 
 .darklight {
   --s: 150px;

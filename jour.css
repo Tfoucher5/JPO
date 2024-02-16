@@ -350,6 +350,7 @@ overflow: hidden;
 .all_table{
 max-height:70vh;
 overflow-y: auto;
+overflow-x: hidden;
 }
 .line_table{
 display:flex;
@@ -455,7 +456,7 @@ font-size: 20px;
   color:var(--secondary-color);
 }
 .head_admin_container input[type="date"]::-webkit-calendar-picker-indicator{
-  background-color: var(--secondary-color);
+  background-color: var(--background-color);
 }
 .card {
 box-sizing: content-box;
@@ -511,7 +512,6 @@ align-items: center;
 
 .box-download {
 text-align: center;
-color: white;
 font-size: 30px;
 margin:0 auto;
 margin-top:40px;
@@ -576,7 +576,7 @@ width: 400px;
 .content_reglages .all_table_reglages table:last-child tr{
 height: 100px;
 }
-.content_reglages .all_table_reglages td:not(:last-child){
+.content_reglages .all_table_reglages td:not(:first-child){
 width: 50px;
 }
 .content_reglages input[type="text"]{
