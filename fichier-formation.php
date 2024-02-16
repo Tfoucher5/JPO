@@ -69,6 +69,7 @@ include ("session_start.php");
     <div class="box-download">
     <p class="text-formation">Voici votre fiche correspondant à la formation choisie :</p><br />
     <?php
+    // I le chemin du fichier existe et  a été envoyé dans la session, alors on fait un lien de téléchargement du fichier en question sinon, on dit qu'il n'y a pas de fichier correspondant
     if ($_SESSION['chemin_fichier']) {
         echo '<a class="download-link" href="' . $_SESSION['chemin_fichier'] . '" download>Télécharger la fiche de formation</a><br /><br />';
         echo '<a class="retour_button" href="Home.php">retour</a><br />';

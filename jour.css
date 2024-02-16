@@ -194,6 +194,7 @@ margin-right:100px;
   font-size:1em;
 }
 .label_home input[type="submit"]{
+
   margin-left:50%;
   transform: translateX(-50%);
   text-align: center;
@@ -271,6 +272,7 @@ margin-right:100px;
     font-size:1em;
   }
   .label_home input[type="submit"]{
+    
     margin-left:50%;
     transform: translateX(-50%);
     text-align: center;
@@ -282,6 +284,7 @@ margin-right:100px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     padding:5px;
+
   }
 
 .retour-modif a{
@@ -296,6 +299,7 @@ margin-right:100px;
     padding:5px;
     position: relative;
     bottom: 31px;
+    border: 1px solid black;
 }
 
 .label_home .select_box{
@@ -329,26 +333,6 @@ background-color: var(--background-color);
   width:80%;
   float:right;
 }
-
-.label_connexion form[action="connexion-reglages.php"]{
-  color:var(--secondary-color);
-  padding:1px;
-  font-size: 20px;
-  width:100%;
-  margin: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.label_connexion form[action="connexion-reglages.php"] input[type="text"], .label_connexion form[action="connexion-reglages.php"] input[type="password"]{
-background-color: var(--background-color);
-  border-radius: 10px;
-  padding:5px;
-  width:80%;
-  float:right;
-}
-
 .label_connexion input[type="submit"]{
 text-align: center;
 font-size:20px;
@@ -471,7 +455,7 @@ font-size: 20px;
   color:var(--secondary-color);
 }
 .head_admin_container input[type="date"]::-webkit-calendar-picker-indicator{
-  background-color: var(--background-color);
+  background-color: var(--secondary-color);
 }
 .card {
 box-sizing: content-box;
@@ -482,6 +466,7 @@ font-style: sans-serif;
 .info_enregistre{
 text-align: center;
 font-size: 30px;
+color:var(--third-color);
 margin:0 auto;
 margin-top:40px;
 margin-bottom: 40px;
@@ -610,16 +595,23 @@ color:var(--secondary-color);
 margin-top: 20px;
 }
 
-.label_formation{
-  width: 500px;
-  margin: 0 auto;
-  padding: 10px;
+.label_formation input{
+  color:var(--secondary-color) ;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  padding:5px;
+  width:50%;
+  margin-left: 20px;
+  height:40px;
+  font-size:1em;
 }
 
-.soumettre{
-  width: 100px;
+.label_formation_alternance{
+  color: var(--secondary-color);
+  width:20%;
+  margin-top: 100px;
   margin: 0 auto;
-}
+  padding-top: 20px;}
 .darklight {
   --s: 150px;
   height: calc(var(--s) + var(--s)/5);
@@ -657,3 +649,4 @@ margin-top: 20px;
   padding: calc(var(--s)/10 + .05px) calc(var(--s)/10);
   --_p: 100%;
   --_i:1 }
+
