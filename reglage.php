@@ -171,6 +171,21 @@ if(isset($_POST['supprimer'])) {
             <input type="submit" name="reset" class="disconnect_button" value="reset">  
         </form>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+</div>
+<div class="content_reglages">
+    <!-- Formulaire de recherche -->
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
+        <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher un Nom">
+        <input type="submit" name="valider" class="disconnect_button" value="rechercher">            
+    </form>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
+        <input type="submit" name="1" class="disconnect_button" value="reset" >
+    </form>
+=======
+=======
+>>>>>>> b1a76343d20863f8377dc87c2118fb5c46e9b574
 <?php
 //liste de la table connaissance
     try{
@@ -184,7 +199,11 @@ if(isset($_POST['supprimer'])) {
         foreach($resco as $r){
             echo '<tr>';
             echo '<td>'.$r["moyen"].'</td>';
+<<<<<<< HEAD
+            echo '<td><form action="modifier_connaissance.php?id='.$r['id_connaissance'].'" method="post">'; // Formulaire pour la modification
+=======
             echo '<td><form action="modifier_connaissance.php?id='.$r["id_connaissance"].'" method="post">'; // Formulaire pour la modification
+>>>>>>> b1a76343d20863f8377dc87c2118fb5c46e9b574
             echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
             echo '</form></td>';
             echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
@@ -199,6 +218,10 @@ if(isset($_POST['supprimer'])) {
             echo '</tr>';
         }
         echo '</table>';
+<<<<<<< HEAD
+>>>>>>> c9db56b515f353863b7c2f34073fd0bd8b8487cb
+=======
+>>>>>>> b1a76343d20863f8377dc87c2118fb5c46e9b574
 
 //liste table formation
         if($afficherfo=='oui'){
