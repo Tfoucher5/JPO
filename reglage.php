@@ -259,7 +259,7 @@ if(isset($_POST['supprimer'])) {
                 } else {
                     echo '<td>Pas en alternance</td>';
                 }
-                echo '<td><form action= modifier_formation.php>'; // Formulaire pour la modification
+                echo '<td><form action= method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="nom" value="' . $q['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="edit-btn" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
