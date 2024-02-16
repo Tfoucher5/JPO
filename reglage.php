@@ -157,7 +157,7 @@ if(isset($_POST['supprimer'])) {
     <div class="content_reglages">
         <!-- formulaire de recherche connaissance -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
-            <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher une connaissance">
+            <input type="text" name="connaissance" value="<?php echo $connaissance;?>" placeholder="Rechercher dans les moyens de connaitre l'école">
             <input type="submit" name="validerco" class="disconnect_button" value="rechercher">                        
         </form>
 
@@ -215,7 +215,7 @@ if(isset($_POST['supprimer'])) {
             }else{
                 echo '</td>';
             }
-                echo '<td><form action="modifier_formation.php" method="post">'; // Formulaire pour la modification
+                echo '<td><form action="modifier_formation.php?id='.$r['id_formation'].'" method="post">'; // Formulaire pour la modification
                 echo '<input type="hidden" name="nom" value="' . $r['nom'] . '">'; // Champ caché pour l'identifiant de la connaissance
                 echo '<input type="submit" class="edit-btn delete-btn"" value="✏️">'; // Bouton de modification
                 echo '</form></td>';
