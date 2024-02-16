@@ -471,7 +471,7 @@ font-size: 20px;
   color:var(--secondary-color);
 }
 .head_admin_container input[type="date"]::-webkit-calendar-picker-indicator{
-  background-color: var(--secondary-color);
+  background-color: var(--background-color);
 }
 .card {
 box-sizing: content-box;
