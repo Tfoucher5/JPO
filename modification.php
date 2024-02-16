@@ -31,10 +31,12 @@ if (isset($_GET['id'])) {
     $ville = $prospect['ville'];
     $code_postal = $prospect['code_postal'];
     $projet = $prospect['projet'];
+    $note_prv = $prospect['note_prive'];
     $pre_inscrit = $prospect['pre_inscrit'];
     $niveau_etude = $prospect['niveau_etude'];
     $decouverte_IIA =  $prospect['decouverte_IIA'];
     $formation_envisagee = $prospect['formation'];
+    
 
     // Vérifier si le bouton submit est pressé
     if (isset($_POST['soumettre'])) {
@@ -48,10 +50,12 @@ if (isset($_GET['id'])) {
         $ville_updated = htmlentities($_POST['ville']);
         $code_postal_updated = htmlentities($_POST['code_postal']);
         $projet_updated = htmlentities($_POST['projet']);
+        $note_prv_updated = htmlentities($_POST['note_prv']);
         $pre_inscrit_updated = htmlentities($_POST['pre_inscrit']);
         $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
         $decouverte_IIA_updated = htmlentities($_POST['decouverte_IIA']);
         $formation_envisagee_updated = htmlentities($_POST['formation_envisagee']);
+        
 
         //on ajoute les valeurs dans la db
         $sql = "UPDATE prospect
@@ -63,6 +67,7 @@ if (isset($_GET['id'])) {
             ville = :ville,
             code_postal = :cp,
             projet = :projet,
+            note_prive = :note_prv,
             pre_inscrit = :inscrit,
             niveau_etude = :etude,
             decouverte_IIA = :iia,
@@ -77,6 +82,7 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":ville",$ville_updated,PDO::PARAM_STR);
         $temp->Bindparam(":cp",$code_postal_updated,PDO::PARAM_INT);
         $temp->Bindparam(":projet",$projet_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":note_prv",$projet_updated,PDO::PARAM_STR);
         $temp->Bindparam(":inscrit",$pre_inscrit_updated,PDO::PARAM_STR);
         $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_STR);
         $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_STR);
@@ -253,6 +259,11 @@ if (isset($_GET['id'])) {
                 <label for="projet">Notes : </label>
                 <textarea type="text" name="projet" id="projet"  required><?php echo $projet; ?></textarea>
 </div>
+<div class="label_box_projet">
+                <label for="note_prv">Note privée : </label>
+                <textarea type="note_prv" name="note_prv" id="note_prv" placeholder="Insérez une note privée"><?php echo $note_prv; ?></textarea>
+</div>
+    </div>
         <input type="submit" name="soumettre" onclick="myFunction()" value="modifier" />
     </form>
         <div class="retour-modif">
