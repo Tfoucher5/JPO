@@ -184,7 +184,7 @@ if(isset($_POST['supprimer'])) {
         foreach($resco as $r){
             echo '<tr>';
             echo '<td>'.$r["moyen"].'</td>';
-            echo '<td><form action="modifier_connaissance.php?id="'.$r["id_connaissance"].'" method="post">'; // Formulaire pour la modification
+            echo '<td><form action="modifier_connaissance.php?id='.$r["id_connaissance"].'" method="post">'; // Formulaire pour la modification
             echo '<input type="submit" class="edit-btn delete-btn" value="✏️">'; // Bouton de modification
             echo '</form></td>';
             echo '<td><form action="ajouter_connaissance.php" method="post">'; // Formulaire pour l'ajout
