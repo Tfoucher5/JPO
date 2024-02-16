@@ -81,7 +81,9 @@ if (isset($_POST['soumettre'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 
+    
     <?php
+    // style de page
         include ("css.php");
     ?>
 
@@ -140,6 +142,7 @@ if (isset($_POST['soumettre'])) {
         </div>
     </nav>
     </div>
+    <!--Formulaire pour la prise d'info-->
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>
