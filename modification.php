@@ -258,7 +258,7 @@ if (isset($_GET['id'])) {
 </div>
     <div class="label_box_projet">
                 <label for="projet">Notes : </label>
-                <textarea type="text" name="projet" id="projet"  required><?php echo $projet; ?></textarea>
+                <textarea type="text" name="projet" id="projet"><?php echo $projet; ?></textarea>
 </div>
 <div class="label_box_projet">
                 <label for="note_prv">Note privée : </label>
