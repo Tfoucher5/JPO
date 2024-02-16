@@ -271,6 +271,7 @@ margin-right:100px;
     font-size:1em;
   }
   .label_home input[type="submit"]{
+    
     margin-left:50%;
     transform: translateX(-50%);
     text-align: center;
@@ -282,6 +283,7 @@ margin-right:100px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     padding:5px;
+
   }
 
 .retour-modif a{
@@ -296,6 +298,7 @@ margin-right:100px;
     padding:5px;
     position: relative;
     bottom: 31px;
+    border: 1px solid black;
 }
 
 .label_home .select_box{
@@ -591,14 +594,22 @@ color:var(--secondary-color);
 margin-top: 20px;
 }
 
-.label_formation{
-  width: 500px;
-  margin: 0 auto;
-  padding: 10px;
+.label_formation input{
+  color:var(--secondary-color) ;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  padding:5px;
+  width:50%;
+  margin-left: 20px;
+  height:40px;
+  font-size:1em;
 }
 
-.soumettre{
-  width: 100px;
+.label_formation_alternance{
+  color: var(--secondary-color);
+  width:20%;
+  margin-top: 100px;
   margin: 0 auto;
-
+  padding-top: 20px;
 }
+
