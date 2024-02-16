@@ -597,12 +597,24 @@ background-color: #EA7AF4;
 }
 
 .label_formation_alternance{
-  color: var(--secondary-color);
+  color: white;
   width:20%;
   margin-top: 100px;
   margin: 0 auto;
-  padding-top: 20px;}
+  padding-top: 20px;
+}
 
+.label_formation_alternance select{
+  text-align: center;
+  appearance: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #EA7AF4;
+  border-radius: 10px;
+  font-size:1em;
+}
 
 .retour-modif a{
   text-decoration: none;
