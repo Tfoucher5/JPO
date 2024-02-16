@@ -25,7 +25,7 @@ if (isset($_POST['soumettre'])) {
     $code_postal = htmlentities($_POST['code-postal']);
     $projet = htmlentities($_POST['projet']);
     $pre_inscrit = htmlentities($_POST['pre_inscrit']);
-    $niveau_etude = $_POST['niveau_etude'];
+    $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
 
@@ -55,7 +55,7 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
         $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
         $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
-        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
+        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_STR);
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
         $temp->execute();

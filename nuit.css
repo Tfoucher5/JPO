@@ -273,6 +273,26 @@ h1{
     width:80%;
     float:right;
 }
+
+.label_connexion form[action="connexion-reglages.php"]{
+  color:white;
+  padding:1px;
+  font-size: 20px;
+  width:100%;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.label_connexion form[action="connexion-reglages.php"] input[type="text"], .label_connexion form[action="connexion-reglages.php"] input[type="password"]{
+background-color: #EA7AF4;
+  border-radius: 10px;
+  padding:5px;
+  width:80%;
+  float:right;
+}
+
 .label_connexion input[type="submit"]{
   text-align: center;
   font-size:20px;
