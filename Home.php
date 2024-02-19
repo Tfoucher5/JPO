@@ -162,7 +162,7 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box">
         <label for="email">Email : </label> 
-        <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+        <input type="mail" name="email" id="email" placeholder="exemple@gmail.com" required />
     </div>
     <div class="label_box">
         <label for="telephone">Téléphone : </label>
@@ -183,7 +183,7 @@ if (isset($_POST['soumettre'])) {
 
     <div class="label_box select_box">
         <label for="pre_inscrit">Pré inscrit : </label>
-        <select name="pre_inscrit" id="pre_inscrit" required>
+        <select name="pre_inscrit" id="pre_inscrit">
             <option value="0">Non</option>
             <option value="1">Oui</option>
         </select>
@@ -216,7 +216,10 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
-        <select name="formation_envisagee" id="formation_envisagee" required>
+        <select name="formation_envisagee" id="formation_envisagee">
+            <option value="">BTS SIO</option>
+            <option value="">LIC SIO</option>
+            <option value="">Master</option>
             <?php
             $sql = "SELECT nom AS formation FROM formation";
             $temp = $pdo->prepare($sql);
@@ -227,17 +230,43 @@ if (isset($_POST['soumettre'])) {
             ?>
         </select>
     </div>
+    <div class="label_box">
+        <label for="projet">Option : </label>
+        <input type="radio" name="option" id="option">
+        <?php
+            $sql = "SELECT * FROM formation";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            foreach($temp as $t){
+                if($t["formation"] == "master"){
+                    echo '<option value="'.$t['option'].'">'$t['option'].'</option>';  
+                }else{
+                    echo '<option value="'.$t['option'].'">'.$t['option'].'</option>';
+                }
+            }
+            ?>
+            <option value="Ne sait pas">Ne sait pas</option>
+        </input>
+    <div class="label_box">
+        <label for="projet">Alternance : </label>
+        <input type="radio" name="alternance" id="alternance">
+            <option value="0">En initial</option>
+            <option value="1">En alternance</option>
+            <option value="Ne sait pas">Ne sait pas</option>
+        </input>
+    </div>
     <div class="label_box_projet">
         <label for="projet">Notes : </label>
         <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
     </div>
     <div class="label_box">
-                <input type="checkbox" name="send_mail" id="send_mail" />
-                <label for="send_mail" >Envoyer la fiche formation par mail : </label>
+        <label for="send_mail" >Envoyer la fiche formation par mail : </label>
+        <input type="checkbox" name="send_mail" id="send_mail" />
     </div>
     <div class="label_box">
-                <input type="checkbox" name="RGPD" id="RPGD" />
-                <label for="RGPD" required>J'ai lu et signé la feuille RGPD </label>
+        <label for="RGPD">J'ai lu et signé la feuille RGPD </label>
+        <input type="checkbox" name="RGPD" id="RPGD" required />
+
     </div>
         <input type="submit" name="soumettre" value="enregistrer" />
     </form>
