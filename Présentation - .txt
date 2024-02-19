@@ -1,0 +1,23 @@
+Présentation - 
+
+Introduction :
+
+- présentation du produit général vague de toute les pages (a quoi ça sert ?)
+
+-présentatition fonctionnalité : 
+- home (
+- admin 
+- reglage
+- jour/nuit
+
+Conclusion :
+Piste d'amélioration :
+- javascript pour du onkeyup pour les barres de recherches
+- scrollbarre dans les notes
+- enregistrement des CSV dans la BD
+- ajout de session élève pour savoir sous quel session les élèves sont enregistrer
+- fichier PDF des formations dans la BD
+- notifié les champs obligatoire dans home et modif
+- home - formation - BTS SIO LIC MASTER + bouton radio alternance initial + option SLAM SISR selon BTS LIC Master
+- filtre export CSV
+
