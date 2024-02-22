@@ -205,7 +205,7 @@ if (isset($_POST['soumettre'])) {
         <label for="decouverte_IIA">Comment nous avez-vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
             <?php
-            $sql = "SELECT * FROM connaissance";
+            $sql = "SELECT DISTINCT moyen FROM connaissance";
             $temp = $pdo->prepare($sql);
             $temp->execute(); 
             while($resultat = $temp->fetch()){
@@ -217,44 +217,46 @@ if (isset($_POST['soumettre'])) {
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
         <select name="formation_envisagee" id="formation_envisagee">
-            <option value="">BTS SIO</option>
-            <option value="">LIC SIO</option>
-            <option value="">Master</option>
             <?php
-            $sql = "SELECT nom AS formation FROM formation";
+            $sql = "SELECT DISTINCT nom FROM formation";
             $temp = $pdo->prepare($sql);
             $temp->execute(); 
             while($resultat = $temp->fetch()){
-                echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
+                echo '<option value="'.$resultat['nom'].'">'.$resultat['nom'].'</option>';
             }
             ?>
         </select>
     </div>
-    <div class="label_box">
+    <div class="label_box select_box">
         <label for="projet">Option : </label>
-        <input type="radio" name="option" id="option">
+        <select name="option" id="option">
         <?php
-            $sql = "SELECT * FROM formation";
+            $sql = "SELECT DISTINCT branche FROM formation";
             $temp = $pdo->prepare($sql);
-            $temp->execute(); 
+            $temp->execute();
             foreach($temp as $t){
-                if($t["formation"] == "master"){
-                    echo '<option value="'.$t['option'].'">'$t['option'].'</option>';  
-                }else{
-                    echo '<option value="'.$t['option'].'">'.$t['option'].'</option>';
-                }
+                echo '<option value="'.$t['branche'].'">'.$t['branche'].'</option>';
             }
             ?>
             <option value="Ne sait pas">Ne sait pas</option>
-        </input>
+        </select>
+    </div>
     <div class="label_box">
         <label for="projet">Alternance : </label>
+        <br>
         <input type="radio" name="alternance" id="alternance">
-            <option value="0">En initial</option>
-            <option value="1">En alternance</option>
-            <option value="Ne sait pas">Ne sait pas</option>
+            <option value="1">Oui</option>
+        </input>
+        <input type="radio" name="alternance" id="alternance">
+            <option value="0">Non</option>
+        </input>
+        <input type="radio" name="alternance" id="alternance">
+            <option value="">Ne sait pas</option>
         </input>
     </div>
+    <br>
+    <br>
+    <br>
     <div class="label_box_projet">
         <label for="projet">Notes : </label>
         <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>

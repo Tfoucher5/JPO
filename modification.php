@@ -244,18 +244,47 @@ if (isset($_GET['id'])) {
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
-        <select name="formation_envisagee" id="formation_envisagee" required>
+        <select name="formation_envisagee" id="formation_envisagee">
+            <?php
+            $sql = "SELECT DISTINCT nom FROM formation";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            while($resultat = $temp->fetch()){
+                echo '<option value="'.$resultat['nom'].'">'.$resultat['nom'].'</option>';
+            }
+            ?>
+        </select>
+    </div>
+    <div class="label_box select_box">
+        <label for="projet">Option : </label>
+        <select name="option" id="option">
         <?php
-            $sql = "SELECT * FROM formation";
+            $sql = "SELECT DISTINCT branche FROM formation";
             $temp = $pdo->prepare($sql);
             $temp->execute();
-            while($resultat = $temp->fetch()){
-                $selected = ($resultat['nom'] == $formation_envisagee) ? 'selected' : '';
-                echo '<option value="'.$resultat['nom'].'" '.$selected.'>'.$resultat['nom'].'</option>';
+            foreach($temp as $t){
+                echo '<option value="'.$t['branche'].'">'.$t['branche'].'</option>';
             }
-        ?>
-    </select>
-</div>
+            ?>
+            <option value="Ne sait pas">Ne sait pas</option>
+        </select>
+    </div>
+    <div class="label_box">
+        <label for="projet">Alternance : </label>
+        <br>
+        <input type="radio" name="alternance" id="alternance">
+            <option value="1">Oui</option>
+        </input>
+        <input type="radio" name="alternance" id="alternance">
+            <option value="0">Non</option>
+        </input>
+        <input type="radio" name="alternance" id="alternance">
+            <option value="">Ne sait pas</option>
+        </input>
+    </div>
+    <br>
+    <br>
+    <br>
     <div class="label_box_projet">
                 <label for="projet">Notes : </label>
                 <textarea type="text" name="projet" id="projet"><?php echo $projet; ?></textarea>
