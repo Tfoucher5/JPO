@@ -4,11 +4,18 @@ require_once('base_donnee.php');
 
 include ("session_start.php");
 
+if(isset($_REQUEST['Mode'])) {
+    if ($_REQUEST['Mode'] == 'nuit'){
+        $_SESSION["Mode"]="nuit";
+    }
+    else{
+        $_SESSION["Mode"]="jour";
+    }
+}
 
-//Si bouton submit pressé, soumettre le formulaire à la base de données
 if (isset($_POST['soumettre'])) {
 
-    //récupérer les valeurs saisies
+
     $prenom = htmlentities($_POST['prenom']);
     $nom = htmlentities($_POST['nom']);
     $mail = htmlentities($_POST['email']);
@@ -21,10 +28,11 @@ if (isset($_POST['soumettre'])) {
     $niveau_etude = htmlentities($_POST['niveau_etude']);
     $connaissance = htmlentities($_POST['decouverte_IIA']);
     $formation_souhaitee = htmlentities($_POST['formation_envisagee']);
+    $formation_option = htmlentities($_POST['formation_option']);
+    $formation_alternance = htmlentities($_POST['formation_alternance']);
 
-    //définir le chemin vers les fichiers correspondant aux formations proposées
+    // Add logic to determine and display the appropriate content based on the selected formation
     $formation_selectionnee = isset($_POST['formation_envisagee']) ? $_POST['formation_envisagee'] : '';
-    
     $chemins_fichiers = array(
         'BTS SIO SLAM' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-slam.pdf',
         'BTS SIO SISR' => 'Fiches formations/bts-services-informatiques-aux-organisations-sio-option-sisr.pdf',
@@ -37,8 +45,8 @@ if (isset($_POST['soumettre'])) {
     $_SESSION['chemin_fichier'] = isset($chemins_fichiers[$formation_selectionnee]) ? $chemins_fichiers[$formation_selectionnee] : '';
 
     //On définit la requête sql qui va envoyer toutes les données a la base de données
-    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, heure_enregistrement) 
-            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, NOW())';
+    $sql = 'INSERT INTO prospect (prenom, nom, email, tel, adresse, ville, code_postal, projet, pre_inscrit, niveau_etude, decouverte_IIA, formation, formation_option, formation_alternance, heure_enregistrement) 
+            VALUES (:prenom, :nom, :mail, :tel, :adresse, :ville, :code_postal, :projet, :pre_inscrit, :niveau_etude, :connaissance, :formation_envisagee, :formation_option , :formation_alternance, NOW())';
     try {
         $temp = $pdo->prepare($sql);
         $temp->Bindparam(":prenom", $prenom, PDO::PARAM_STR);
@@ -50,12 +58,13 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":code_postal", $code_postal, PDO::PARAM_INT);
         $temp->Bindparam(":projet", $projet, PDO::PARAM_STR);
         $temp->Bindparam(":pre_inscrit", $pre_inscrit, PDO::PARAM_INT);
-        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_STR);
+        $temp->Bindparam(":niveau_etude", $niveau_etude, PDO::PARAM_INT);
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
+        $temp->Bindparam(":formation_option", $formation_option, PDO::PARAM_STR);
+        $temp->Bindparam(":formation_alternance", $formation_alternance, PDO::PARAM_STR);
         $temp->execute();
 
-        //Si send-mail est cliqué, alors on renvoie sur une page qui contient un lien de téléchargement du fichier correspondant a la formation souhaitée
         if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on') {
             // Redirection explicite
             header("Location: fichier-formation.php");
@@ -78,19 +87,13 @@ if (isset($_POST['soumettre'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="<?php echo $_SESSION['Mode'] ?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
 
-    
-    <?php
-    // style de page
-        include ("css.php");
-    ?>
-
 </head>
 <body>
-    <!-- Menu de navigation -->
     <div class="nav_hitbox">
 <nav>
         <div>
@@ -113,7 +116,7 @@ if (isset($_POST['soumettre'])) {
             </a>
         </div>
         <div class="nav_container">
-        <a href="MentionsLegales.php">
+        <a href="MentionsLegales.html">
             <div class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v.756a49.106 49.106 0 0 1 9.152 1 .75.75 0 0 1-.152 1.485h-1.918l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 18.75 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84l2.474-10.124H12.75v13.28c1.293.076 2.534.343 3.697.776a.75.75 0 0 1-.262 1.453h-8.37a.75.75 0 0 1-.262-1.453c1.162-.433 2.404-.7 3.697-.775V6.24H6.332l2.474 10.124a.75.75 0 0 1-.375.84A6.723 6.723 0 0 1 5.25 18a6.723 6.723 0 0 1-3.181-.795.75.75 0 0 1-.375-.84L4.168 6.241H2.25a.75.75 0 0 1-.152-1.485 49.105 49.105 0 0 1 9.152-1V3a.75.75 0 0 1 .75-.75Zm4.878 13.543 1.872-7.662 1.872 7.662h-3.744Zm-9.756 0L5.25 8.131l-1.872 7.662h3.744Z" clip-rule="evenodd" />
@@ -143,14 +146,11 @@ if (isset($_POST['soumettre'])) {
         </div>
     </nav>
     </div>
-    <!--Formulaire pour la prise d'info-->
     <div class="content_home">
     <div class="sun">
         <div class="line"></div>
     </div>
         <div class="label_home">
-
-        <!-- Formulaire -->
         <form action="Home.php" method="post">
             <div class="label_box">
         <label for="prenom">Prénom : </label>
@@ -162,11 +162,11 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box">
         <label for="email">Email : </label> 
-        <input type="mail" name="email" id="email" placeholder="exemple@gmail.com" required />
+        <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
     </div>
     <div class="label_box">
         <label for="telephone">Téléphone : </label>
-        <input type="tel" name="tel" id="tel" minlength="10" maxlength="10" placeholder="telephone" required />
+        <input type="tel" name="tel" id="tel" placeholder="telephone" required />
     </div>
     <div class="label_box">
         <label for="adresse">Adresse : </label>
@@ -183,29 +183,26 @@ if (isset($_POST['soumettre'])) {
 
     <div class="label_box select_box">
         <label for="pre_inscrit">Pré inscrit : </label>
-        <select name="pre_inscrit" id="pre_inscrit">
+        <select name="pre_inscrit" id="pre_inscrit" required>
             <option value="0">Non</option>
             <option value="1">Oui</option>
         </select>
    
         <label for="niveau_etude">Niveau d'étude : </label>
         <select name="niveau_etude" id="niveau_etude" required>
-        <!-- Pour les select on vient récupérer directement les valeurs depuis la base de données pour que les options soient bien a jour avec la bdd tout le temps -->
-        <?php
-            $sql = "SELECT * FROM niveau_etude";
-            $temp = $pdo->prepare($sql);
-            $temp->execute(); 
-            while($resultat = $temp->fetch()){
-                echo '<option value="'.$resultat['equivalent'].'">'.$resultat['equivalent'].'</option>';
-            }
-            ?>
+            <option value="4">BAC</option>
+            <option value="3">Bac +2</option>
+            <option value="2">Licence</option>
+            <option value="1">Master</option>
+            <option value="5">CAP</option>
+            <option value="6">Autre</option>
         </select>
     </div>
     <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez-vous découvert ? : </label>
         <select name="decouverte_IIA" id="decouverte_IIA" required>
             <?php
-            $sql = "SELECT DISTINCT moyen FROM connaissance";
+            $sql = "SELECT * FROM connaissance";
             $temp = $pdo->prepare($sql);
             $temp->execute(); 
             while($resultat = $temp->fetch()){
@@ -216,41 +213,41 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
-        <select name="formation_envisagee" id="formation_envisagee">
+        <select name="formation_envisagee" id="formation_envisagee" required>
             <?php
-            $sql = "SELECT DISTINCT nom FROM formation";
+            $sql = "SELECT nom AS formation FROM formation";
             $temp = $pdo->prepare($sql);
             $temp->execute(); 
             while($resultat = $temp->fetch()){
-                echo '<option value="'.$resultat['nom'].'">'.$resultat['nom'].'</option>';
+                echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
             }
             ?>
         </select>
     </div>
     <div class="label_box select_box">
-        <label for="projet">Option : </label>
-        <select name="option" id="option">
+        <label for="formation_option">Option : </label>
+        <select name="formation_option" id="formation_option">
         <?php
-            $sql = "SELECT DISTINCT branche FROM formation";
+            $sql = "SELECT DISTINCT option_formation FROM formation";
             $temp = $pdo->prepare($sql);
             $temp->execute();
             foreach($temp as $t){
-                echo '<option value="'.$t['branche'].'">'.$t['branche'].'</option>';
+                echo '<option value="'.$t['option_formation'].'">'.$t['option_formation'].'</option>';
             }
             ?>
             <option value="Ne sait pas">Ne sait pas</option>
         </select>
     </div>
     <div class="label_box">
-        <label for="projet">Alternance : </label>
+        <label for="formation_alternance">Alternance : </label>
         <br>
-        <input type="radio" name="alternance" id="alternance">
+        <input type="radio" name="formation_alternance" id="formation_alternance">
             <option value="1">Oui</option>
         </input>
-        <input type="radio" name="alternance" id="alternance">
+        <input type="radio" name="formation_alternance" id="formation_alternance">
             <option value="0">Non</option>
         </input>
-        <input type="radio" name="alternance" id="alternance">
+        <input type="radio" name="formation_alternance" id="formation_alternance">
             <option value="">Ne sait pas</option>
         </input>
     </div>
@@ -262,15 +259,14 @@ if (isset($_POST['soumettre'])) {
         <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
     </div>
     <div class="label_box">
-        <label for="send_mail" >Envoyer la fiche formation par mail : </label>
-        <input type="checkbox" name="send_mail" id="send_mail" />
+                <input type="checkbox" name="send_mail" id="send_mail" />
+                <label for="send_mail" >Envoyer la fiche formation par mail : </label>
     </div>
     <div class="label_box">
-        <label for="RGPD">J'ai lu et signé la feuille RGPD </label>
-        <input type="checkbox" name="RGPD" id="RPGD" required />
-
+                <input type="checkbox" name="RGPD" id="RPGD" />
+                <label for="RGPD" required>J'ai lu et signé la feuille RGPD </label>
     </div>
-        <input type="submit" name="soumettre" value="enregistrer" />
+        <input type="submit" href="enregistrement_reussie.php" name="soumettre" value="enregistrer" />
     </form>
         </div>
     </div>

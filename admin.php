@@ -1,6 +1,12 @@
-<?php
+ <?php
 include("session_start.php");
-
+if (isset($_REQUEST['Mode'])) {
+    if ($_REQUEST['Mode'] == 'nuit') {
+        $_SESSION["Mode"] = "nuit";
+    } else {
+        $_SESSION["Mode"] = "jour";
+    }
+}
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['connected']) || $_SESSION['connected'] !== true) {
@@ -23,7 +29,7 @@ if (isset($_POST['download_csv'])) {
     fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
     // Entêtes du CSV
-    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude','Formation','Note privé', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
+    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
 
     // Sélection des données depuis la base de données
     $sql = 'SELECT * FROM prospect ORDER BY id_prospect';
@@ -44,8 +50,6 @@ if (isset($_POST['download_csv'])) {
             $resultats['tel'],
             $resultats['email'],
             $resultats['niveau_etude'],
-            $resultats['formation'],
-            $resultats['note_prive'],
             $resultats['projet'],
             $resultats['pre_inscrit'] == '1' ? 'oui' : 'non',
             $resultats['decouverte_IIA'],
@@ -57,7 +61,7 @@ if (isset($_POST['download_csv'])) {
     fclose($output);
     exit(); 
 }
-//définition variable barre de recherche 
+//définition variable bare de recherche 
 $tableau=1;
 $valider = "";
 $afficher = "";
@@ -70,14 +74,16 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $where="";
 
     // variable de recherche
-    if(isset($_REQUEST['keywords'])){
+    if(isset($_REQUEST['q'])){
         $keywords = htmlentities($_REQUEST['keywords']);
     }
     // Date1
     if(isset($_REQUEST['date1'])){
         $date1 = htmlentities($_REQUEST['date1']); 
         if(!empty($date1)){
-            $where .= " AND "; 
+            if(!empty($keywords)){
+                $where .= " AND "; 
+            }
             $where .= "heure_enregistrement >= '".$date1."'";
         }
     }
@@ -91,11 +97,12 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             $where .= "heure_enregistrement <= '".$date2."'";
         }
     }
-    //requete SQL barre de recherche 
+
     $sql = "SELECT * 
     FROM prospect 
     WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
     LIKE '".$keywords."%'".$where;
+    echo $sql;
     $temp = $pdo->query($sql);
     $res = $temp->fetchAll();
     $afficher = "oui";
@@ -111,17 +118,13 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrateur</title>
+    <link rel="stylesheet" href="<?php echo $_SESSION['Mode'] ?>.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&display=swap" rel="stylesheet">
-
-    <?php
-        include ("css.php");
-    ?>
 </head>
 
 <body class="admin_page">
-    <!--Nav barre-->
     <div class="nav_hitbox">
 <nav>
         <div class="nav_container">
@@ -172,41 +175,26 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         </div>
     </nav>
     </div>
-    <!--Fin nav barre-->
     <?php
         // bouton modifier + bouton supprimer
-
-        $sql='SELECT * FROM prospect ORDER BY id_prospect';
-        $temp=$pdo->prepare($sql);
-        $temp->execute();
-
-        // Script de suppression d'une ligne
-        if (isset($_POST['id_prospect'])) {
+    
+        //Script de suppression d'une ligne
+            if (isset($_POST['id_prospect'])) {
             $id = $_POST['id_prospect'];
-            
-            $del = "DELETE FROM prospect WHERE id_prospect=:id";
-            $stmt = $pdo->prepare($del);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            
-            if ($stmt->execute()) {
-                echo '<script>
-                    if (confirm("Élément supprimé avec succès.")) {
-                        window.location.href = "admin.php";
-                    }
-                </script>';
-                exit();
-            } else {
-                echo '<script>
-                    alert("Erreur lors de la suppression de l\'élément.");
-                </script>';
-                exit();
+            $del = "DELETE FROM prospect WHERE id_prospect='$id'";
+            $pdo->exec($del);
+            echo '<script>
+            if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
+                window.location.href = "admin.php?id_prospect=' . $_POST['id_prospect'] . '";
             }
-        }
+            </script>';
+            exit();
+
+    }
     ?>
     <div class="content_admin">
     <div class="head_admin">
     <div class="head_admin_container">
-    <!-- qui est connecté + boutons de fonctionnalités -->
     <?php echo 'Connecté en tant que'. ' ' . htmlentities($_SESSION['utilisateur']); ?>
         <form action="deconnexion.php" method="post">
             <input type="submit" name="deconnecter" class="disconnect_button" value="Deconnexion" />
@@ -215,34 +203,58 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             <input type="submit" class="disconnect_button" name="download_csv" value="Télécharger CSV">
         </form>
     </div>      
-    <div class="head_admin_container">   
-   
+    <div class="head_admin_container">      
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
-            <input type="text" name="keywords" value="<?php echo $keywords;?>" placeholder="Rechercher dans la base de donnée">
+            <input type="text" name="keywords" value="<?php echo $keywordsh;?>" placeholder="Rechercher dans la base de donnée">
             <input type="date" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher une date supérieur à ">ET/OU
             <input type="date" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher une date inférieur à ">
-            <input type="submit" class="disconnect_button" name="valider" value="rechercher" >            
+            <input type="submit" name="valider" value="rechercher" >            
         </form>
 
     <!-- bouton reset pour afficher le tableau complet -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="reset">
-            <input type="submit" class="disconnect_button" name="1" value="reset" >
+            <input type="submit" name="1" value="reset" >
         </form>
     </div>
+    <!-- affichage des résultats -->
+    <?php if($afficher=="oui"){ ?>
+    <div id="resultat">
+        <div id="nbr"><?=count($res)." ".(count($res)>=1?"résultats trouvés":"résultat trouvé") ?></div>
+        <table border="1">
+            <tr>
+                <?php foreach($res as $r){ ?>
+                <td><?php echo $r['prenom']; ?></td>
+                <td><?php echo $r['nom']; ?></td>
+                <td><?php echo $r['adresse']; ?></td>
+                <td><?php echo $r['code_postal']; ?></td>
+                <td><?php echo $r['ville']; ?></td>
+                <td><?php echo $r['tel']; ?></td>
+                <td><?php echo $r['email']; ?></td>
+                <td><?php echo $r['niveau_etude']; ?></td>
+                <td><?php echo $r['projet']; ?></td>
+                <td><?php echo $r['pre_inscrit']; ?></td>
+                <td><?php echo $r['decouverte_IIA']; ?></td>
+                <td><?php echo $r['note_prive']; ?></td>
+                <td><?php echo $r['formation']; ?></td>
+                <td><?php echo $r['heure_enregistrement']; ?></td>
+                <?php } ?>
+            </tr>
+        </table>
+        <?php } ?>
     
-    <!-- ligne de description de chaques colonnes -->
+ 
+    </div>
+    
+            
     <div class="line_table index">
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
     <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
-    <div class="content_line"><span>Niveau étude</span><span>Formation souhaitée</span></div>
-    <div class="content_line"><span>Note</span><span>Note privée</span></div>
+    <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
     </div>
-    </div>
-    <!-- toutes les lignes du tableau -->
         <div class="all_table">
             <?php
             if($tableau==1){
@@ -250,26 +262,22 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 $temp=$pdo->prepare($sql);
                 $temp->execute();
                 while ($resultats = $temp -> fetch()){ ?>
-                <!-- chaques ligne du tableau -->
                     <div class="table_container">
                         <div class="button_table">
-                        <!-- bouton modification -->
                     <?php echo '<a href="modification.php?id=' . $resultats['id_prospect'] . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">' ?>
                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                         </svg>
                         </a>
-                        <!-- bouton suppression -->
-                        <form onsubmit="return confirmDelete(<?php echo $resultats['id_prospect']; ?>)">
-                            <input type="hidden" name="id_prospect" value="<?php echo $resultats['id_prospect']; ?>">
+                        <form action="admin.php" method="post">
+                            <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
                             <input type="submit" class="delete-btn" value="🗑️">
                         </form>
                     </div>
-                    <!-- contenu de chaques lignes -->
                     <?php echo '<div class="line_table">
                         <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['formation'] . '</div></div>
+                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['formation'] .' '.$resultats['formation_option'].' '.$resultats['formation_alternance']. '</div></div>
                         <div class="content_line"><div>' . $resultats['projet'] .'</div><div>'. $resultats['note_prive'] . '</div></div>
                         <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
                             echo '<div>oui</div>';
@@ -302,6 +310,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 <div class="content_line"><?php echo $r['decouverte_IIA']; ?></div>
                 <div class="content_line"><?php echo $r['note_prive']; ?></div>
                 <div class="content_line"><?php echo $r['formation']; ?></div>
+                <div class="content_line"><?php echo $r['formation_option']; ?></div>
+                <div class="content_line"><?php echo $r['formation_alternance']; ?></div>
                 <div class="content_line"><?php echo $r['heure_enregistrement']; ?></div>
                     </div>
                 <?php } ?>
@@ -314,13 +324,13 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         //script confirmation de suppression
         function confirmDelete(id) {
         var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
-
+        
         if (confirmation) {
             // Utiliser AJAX pour envoyer la requête de suppression
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "admin.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
+            
             xhr.onload = function () {
                 if (xhr.status == 200) {
                     // Recharger la page après la suppression réussie
@@ -328,15 +338,16 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                 } else {
                     // Gérer l'erreur si nécessaire
                     console.error("Erreur lors de la suppression de l'enregistrement");
+                }
             }
-        };
-
-        xhr.send("id_prospect=" + id + "&confirm_delete=1");
+            
+            xhr.send("id_prospect=" + id + "&confirm_delete=1");
         }
-
+        
         // Empêcher le formulaire de se soumettre et de recharger la page
         return false;
     }
-    </script>
+</script>
 </body>
+
 </html>

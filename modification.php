@@ -29,6 +29,8 @@ if (isset($_GET['id'])) {
     $niveau_etude = $prospect['niveau_etude'];
     $decouverte_IIA =  $prospect['decouverte_IIA'];
     $formation_envisagee = $prospect['formation'];
+    $formation_option = $prospect['formation_option'];
+    $formation_alternance = $prospect['formation__alternance'];
     
 
     // Vérifier si le bouton submit est pressé
@@ -259,11 +261,11 @@ if (isset($_GET['id'])) {
         <label for="projet">Option : </label>
         <select name="option" id="option">
         <?php
-            $sql = "SELECT DISTINCT branche FROM formation";
+            $sql = "SELECT DISTINCT option_formation FROM formation";
             $temp = $pdo->prepare($sql);
             $temp->execute();
             foreach($temp as $t){
-                echo '<option value="'.$t['branche'].'">'.$t['branche'].'</option>';
+                echo '<option value="'.$t['option_formation'].'">'.$t['option_formation'].'</option>';
             }
             ?>
             <option value="Ne sait pas">Ne sait pas</option>
@@ -272,14 +274,21 @@ if (isset($_GET['id'])) {
     <div class="label_box">
         <label for="projet">Alternance : </label>
         <br>
+        <?php
+        $sql = "SELECT formation_alternance FROM prospect";
+        $temp = $pdo->prepare($sql);
+        $temp->execute(); 
+        while($resultat = $temp->fetch()){
+            $selected = ($resultat['formation_alternance'] == $formation_alternance) ? 'selected' : '';
+        }?>
         <input type="radio" name="alternance" id="alternance">
-            <option value="1">Oui</option>
+            <option value="1" <?php $selected ?>>Oui</option>
         </input>
         <input type="radio" name="alternance" id="alternance">
-            <option value="0">Non</option>
+            <option value="0" <?php $selected ?>>Non</option>
         </input>
         <input type="radio" name="alternance" id="alternance">
-            <option value="">Ne sait pas</option>
+            <option value="" <?php $selected ?>>Ne sait pas</option>
         </input>
     </div>
     <br>
