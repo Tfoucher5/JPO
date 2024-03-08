@@ -62,7 +62,7 @@ if (isset($_POST['soumettre'])) {
         $temp->Bindparam(":connaissance", $connaissance, PDO::PARAM_STR);
         $temp->Bindparam(":formation_envisagee", $formation_souhaitee, PDO::PARAM_STR);
         $temp->Bindparam(":formation_option", $formation_option, PDO::PARAM_STR);
-        $temp->Bindparam(":formation_alternance", $formation_alternance, PDO::PARAM_STR);
+        $temp->Bindparam(":formation_alternance", $formation_alternance, PDO::PARAM_INT);
         $temp->execute();
 
         if (isset($_POST['send_mail']) && $_POST['send_mail'] == 'on') {
@@ -154,42 +154,42 @@ if (isset($_POST['soumettre'])) {
         <form action="Home.php" method="post">
             <div class="label_box">
         <label for="prenom">Prénom : </label>
-        <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+        <input type="text" name="prenom" id="prenom" placeholder="Prenom"  />
     </div>
     <div class="label_box">
         <label for="nom">Nom : </label>
-        <input type="text" name="nom" id="nom" placeholder="Nom" required />
+        <input type="text" name="nom" id="nom" placeholder="Nom"  />
     </div>
     <div class="label_box">
         <label for="email">Email : </label> 
-        <input type="text" name="email" id="email" placeholder="exemple@gmail.com" required />
+        <input type="text" name="email" id="email" placeholder="exemple@gmail.com"  />
     </div>
     <div class="label_box">
         <label for="telephone">Téléphone : </label>
-        <input type="tel" name="tel" id="tel" placeholder="telephone" required />
+        <input type="numbers" name="tel" id="tel" placeholder="telephone"  />
     </div>
     <div class="label_box">
         <label for="adresse">Adresse : </label>
-        <input type="text" name="adresse" id="adresse" placeholder="adresse" required />
+        <input type="text" name="adresse" id="adresse" placeholder="adresse"  />
     </div>
     <div class="label_box">
         <label for="code-postal">Code postal : </label>
-        <input type="text" name="code-postal" id="code-postal" placeholder="code postal" required />
+        <input type="text" name="code-postal" id="code-postal" placeholder="code postal"  />
     </div>
     <div class="label_box">
         <label for="ville">Ville : </label>
-        <input type="text" name="ville" id="ville" placeholder="ville" required />
+        <input type="text" name="ville" id="ville" placeholder="ville"  />
     </div>
 
     <div class="label_box select_box">
         <label for="pre_inscrit">Pré inscrit : </label>
-        <select name="pre_inscrit" id="pre_inscrit" required>
+        <select name="pre_inscrit" id="pre_inscrit" >
             <option value="0">Non</option>
             <option value="1">Oui</option>
         </select>
    
         <label for="niveau_etude">Niveau d'étude : </label>
-        <select name="niveau_etude" id="niveau_etude" required>
+        <select name="niveau_etude" id="niveau_etude" >
             <option value="4">BAC</option>
             <option value="3">Bac +2</option>
             <option value="2">Licence</option>
@@ -200,7 +200,7 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez-vous découvert ? : </label>
-        <select name="decouverte_IIA" id="decouverte_IIA" required>
+        <select name="decouverte_IIA" id="decouverte_IIA" >
             <?php
             $sql = "SELECT * FROM connaissance";
             $temp = $pdo->prepare($sql);
@@ -213,15 +213,16 @@ if (isset($_POST['soumettre'])) {
     </div>
     <div class="label_box select_box">
         <label for="formation_envisagee">Formation envisagée : </label>
-        <select name="formation_envisagee" id="formation_envisagee" required>
+        <select name="formation_envisagee" id="formation_envisagee" >
             <?php
-            $sql = "SELECT nom AS formation FROM formation";
+            $sql = "SELECT DISTINCT nom AS formation FROM formation";
             $temp = $pdo->prepare($sql);
             $temp->execute(); 
             while($resultat = $temp->fetch()){
                 echo '<option value="'.$resultat['formation'].'">'.$resultat['formation'].'</option>';
             }
             ?>
+            <option value="Ne sait pas">Ne sait pas</option>
         </select>
     </div>
     <div class="label_box select_box">
@@ -238,30 +239,22 @@ if (isset($_POST['soumettre'])) {
             <option value="Ne sait pas">Ne sait pas</option>
         </select>
     </div>
-    <div class="label_box">
+    <div class="label_box select_box">
         <label for="formation_alternance">Alternance : </label>
-        <br>
-        <input type="radio" name="formation_alternance" id="formation_alternance">
+        <select name="formation_alternance" id="formation_alternance">
             <option value="1">Oui</option>
-        </input>
-        <input type="radio" name="formation_alternance" id="formation_alternance">
-            <option value="0">Non</option>
-        </input>
-        <input type="radio" name="formation_alternance" id="formation_alternance">
-            <option value="">Ne sait pas</option>
-        </input>
+            <option value="-1">Non</option>
+            <option value="0">Je ne sais pas</option>
+        </select>
     </div>
-    <br>
-    <br>
-    <br>
     <div class="label_box_projet">
         <label for="projet">Notes : </label>
         <textarea name="projet" id="projet" placeholder="Ajouter une note"></textarea>
     </div>
-    <div class="label_box">
+    <!-- <div class="label_box">
                 <input type="checkbox" name="send_mail" id="send_mail" />
                 <label for="send_mail" >Envoyer la fiche formation par mail : </label>
-    </div>
+    </div> -->
     <div class="label_box">
                 <input type="checkbox" name="RGPD" id="RPGD" />
                 <label for="RGPD" required>J'ai lu et signé la feuille RGPD </label>

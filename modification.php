@@ -1,4 +1,7 @@
 <?php
+
+header('Content-type: text/html; charset=UTF-8');
+
 include ("session_start.php");
 
 // script de connexion
@@ -30,7 +33,7 @@ if (isset($_GET['id'])) {
     $decouverte_IIA =  $prospect['decouverte_IIA'];
     $formation_envisagee = $prospect['formation'];
     $formation_option = $prospect['formation_option'];
-    $formation_alternance = $prospect['formation__alternance'];
+    $formation_alternance = $prospect['formation_alternance'];
     
 
     // Vérifier si le bouton submit est pressé
@@ -50,7 +53,8 @@ if (isset($_GET['id'])) {
         $niveau_etude_updated = htmlentities($_POST['niveau_etude']);
         $decouverte_IIA_updated = htmlentities($_POST['decouverte_IIA']);
         $formation_envisagee_updated = htmlentities($_POST['formation_envisagee']);
-        
+        $formation_option_updated = htmlentities($_POST['formation_option']);
+        $formation_alternance_updated = htmlentities($_POST['formation_alternance']);
 
         //on ajoute les valeurs dans la db
         $sql = "UPDATE prospect
@@ -66,7 +70,9 @@ if (isset($_GET['id'])) {
             pre_inscrit = :inscrit,
             niveau_etude = :etude,
             decouverte_IIA = :iia,
-            formation = :formenv
+            formation = :formenv,
+            formation_option = :formeop,
+            formation_alternance = :formeal
         WHERE id_prospect = :id";
         $temp=$pdo->prepare($sql);
         $temp->Bindparam(":nom",$nom_updated,PDO::PARAM_STR);
@@ -82,6 +88,8 @@ if (isset($_GET['id'])) {
         $temp->Bindparam(":etude",$niveau_etude_updated,PDO::PARAM_STR);
         $temp->Bindparam(":iia",$decouverte_IIA_updated,PDO::PARAM_STR);
         $temp->Bindparam(":formenv",$formation_envisagee_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":formeop",$formation_option_updated,PDO::PARAM_STR);
+        $temp->Bindparam(":formeal",$formation_alternance_updated,PDO::PARAM_INT);
         $temp->bindParam(':id', $id);
         $temp->execute();
 
@@ -178,36 +186,36 @@ if (isset($_GET['id'])) {
 <div class="label_box"></div>
             <div class="label_box">
             <label for="prenom">Prénom : </label>
-            <input type="text" name="prenom" id="prenom" value="<?php echo $prenom; ?>" required />
+            <input type="text" name="prenom" id="prenom" value="<?php echo $prenom; ?>"  />
 </div>
             <div class="label_box">
         <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" value="<?php echo $nom; ?>" required />
+            <input type="text" name="nom" id="nom" value="<?php echo $nom; ?>"  />
 </div>
             <div class="label_box">
         <label for="email">Email : </label> 
-            <input type="text" name="email" id="email" value="<?php echo $mail; ?>" required />
+            <input type="text" name="email" id="email" value="<?php echo $mail; ?>"  />
 </div>
             <div class="label_box">
         <label for="telephone">Téléphone : </label>
-            <input type="tel" name="tel" id="tel" minlength="10" maxlength="10" value="<?php echo $tel; ?>" required />
+            <input type="tel" name="tel" id="tel" minlength="10" maxlength="10" value="<?php echo $tel; ?>"  />
 </div>
             <div class="label_box">
         <label for="adresse">Adresse : </label>
-            <input type="text" name="adresse" id="adresse" value="<?php echo $adresse; ?>" required />
+            <input type="text" name="adresse" id="adresse" value="<?php echo $adresse; ?>"  />
 </div>
             <div class="label_box">
         <label for="ville">Ville : </label>
-            <input type="text" name="ville" id="ville" value="<?php echo $ville; ?>" required />
+            <input type="text" name="ville" id="ville" value="<?php echo $ville; ?>"  />
 </div>
             <div class="label_box">
             <label for="code-postal">Code postal : </label>
-            <input type="text" name="code_postal" id="code-postal" value="<?php echo $code_postal; ?>" required />
+            <input type="text" name="code_postal" id="code-postal" value="<?php echo $code_postal; ?>"  />
 </div>
             
             <div class="label_box select_box">
             <label for="pre-inscrit">Pré inscrit : </label>
-            <select name="pre_inscrit" id="pre_inscrit" required>
+            <select name="pre_inscrit" id="pre_inscrit" >
                 <?php
                 $preInscritOptions = array(1 => 'Oui', 0 => 'Non');
                 foreach ($preInscritOptions as $value => $label) {
@@ -216,7 +224,7 @@ if (isset($_GET['id'])) {
                 ?>
             </select>
         <label for="niveau-etude">Niveau d'étude : </label>
-            <select name="niveau_etude" id="niveau_etude" required>
+            <select name="niveau_etude" id="niveau_etude" >
 
             <!-- Pour les select on récupère depuis la db directement puis on selectionne celui qui est déja sélectionné dans la db -->
             <?php
@@ -232,13 +240,15 @@ if (isset($_GET['id'])) {
 </div>
         <div class="label_box select_box">
         <label for="decouverte_IIA">Comment nous avez vous découvert ? : </label>
-        <select name="decouverte_IIA" id="decouverte_IIA" required>
+        <?php echo $decouverte_IIA;
+        ?>   
+        <select name="decouverte_IIA" id="decouverte_IIA" >
         <?php
             $sql = "SELECT * FROM connaissance";
             $temp = $pdo->prepare($sql);
             $temp->execute();
             while($resultat = $temp->fetch()){
-                $selected = ($resultat['moyen'] == $decouverte_IIA) ? 'selected' : '';
+                $selected = ($resultat['moyen'] == html_entity_decode($decouverte_IIA)) ? 'selected' : '';
                 echo '<option value="'.$resultat['moyen'].'" '.$selected.'>'.$resultat['moyen'].'</option>';
             }
         ?>
@@ -252,44 +262,40 @@ if (isset($_GET['id'])) {
             $temp = $pdo->prepare($sql);
             $temp->execute(); 
             while($resultat = $temp->fetch()){
-                echo '<option value="'.$resultat['nom'].'">'.$resultat['nom'].'</option>';
-            }
-            ?>
-        </select>
-    </div>
-    <div class="label_box select_box">
-        <label for="projet">Option : </label>
-        <select name="option" id="option">
-        <?php
-            $sql = "SELECT DISTINCT option_formation FROM formation";
-            $temp = $pdo->prepare($sql);
-            $temp->execute();
-            foreach($temp as $t){
-                echo '<option value="'.$t['option_formation'].'">'.$t['option_formation'].'</option>';
+                $selected = ($resultat['nom'] == $formation_envisagee) ? 'selected' : '';
+                echo '<option value="'.$resultat['nom'].'"'.$selected.'>'.$resultat['nom'].'</option>';
             }
             ?>
             <option value="Ne sait pas">Ne sait pas</option>
         </select>
     </div>
-    <div class="label_box">
-        <label for="projet">Alternance : </label>
-        <br>
+    <div class="label_box select_box">
+        <label for="projet">Option : </label>
+        <select name="formation_option" id="formation_option">
         <?php
-        $sql = "SELECT formation_alternance FROM prospect";
-        $temp = $pdo->prepare($sql);
-        $temp->execute(); 
-        while($resultat = $temp->fetch()){
-            $selected = ($resultat['formation_alternance'] == $formation_alternance) ? 'selected' : '';
-        }?>
-        <input type="radio" name="alternance" id="alternance">
-            <option value="1" <?php $selected ?>>Oui</option>
-        </input>
-        <input type="radio" name="alternance" id="alternance">
-            <option value="0" <?php $selected ?>>Non</option>
-        </input>
-        <input type="radio" name="alternance" id="alternance">
-            <option value="" <?php $selected ?>>Ne sait pas</option>
-        </input>
+            $sql = "SELECT DISTINCT option_formation FROM formation";
+            $temp = $pdo->prepare($sql);
+            $temp->execute();
+            foreach($temp as $t){
+                $selected = ($t['option_formation'] == $formation_option) ? 'selected' : '';
+                echo '<option value="'.$t['option_formation'].'"'.$selected.'>'.$t['option_formation'].'</option>';
+            }
+            ?>
+            <option value="Ne sait pas">Ne sait pas</option>
+        </select>
+    </div>
+    <div class="label_box select_box">
+        <label for="formation_alternance">Alternance : </label>
+        <select name="formation_alternance" id="formation_alternance">
+            <?php
+            $sql = "SELECT formation_alternance FROM prospect";
+            $temp = $pdo->prepare($sql);
+            $temp->execute(); 
+            ?>
+            <option value="1" <?php  ?>>Oui</option>
+            <option value="-1" <?php ?>>Non</option>
+            <option value="0" <?php  ?>>Je ne sais pas</option>
+        </select>
     </div>
     <br>
     <br>

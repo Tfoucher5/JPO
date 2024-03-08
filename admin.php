@@ -29,7 +29,7 @@ if (isset($_POST['download_csv'])) {
     fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
     // Entêtes du CSV
-    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'Projet', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
+    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'formation envisagée', 'option envisagée', 'choix de l\'alternance', 'Projet', 'commentaire privé', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
 
     // Sélection des données depuis la base de données
     $sql = 'SELECT * FROM prospect ORDER BY id_prospect';
@@ -40,21 +40,33 @@ if (isset($_POST['download_csv'])) {
     while ($resultats = $temp->fetch()) {
         // Formater l'heure
         $heure_enregistrement = date('Y-m-d H:i:s', strtotime($resultats['heure_enregistrement']));
-        
+        if ($resultats['formation_alternance'] == '1') {
+            $resultats['formation_alternance'] == 'Alternance';
+        }else if ($resultats['formation_alternance'] == '-1') {
+            $resultats['formation_alternance'] == 'Initial';
+        }else {
+            $resultats['formation_alternance'] == 'Ne sait pas';
+        }
+        //entity decode pour réencoder les caractères spéciaux
         fputcsv($output, array(
-            $resultats['prenom'],
-            $resultats['nom'],
-            $resultats['adresse'],
+            html_entity_decode($resultats['prenom']),
+            html_entity_decode($resultats['nom']),
+            html_entity_decode($resultats['adresse']),
             $resultats['code_postal'],
-            $resultats['ville'],
+            html_entity_decode($resultats['ville']),
             $resultats['tel'],
-            $resultats['email'],
+            html_entity_decode($resultats['email']),
             $resultats['niveau_etude'],
-            $resultats['projet'],
+            $resultats['formation'],
+            $resultats['formation_option'],
+            $resultats['formation_alternance'] == 1 ? 'alternance':'initial',
+            html_entity_decode($resultats['projet']),
+            html_entity_decode($resultats['note_prive']),
             $resultats['pre_inscrit'] == '1' ? 'oui' : 'non',
-            $resultats['decouverte_IIA'],
+            html_entity_decode($resultats['decouverte_IIA']),
             '"'. $heure_enregistrement.'"' // Utilisation de l'heure formatée
-        ), ";");
+        ), ";"
+        );
     }
 
     // Fermeture du fichier CSV
@@ -97,10 +109,10 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
             $where .= "heure_enregistrement <= '".$date2."'";
         }
     }
-
+ 
     $sql = "SELECT * 
     FROM prospect 
-    WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
+    WHERE CONCAT(prenom,nom,email,tel,adresse,ville,code_postal,formation,formation_option,formation_alternance,projet,note_prive,pre_inscrit,niveau_etude,decouverte_IIA,heure_enregistrement) 
     LIKE '".$keywords."%'".$where;
     echo $sql;
     $temp = $pdo->query($sql);
@@ -108,9 +120,8 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     $afficher = "oui";
     $tableau = 0;
 }
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -181,8 +192,10 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         //Script de suppression d'une ligne
             if (isset($_POST['id_prospect'])) {
             $id = $_POST['id_prospect'];
-            $del = "DELETE FROM prospect WHERE id_prospect='$id'";
-            $pdo->exec($del);
+            $del = "DELETE FROM prospect WHERE id_prospect=:id";
+            $temp = $pdo->prepare($del);
+            $temp->bindParam(':id', $id,PDO::PARAM_INT);
+            $temp->execute();
             echo '<script>
             if (confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) {
                 window.location.href = "admin.php?id_prospect=' . $_POST['id_prospect'] . '";
@@ -206,7 +219,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="head_admin_container">      
         <!-- formulaire de recherche -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get" name="search">
-            <input type="text" name="keywords" value="<?php echo $keywordsh;?>" placeholder="Rechercher dans la base de donnée">
+            <input type="text" name="keywords" value="<?php echo $keywords;?>" placeholder="Rechercher dans la base de donnée">
             <input type="date" name="date1" value="<?php echo $date1;?>" placeholder="Rechercher une date supérieur à ">ET/OU
             <input type="date" name="date2" value="<?php echo $date2;?>" placeholder="Rechercher une date inférieur à ">
             <input type="submit" name="valider" value="rechercher" >            
@@ -251,14 +264,15 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
     <div class="content_line"><span>Prénom</span><span>Nom</span></div>
     <div class="content_line"><span>Adresse</span></div>
     <div class="content_line"><span>N° de téléphone</span><span>E-Mail</span></div>
-    <div class="content_line"><span>Niveau étude</span><span>Projet</span></div>
+    <div class="content_line"><span>Niveau étude</span><span>formation envisagée</span></div>
+    <div class="content_line"><span>Projet</span><span>note privée</span></div>
     <div class="content_line"><span>Préinscrit ?</span><span>Méthode de découverte</span></div>
     <div class="content_line"><span>Date inscription</span></div>
     </div>
         <div class="all_table">
             <?php
             if($tableau==1){
-                $sql='SELECT * FROM prospect ORDER BY id_prospect';
+                $sql='SELECT * FROM prospect,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau ORDER BY id_prospect';
                 $temp=$pdo->prepare($sql);
                 $temp->execute();
                 while ($resultats = $temp -> fetch()){ ?>
@@ -269,7 +283,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                         </svg>
                         </a>
                         <form action="admin.php" method="post">
-                            <input type="hidden" name="id_prospect" value="' . $resultats['id_prospect'] . '">
+                            <input type="hidden" name="id_prospect" value="<?=$resultats['id_prospect']?>">
                             <input type="submit" class="delete-btn" value="🗑️">
                         </form>
                     </div>
@@ -277,7 +291,15 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
                         <div class="content_line"><div>' . $resultats['prenom'] .'</div><div>'. $resultats['nom'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['adresse'] .'</div><div>'. $resultats['code_postal'] .' '. $resultats['ville'] . '</div></div>
                         <div class="content_line"><div>' . $resultats['tel'] .'</div><div>'. $resultats['email'] . '</div></div>
-                        <div class="content_line"><div>' . $resultats['niveau_etude'] .'</div><div>'. $resultats['formation'] .' '.$resultats['formation_option'].' '.$resultats['formation_alternance']. '</div></div>
+                        <div class="content_line"><div>' . $resultats['equivalent'] .'</div><div>'. $resultats['formation'] .' '.$resultats['formation_option'].' ';      
+                        if ($resultats['formation_alternance'] == 1) {
+                            echo 'Alternance';
+                        }elseif ($resultats['formation_alternance'] == -1) {
+                            echo 'Initial';
+                        }else {
+                            echo 'Ne sait pas';
+                        }
+                        echo  '</div></div>
                         <div class="content_line"><div>' . $resultats['projet'] .'</div><div>'. $resultats['note_prive'] . '</div></div>
                         <div class="content_line">';if ($resultats['pre_inscrit']== '1') { 
                             echo '<div>oui</div>';
