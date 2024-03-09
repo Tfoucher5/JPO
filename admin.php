@@ -29,7 +29,7 @@ if (isset($_POST['download_csv'])) {
     fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
     // Entêtes du CSV
-    fputcsv($output, array('Prénom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Téléphone', 'Email', 'Niveau d\'étude', 'formation envisagée', 'option envisagée', 'choix de l\'alternance', 'Projet', 'commentaire privé', 'Pré-inscrit', 'Découverte IIA', 'Heure d\'enregistrement'), ";");
+    fputcsv($output, array('Prenom', 'Nom', 'Adresse', 'Code Postal', 'Ville', 'Télephone', 'Email', 'Niveau d\'etude', 'formation envisagee', 'option envisagee', 'choix de l\'alternance', 'Projet', 'commentaire privé', 'Pre-inscrit', 'Decouverte IIA', 'Heure d\'enregistrement'), ";");
 
     // Sélection des données depuis la base de données
     $sql = 'SELECT * FROM prospect ORDER BY id_prospect';
@@ -41,11 +41,11 @@ if (isset($_POST['download_csv'])) {
         // Formater l'heure
         $heure_enregistrement = date('Y-m-d H:i:s', strtotime($resultats['heure_enregistrement']));
         if ($resultats['formation_alternance'] == '1') {
-            $resultats['formation_alternance'] == 'Alternance';
+            $alternance_csv = 'Alternance';
         }else if ($resultats['formation_alternance'] == '-1') {
-            $resultats['formation_alternance'] == 'Initial';
+            $alternance_csv = 'initial';
         }else {
-            $resultats['formation_alternance'] == 'Ne sait pas';
+            $alternance_csv = 'Ne sait pas';
         }
         //entity decode pour réencoder les caractères spéciaux
         fputcsv($output, array(
@@ -59,7 +59,7 @@ if (isset($_POST['download_csv'])) {
             $resultats['niveau_etude'],
             $resultats['formation'],
             $resultats['formation_option'],
-            $resultats['formation_alternance'] == 1 ? 'alternance':'initial',
+            $alternance_csv,
             html_entity_decode($resultats['projet']),
             html_entity_decode($resultats['note_prive']),
             $resultats['pre_inscrit'] == '1' ? 'oui' : 'non',
