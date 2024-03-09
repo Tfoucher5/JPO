@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 08 mars 2024 à 14:46
+-- Généré le : sam. 09 mars 2024 à 10:54
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.2.0
 
@@ -53,7 +53,7 @@ INSERT INTO `admin` (`id_admin`, `nom_utilisateur`, `mot_de_passe`) VALUES
 DROP TABLE IF EXISTS `connaissance`;
 CREATE TABLE IF NOT EXISTS `connaissance` (
   `id_connaissance` int NOT NULL AUTO_INCREMENT,
-  `moyen` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `moyen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_connaissance`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -78,7 +78,7 @@ INSERT INTO `connaissance` (`id_connaissance`, `moyen`) VALUES
 DROP TABLE IF EXISTS `formation`;
 CREATE TABLE IF NOT EXISTS `formation` (
   `id_formation` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `option_formation` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `alternance` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_formation`)
@@ -107,8 +107,8 @@ INSERT INTO `formation` (`id_formation`, `nom`, `option_formation`, `alternance`
 DROP TABLE IF EXISTS `niveau_etude`;
 CREATE TABLE IF NOT EXISTS `niveau_etude` (
   `id_niveau` int NOT NULL AUTO_INCREMENT,
-  `RNCP` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `equivalent` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `RNCP` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `equivalent` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_niveau`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -133,7 +133,7 @@ DROP TABLE IF EXISTS `pdf`;
 CREATE TABLE IF NOT EXISTS `pdf` (
   `id_pdf` int NOT NULL AUTO_INCREMENT,
   `date_export` datetime NOT NULL,
-  `lien` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `lien` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_pdf`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -148,15 +148,15 @@ CREATE TABLE IF NOT EXISTS `prospect` (
   `id_prospect` int NOT NULL AUTO_INCREMENT,
   `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `tel` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `adresse` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `adresse` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `ville` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `code_postal` int NOT NULL,
-  `formation` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `formation_option` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `formation` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `formation_option` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `formation_alternance` int NOT NULL,
-  `projet` text COLLATE utf8mb4_general_ci NOT NULL,
+  `projet` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `note_prive` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `pre_inscrit` tinyint(1) NOT NULL,
   `niveau_etude` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
