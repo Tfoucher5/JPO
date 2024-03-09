@@ -272,7 +272,7 @@ if(isset($_REQUEST['valider']) && $_REQUEST['valider'] == "rechercher") {
         <div class="all_table">
             <?php
             if($tableau==1){
-                $sql='SELECT * FROM prospect,niveau_etude WHERE prospect.niveau_etude=niveau_etude.id_niveau ORDER BY id_prospect';
+                $sql='SELECT * FROM prospect,niveau_etude WHERE prospect.niveau_etude=niveau_etude.equivalent ORDER BY id_prospect';
                 $temp=$pdo->prepare($sql);
                 $temp->execute();
                 while ($resultats = $temp -> fetch()){ ?>
